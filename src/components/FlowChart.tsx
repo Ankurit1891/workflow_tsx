@@ -21,7 +21,7 @@ import CustomNode from "./CustomNode";
 import { useDrop } from "react-dnd";
 // import { useDrop } from "react-dnd";
 // import EdgeModalForm from "./EdgeModalForm";
-import html2canvas from "html2canvas";
+// import html2canvas from "html2canvas";
 import OptionDialog from "./OptionDialog";
 import NodeFormModal from "./NodeFormModal";
 // import AlterNode from "./AlterNode";
@@ -36,7 +36,7 @@ const FlowChart = (props: any) => {
     icon: {},
     type: "",
   });
-  const [editNodeForm, seteditNodeForm] = useState(false);
+  // const [editNodeForm, seteditNodeForm] = useState(false);
   const [nodeName, setnodeName] = useState("");
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [selectedEdge, setSelectedEdge] = useState<any>({});
@@ -172,6 +172,11 @@ const FlowChart = (props: any) => {
     [setNodes]
   );
 
+  const nodeTypes: any = {
+    default: {
+      className: "react-flow__node",
+    },
+  };
   // onconnect the edge (adding the edge)
 
   const onConnect = (params: any) => {
@@ -416,16 +421,8 @@ const FlowChart = (props: any) => {
           alterNode={onAlterNode}
         />
       )}
-      {/* {editNodeForm && (
-        // <AlterNode
-        //   name={nodeName}
-        //   theme={props.theme}
-        //   node={selectedNode}
-        //   nodeData={nodeValues}
-        //   seteditNodeForm={seteditNodeForm}
-        // />
-      )} */}
       <ReactFlow
+        // nodeTypes={nodeTypes}
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}

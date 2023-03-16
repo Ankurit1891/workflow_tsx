@@ -165,10 +165,9 @@ const EdgeFormPanel = (props: any) => {
               >
                 <Stepper.Step
                   label="Transtion Name"
-                  // styles={step:{
-                  //   color: props.theme ? "black" : "white"
-                  // }}
-                  //  stepIcon: "5",
+                  style={{
+                    color: props.theme ? "black" : "white",
+                  }}
                 >
                   <div style={{ marginRight: "20px" }}>
                     <Input
@@ -201,6 +200,32 @@ const EdgeFormPanel = (props: any) => {
                         marginRight: "10px",
                       }}
                     />
+                  </div>
+                  <div
+                    style={{
+                      width: "100px",
+                      height: "30px",
+                      backgroundColor: "#38dd56b0",
+                      borderRadius: "20px",
+                      padding: "5px",
+                      marginTop: "20px",
+                      color: "white",
+                      textAlign: "center",
+                    }}
+                    onClick={(e) => {
+                      setActive(1);
+                    }}
+                  >
+                    <button
+                      type="submit"
+                      style={{
+                        color: "#ffffff",
+                        border: "none",
+                        backgroundColor: "transparent",
+                      }}
+                    >
+                      NEXT
+                    </button>
                   </div>
                 </Stepper.Step>
                 <Stepper.Step
@@ -243,40 +268,69 @@ const EdgeFormPanel = (props: any) => {
                       marginRight: "10px",
                     }}
                   />
-                  <div
-                    style={{
-                      width: "100px",
-                      height: "30px",
-                      backgroundColor: "#e08080",
-                      borderRadius: "20px",
-                      padding: "5px",
-                      marginTop: "20px",
-                      color: "white",
-                      textAlign: "center",
-                    }}
-                    onClick={(e) => {
-                      console.log(
-                        " preTranstionValue : ",
-                        preTranstionValue,
-                        " postTranstionValue : ",
-                        postTranstionValue,
-                        "conditionalNextState",
-                        conditionalNextState,
-                        "onChangeSystemEventCode",
-                        onChangeSystemEventCode
-                      );
-                    }}
-                  >
-                    <button
-                      type="submit"
+                  <div style={{ display: "flex", flexDirection: "row" }}>
+                    <div
                       style={{
-                        color: "#ffffff",
-                        border: "none",
-                        backgroundColor: "#e08080",
+                        width: "100px",
+                        height: "30px",
+                        backgroundColor: props.theme ? "black" : "#0078d4",
+                        borderRadius: "20px",
+                        padding: "5px",
+                        marginTop: "20px",
+                        color: "white",
+                        textAlign: "center",
+                        marginRight: "10px",
+                      }}
+                      onClick={(e) => {
+                        setActive(0);
                       }}
                     >
-                      CLICK
-                    </button>
+                      <button
+                        type="submit"
+                        style={{
+                          color: "#ffffff",
+                          border: "none",
+                          backgroundColor: "transparent",
+                        }}
+                      >
+                        BACK
+                      </button>
+                    </div>
+                    <div
+                      style={{
+                        width: "100px",
+                        height: "30px",
+                        backgroundColor: "#e08080",
+                        borderRadius: "20px",
+                        padding: "5px",
+                        marginTop: "20px",
+                        color: "white",
+                        textAlign: "center",
+                      }}
+                      onClick={(e) => {
+                        console.log(
+                          " preTranstionValue : ",
+                          preTranstionValue,
+                          " postTranstionValue : ",
+                          postTranstionValue,
+                          "conditionalNextState",
+                          conditionalNextState,
+                          "onChangeSystemEventCode",
+                          onChangeSystemEventCode
+                        );
+                      }}
+                    >
+                      <button
+                        type="submit"
+                        style={{
+                          color: "#ffffff",
+                          border: "none",
+                          backgroundColor: "#e08080",
+                        }}
+                      >
+                        CLICK
+                      </button>
+                    </div>
                   </div>
                 </Stepper.Step>
                 <Stepper.Completed>

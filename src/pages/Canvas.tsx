@@ -74,11 +74,7 @@ const Canvas = (props: any) => {
                 justifyContent: "flex-end",
               }}
             >
-              <Toggle
-                style={{ padding: "2px" }}
-                // defaultUnChecked
-                onChange={_onChange}
-              />
+              <Toggle style={{ padding: "2px" }} onChange={_onChange} />
             </div>
             <FlowChart
               updatedNodes={updatedNodes}
