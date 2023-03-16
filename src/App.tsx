@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import Analytics from "./pages/Analytics";
+import FileManager from "./pages/FileManager";
+import SideBar from "./components/SideBar";
+import Canvas from "./pages/Canvas";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <SideBar>
+        <Routes>
+          <Route path="/" element={<Canvas></Canvas>} />
+          <Route path="/dashboard" element={<Dashboard></Dashboard>} />
+          <Route path="/analytics" element={<Analytics></Analytics>} />
+          <Route path="/filemanager" element={<FileManager></FileManager>} />
+          <Route path="/canvas" element={<Canvas></Canvas>} />
+        </Routes>
+      </SideBar>
+    </Router>
   );
 }
 
