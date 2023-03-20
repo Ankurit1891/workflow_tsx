@@ -129,7 +129,8 @@ path.react-flow__edge-path {
   align-items: stretch;
 }
 
-/* .react-flow__node {
-  padding: 0;
-  background-color: transparent;
-} */
+.react-flow__node {
+  /* padding: 10px; */
+  /* background-color: #000000; */
+  /* background-color: transparent; */
+}

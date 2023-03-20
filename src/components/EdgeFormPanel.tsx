@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 import React, { useState, useEffect } from "react";
 import { Input } from "./Input";
 import { Panel, PanelType } from "@fluentui/react";
@@ -5,9 +6,26 @@ import { Panel, PanelType } from "@fluentui/react";
 import { Flex, Stepper, Styles, StepperStylesNames, Step } from "@mantine/core";
 import { useForm } from "react-hook-form";
 import { Dropdown } from "@fluentui/react/lib/Dropdown";
+import { Background } from "reactflow";
+import {
+  AbButton,
+  AbInput,
+  AbInputTypes,
+  AbPanel,
+  AbPanelBody,
+  AbPanelHeader,
+  AbSelect,
+  AbSelectHeader,
+  AbSelectOption,
+  AbStack,
+  AbStackItem,
+  AbStepper,
+  AbStepperStep,
+  AbText,
+} from "@surya-soft/surya-ab-reactui";
 
 const EdgeFormPanel = (props: any) => {
-  const [systemCodeData, setSystemCodeData] = useState([]);
+  const [systemCodeData, setSystemCodeData] = useState<any>([]);
   const [onChangeSystemEventCode, setOnChangeSystemEventCode] = useState();
   const [primaryDropDown, setPrimaryDropDown] = useState({
     preTranstionOptions: [],
@@ -99,249 +117,257 @@ const EdgeFormPanel = (props: any) => {
         }));
       });
   }, []);
-  const verticalStepperStyles: Styles<StepperStylesNames, never> = {
-    content: {
-      padding: 32,
-      overflowY: "auto",
-      width: "100%",
-      height: "100%",
-    },
-    root: {
-      display: "flex",
-      height: "100%",
-    },
-    stepLabel: {
-      marginTop: "4px",
-    },
-    stepIcon: {
-      backgroundColor: "transparent",
-      border: "none",
-    },
-    steps: {
-      marginRight: 32,
-      width: "30%",
-      marginTop: 32,
-    },
-
-    verticalSeparatorActive: {
-      borderColor: "green",
-    },
+  const dismiss = (): any => {
+    props.setEdgeOpenFormModal(false);
+    return props.dismissHandler;
   };
+  const widthStyle = {
+    width: 371,
+  };
+  console.log(primaryDropDown);
   return (
-    <div>
-      <Panel
-        headerText="Transition"
-        type={PanelType.medium}
-        isOpen={props.isOpen}
-        onDismiss={props.dismissHandler}
-        closeButtonAriaLabel="Close"
-      >
-        <div
-          style={{
-            width: "100%",
-            height: "0.1px",
-            backgroundColor: "#484848",
-            marginTop: "5px",
-          }}
-        ></div>
-        <form
-          onSubmit={handleSubmit((data) => {
-            console.log(data);
-          })}
+    <AbPanel
+      isOpen={props.isOpen}
+      placement={"right"}
+      onDismiss={dismiss}
+      size="M"
+      modalLike={true}
+    >
+      <AbPanelHeader>Transition</AbPanelHeader>
+      <AbPanelBody>
+        <AbStepper
+          activeIndex={active}
+          onStepClick={function noRefCheck() {}}
+          orientation="vertical"
         >
-          <div
-            style={{
-              marginTop: "50px",
-            }}
-          >
+          <AbStepperStep label="Transition Name">
+            <AbStack
+              style={{
+                maxWidth: "250",
+              }}
+            >
+              <AbInput
+                required={true}
+                label="Transition Name"
+                onChange={function noRefCheck() {}}
+                type={AbInputTypes.Text}
+              />
+            </AbStack>
+            <AbSelect
+              label="Default Select"
+              onBlur={function noRefCheck() {}}
+              onChange={function noRefCheck() {}}
+              placeholder="Select one option"
+              style={widthStyle}
+            >
+              {systemCodeData.map((data: any): any => {
+                if (data) {
+                  return (
+                    <AbSelectOption key={data.key}>{data.text}</AbSelectOption>
+                  );
+                }
+              })}
+            </AbSelect>
+            <AbButton
+              onClick={function noRefCheck() {
+                setActive(1);
+              }}
+              variant="Primary"
+              style={{
+                marginTop: "10px",
+              }}
+            >
+              Next
+            </AbButton>
+          </AbStepperStep>
+          <AbStepperStep label="Pre-Transition Action">
+            <AbSelect
+              label="Pre-Transition Action"
+              onBlur={function noRefCheck() {}}
+              onChange={function noRefCheck() {}}
+              placeholder="Select one option"
+              style={widthStyle}
+            >
+              {primaryDropDown.preTranstionOptions.map((data: any): any => {
+                if (data) {
+                  return (
+                    <AbSelectOption key={data.key}>{data.text}</AbSelectOption>
+                  );
+                }
+              })}
+            </AbSelect>
+
+            <AbSelect
+              label="Pre-Transition Action"
+              onBlur={function noRefCheck() {}}
+              onChange={function noRefCheck() {}}
+              placeholder="Select one option"
+              style={widthStyle}
+            >
+              {/* {systemCodeData.map((data: any): any => {
+                if (data) {
+                  console.log(data.text);
+                  <AbSelectOption key={dat a.key}>{data.text}</AbSelectOption>;
+                }
+              })} */}
+              <AbSelectOption key={1}>Option1</AbSelectOption>;
+              <AbSelectOption key={2}>Option2</AbSelectOption>;
+              <AbSelectOption key={3}>Option3</AbSelectOption>;
+            </AbSelect>
+
+            <AbInput
+              required={true}
+              label="Pre-Transition Data"
+              onChange={function noRefCheck() {}}
+              type={AbInputTypes.Text}
+            />
             <div>
-              <Stepper
-                active={active}
-                onStepClick={setActive}
-                breakpoint="sm"
-                iconSize={30}
-                orientation="vertical"
-                styles={verticalStepperStyles}
+              <AbButton
+                style={{ marginTop: "10px", marginRight: "10px" }}
+                onClick={function noRefCheck() {
+                  setActive(0);
+                }}
+                variant="Default"
               >
-                <Stepper.Step
-                  label="Transtion Name"
-                  style={{
-                    color: props.theme ? "black" : "white",
-                  }}
-                >
-                  <div style={{ marginRight: "20px" }}>
-                    <Input
-                      style={{ width: "350px" }}
-                      control={control}
-                      // {...register("transitionName")}
-                      name="transitionName"
-                      label="Transition Name"
-                      rules={{
-                        required: "This is required",
-                        minLength: {
-                          value: 5,
-                          message: "Minimun character is 5",
-                        },
-                        maxLength: {
-                          value: 10,
-                          message: "Maximum character is 10",
-                        },
-                      }}
-                      placeholder="Enter transition name  here"
-                    />
-                    <div style={{ height: "10px", width: "100%" }} />
-                    <Dropdown
-                      onChange={onChangeSystemEventCodeHandler}
-                      label="System Event Code"
-                      placeholder="Select an option"
-                      options={systemCodeData}
-                      style={{
-                        width: "350px",
-                        marginRight: "10px",
-                      }}
-                    />
-                  </div>
-                  <div
-                    style={{
-                      width: "100px",
-                      height: "30px",
-                      backgroundColor: "#38dd56b0",
-                      borderRadius: "20px",
-                      padding: "5px",
-                      marginTop: "20px",
-                      color: "white",
-                      textAlign: "center",
-                    }}
-                    onClick={(e) => {
-                      setActive(1);
-                    }}
-                  >
-                    <button
-                      type="submit"
-                      style={{
-                        color: "#ffffff",
-                        border: "none",
-                        backgroundColor: "transparent",
-                      }}
-                    >
-                      NEXT
-                    </button>
-                  </div>
-                </Stepper.Step>
-                <Stepper.Step
-                  label="Transition Action"
-                  style={{
-                    color: props.theme ? "black" : "white",
-                    fontWeight: "normal",
-                  }}
-                >
-                  <Dropdown
-                    // {...methods.register("Pre_Transition_Action")}
-                    label="Pre-Transition Action"
-                    onChange={onChangePreTransitionHandler}
-                    placeholder="Select an option"
-                    options={primaryDropDown.preTranstionOptions}
-                    style={{
-                      width: "350px",
-                      marginRight: "10px",
-                    }}
-                  />
-
-                  <Dropdown
-                    label="Post-Transition Action"
-                    onChange={onChangePostTransitionHandler}
-                    placeholder="Select an option"
-                    options={primaryDropDown.postTranstionOptions}
-                    style={{
-                      width: "350px",
-                      marginRight: "10px",
-                    }}
-                  />
-
-                  <Dropdown
-                    label="Conditional Next State"
-                    onChange={onChangeConditionalNextState}
-                    placeholder="Select an option"
-                    options={primaryDropDown.conditionalNextState}
-                    style={{
-                      width: "350px",
-                      marginRight: "10px",
-                    }}
-                  />
-                  <div style={{ display: "flex", flexDirection: "row" }}>
-                    <div
-                      style={{
-                        width: "100px",
-                        height: "30px",
-                        backgroundColor: props.theme ? "black" : "#0078d4",
-                        borderRadius: "20px",
-                        padding: "5px",
-                        marginTop: "20px",
-                        color: "white",
-                        textAlign: "center",
-                        marginRight: "10px",
-                      }}
-                      onClick={(e) => {
-                        setActive(0);
-                      }}
-                    >
-                      <button
-                        type="submit"
-                        style={{
-                          color: "#ffffff",
-                          border: "none",
-                          backgroundColor: "transparent",
-                        }}
-                      >
-                        BACK
-                      </button>
-                    </div>
-                    <div
-                      style={{
-                        width: "100px",
-                        height: "30px",
-                        backgroundColor: "#e08080",
-                        borderRadius: "20px",
-                        padding: "5px",
-                        marginTop: "20px",
-                        color: "white",
-                        textAlign: "center",
-                      }}
-                      onClick={(e) => {
-                        console.log(
-                          " preTranstionValue : ",
-                          preTranstionValue,
-                          " postTranstionValue : ",
-                          postTranstionValue,
-                          "conditionalNextState",
-                          conditionalNextState,
-                          "onChangeSystemEventCode",
-                          onChangeSystemEventCode
-                        );
-                      }}
-                    >
-                      <button
-                        type="submit"
-                        style={{
-                          color: "#ffffff",
-                          border: "none",
-                          backgroundColor: "#e08080",
-                        }}
-                      >
-                        CLICK
-                      </button>
-                    </div>
-                  </div>
-                </Stepper.Step>
-                <Stepper.Completed>
-                  Completed, click back button to get to previous step
-                </Stepper.Completed>
-              </Stepper>
+                Back
+              </AbButton>
+              <AbButton
+                style={{ marginTop: "10px" }}
+                onClick={function noRefCheck() {
+                  setActive(2);
+                }}
+                variant="Primary"
+              >
+                Next
+              </AbButton>
             </div>
-          </div>
-        </form>
-      </Panel>
-    </div>
+          </AbStepperStep>
+          <AbStepperStep label="Post-Transition Action">
+            <AbSelect
+              label="Post-Transition Action"
+              onBlur={function noRefCheck() {}}
+              onChange={function noRefCheck() {}}
+              placeholder="Select one option"
+              style={widthStyle}
+            >
+              {primaryDropDown.postTranstionOptions.map((data: any): any => {
+                if (data) {
+                  return (
+                    <AbSelectOption key={data.key}>{data.text}</AbSelectOption>
+                  );
+                }
+              })}
+            </AbSelect>
+
+            <AbSelect
+              label="Post-Transition Action"
+              onBlur={function noRefCheck() {}}
+              onChange={function noRefCheck() {}}
+              placeholder="Select one option"
+              style={widthStyle}
+            >
+              {/* {systemCodeData.map((data: any): any => {
+                if (data) {
+                  console.log(data.text);
+                  <AbSelectOption key={dat a.key}>{data.text}</AbSelectOption>;
+                }
+              })} */}
+              <AbSelectOption key={1}>Option1</AbSelectOption>;
+              <AbSelectOption key={2}>Option2</AbSelectOption>;
+              <AbSelectOption key={3}>Option3</AbSelectOption>;
+            </AbSelect>
+
+            <AbInput
+              required={true}
+              label="Post-Transition Data"
+              onChange={function noRefCheck() {}}
+              type={AbInputTypes.Text}
+            />
+            <div>
+              <AbButton
+                style={{ marginTop: "10px", marginRight: "10px" }}
+                onClick={function noRefCheck() {
+                  setActive(1);
+                }}
+                variant="Default"
+              >
+                Back
+              </AbButton>
+              <AbButton
+                style={{ marginTop: "10px" }}
+                onClick={function noRefCheck() {
+                  setActive(3);
+                }}
+                variant="Primary"
+              >
+                Next
+              </AbButton>
+            </div>
+          </AbStepperStep>
+          <AbStepperStep label="Conditional Next Step">
+            <AbSelect
+              label="Conditional Next Step"
+              onBlur={function noRefCheck() {}}
+              onChange={function noRefCheck() {}}
+              placeholder="Select one option"
+              style={widthStyle}
+            >
+              {primaryDropDown.conditionalNextState.map((data: any): any => {
+                if (data) {
+                  return (
+                    <AbSelectOption key={data.key}>{data.text}</AbSelectOption>
+                  );
+                }
+              })}
+            </AbSelect>
+
+            <AbSelect
+              label="Conditional Next Step"
+              onBlur={function noRefCheck() {}}
+              onChange={function noRefCheck() {}}
+              placeholder="Select one option"
+              style={widthStyle}
+            >
+              {/* {systemCodeData.map((data: any): any => {
+                if (data) {
+                  <AbSelectOption key={data.key}>dada</AbSelectOption>;
+                }
+              })} */}
+              <AbSelectOption key={1}>Option1</AbSelectOption>;
+              <AbSelectOption key={2}>Option2</AbSelectOption>;
+              <AbSelectOption key={3}>Option3</AbSelectOption>;
+            </AbSelect>
+
+            <AbInput
+              required={true}
+              label="Conditional Next Step"
+              onChange={function noRefCheck() {}}
+              type={AbInputTypes.Text}
+            />
+            <div>
+              <AbButton
+                style={{ marginTop: "10px", marginRight: "10px" }}
+                onClick={function noRefCheck() {
+                  setActive(2);
+                }}
+                variant="Default"
+              >
+                Back
+              </AbButton>
+              <AbButton
+                style={{ marginTop: "10px" }}
+                // onClick={function noRefCheck() {
+                //   setActive(3);
+                // }}
+                variant="Primary"
+              >
+                Submit
+              </AbButton>
+            </div>
+          </AbStepperStep>
+        </AbStepper>
+      </AbPanelBody>
+    </AbPanel>
   );
 };
 

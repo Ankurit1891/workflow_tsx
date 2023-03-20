@@ -404,11 +404,14 @@ const FlowChart = (props: any) => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.05 }}
       > */}
-      <EdgeFormPanel
-        isOpen={isOpen}
-        dismissHandler={closePanel}
-        theme={props.theme}
-      />
+      {openEdgeFormModal && (
+        <EdgeFormPanel
+          isOpen={isOpen}
+          dismissHandler={closePanel}
+          theme={props.theme}
+          setEdgeOpenFormModal={setEdgeOpenFormModal}
+        />
+      )}
       {/* </motion.div> */}
       {/* {//Opening the form modal for nodes on right click} */}
       {openModal && (

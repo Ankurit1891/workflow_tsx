@@ -64,6 +64,7 @@ const NodeFormModal = ({
       margin: "0",
     },
     body: {
+      height: "86px",
       flex: "4 4 auto",
       padding: "0 24px 24px 24px",
       overflowY: "hidden",
@@ -115,7 +116,13 @@ const NodeFormModal = ({
             nodeFormAcceptHandler(data);
           })}
         >
-          <div style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+            }}
+          >
             <div className={contentStyles.body}>
               <Input
                 style={{ width: "300px" }}
@@ -129,18 +136,6 @@ const NodeFormModal = ({
                 }}
                 placeholder="Enter state name  here"
               />
-              {/* <TextArea
-              style={{ width: "600px" }}
-              control={control}
-              name={"description"}
-              label="Description"
-              rules={{
-                required: "This is required",
-                minLength: { value: 3, message: "Minimun value 3" },
-                maxLength: { value: 30, message: "Maximum val 30" },
-              }}
-              placeholder="Enter description  here"
-            /> */}
             </div>
             <div style={{ marginTop: "30px", marginRight: "10px" }}>
               <Stack

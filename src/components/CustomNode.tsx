@@ -3,7 +3,18 @@ import React from "react";
 import { useDrag } from "react-dnd";
 import { motion } from "framer-motion";
 import "../App.css";
-
+interface props {
+  NodeKey: String;
+  NodeID: String;
+  Nodeheight: String;
+  Nodemargin: String;
+  NodeName: String;
+  NodeIcon: Object;
+  theme: boolean;
+  parent: String;
+  key: number;
+  NodebackgroundColor: String;
+}
 const CustomNode = (props: any) => {
   const x = Math.trunc(Math.random() * 500);
   const y = Math.trunc(Math.random() * 50);
@@ -15,11 +26,11 @@ const CustomNode = (props: any) => {
       y: y,
       nodeKey: props.NodeKey,
       nodeHeight: props.Nodeheight,
-      nodeBackgroundColor: props.NodebackgroundColor,
+      nodeBackgroundColor: props.Nodeheight,
       nodeMargin: props.Nodemargin,
       nodeIcon: props.NodeIcon,
       nodeName: props.NodeName,
-      nodeType: props.NodeType,
+      nodeType: props.NodeName,
     },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
