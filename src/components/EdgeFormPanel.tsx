@@ -1,46 +1,43 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React, { useState, useEffect } from "react";
-import { Input } from "./Input";
-import { Panel, PanelType } from "@fluentui/react";
+import { ThemeProvider, useTheme } from "@fluentui/react";
 // import event_code from "../api_data/event_code";
-import { Flex, Stepper, Styles, StepperStylesNames, Step } from "@mantine/core";
 import { useForm } from "react-hook-form";
-import { Dropdown } from "@fluentui/react/lib/Dropdown";
-import { Background } from "reactflow";
+
 import {
   AbButton,
+  AbDarkTheme,
   AbInput,
   AbInputTypes,
   AbPanel,
   AbPanelBody,
   AbPanelHeader,
   AbSelect,
-  AbSelectHeader,
   AbSelectOption,
   AbStack,
-  AbStackItem,
   AbStepper,
   AbStepperStep,
-  AbText,
 } from "@surya-soft/surya-ab-reactui";
 
 const EdgeFormPanel = (props: any) => {
+  const [transitionName, setTransitionName] = useState<any>("");
   const [systemCodeData, setSystemCodeData] = useState<any>([]);
   const [onChangeSystemEventCode, setOnChangeSystemEventCode] = useState();
   const [primaryDropDown, setPrimaryDropDown] = useState({
-    preTranstionOptions: [],
-    postTranstionOptions: [],
+    preTransitionOptions: [],
+    postTransitionOptions: [],
     conditionalNextState: [],
   });
-  const [preTranstionValue, setPreTranstionValue] = useState({
+  const theme = useTheme();
+  const [preTransitionActionType, setPreTransitionActionType] = useState({
     actionType: "",
     input: "",
   });
-  const [postTranstionValue, setPostTranstionValue] = useState({
+  const [postTransitionActionType, setPostTransitionActionType] = useState({
     actionType: "",
     input: "",
   });
-  const [conditionalNextState, setConditionalNextState] = useState({
+  const [conditionalNextStateType, setConditionalNextStateType] = useState({
     actionType: "",
     input: "",
   });
@@ -60,20 +57,21 @@ const EdgeFormPanel = (props: any) => {
     setOnChangeSystemEventCode(option.text);
   };
   const onChangePreTransitionHandler = (e: any, option: any) => {
-    setPreTranstionValue((prev) => ({
-      actionType: option.actionType,
+    setPreTransitionActionType((prev) => ({
+      actionType: option.key,
       input: option.text,
     }));
   };
   const onChangePostTransitionHandler = (e: any, option: any) => {
-    setPostTranstionValue((prev) => ({
-      actionType: option.actionType,
+    setPostTransitionActionType((prev) => ({
+      actionType: option.key,
       input: option.text,
     }));
   };
   const onChangeConditionalNextState = (e: any, option: any) => {
-    setConditionalNextState((prev) => ({
-      actionType: option.actionType,
+    console.log(`awda - `, option);
+    setConditionalNextStateType((prev) => ({
+      actionType: option.key,
       input: option.text,
     }));
   };
@@ -92,7 +90,7 @@ const EdgeFormPanel = (props: any) => {
       .then((json) => {
         setPrimaryDropDown((prev: any) => ({
           ...prev,
-          preTranstionOptions: [...json.data],
+          preTransitionOptions: [...json.data],
         }));
       });
   }, []);
@@ -103,7 +101,7 @@ const EdgeFormPanel = (props: any) => {
       .then((json) => {
         setPrimaryDropDown((prev: any) => ({
           ...prev,
-          postTranstionOptions: [...json.data],
+          postTransitionOptions: [...json.data],
         }));
       });
   }, []);
@@ -122,252 +120,287 @@ const EdgeFormPanel = (props: any) => {
     return props.dismissHandler;
   };
   const widthStyle = {
-    width: 371,
+    width: 400,
   };
-  console.log(primaryDropDown);
+  const widthStyleLabel = {
+    maxWidth: "400px",
+  };
+  console.log(
+    onChangeSystemEventCode,
+    primaryDropDown,
+    preTransitionActionType,
+    postTransitionActionType,
+    conditionalNextStateType
+  );
   return (
-    <AbPanel
-      isOpen={props.isOpen}
-      placement={"right"}
-      onDismiss={dismiss}
-      size="M"
-      modalLike={true}
-    >
-      <AbPanelHeader>Transition</AbPanelHeader>
-      <AbPanelBody>
-        <AbStepper
-          activeIndex={active}
-          onStepClick={function noRefCheck() {}}
-          orientation="vertical"
-        >
-          <AbStepperStep label="Transition Name">
-            <AbStack
-              style={{
-                maxWidth: "250",
-              }}
-            >
-              <AbInput
-                required={true}
-                label="Transition Name"
-                onChange={function noRefCheck() {}}
-                type={AbInputTypes.Text}
-              />
-            </AbStack>
-            <AbSelect
-              label="Default Select"
-              onBlur={function noRefCheck() {}}
-              onChange={function noRefCheck() {}}
-              placeholder="Select one option"
-              style={widthStyle}
-            >
-              {systemCodeData.map((data: any): any => {
-                if (data) {
-                  return (
-                    <AbSelectOption key={data.key}>{data.text}</AbSelectOption>
-                  );
-                }
-              })}
-            </AbSelect>
-            <AbButton
-              onClick={function noRefCheck() {
-                setActive(1);
-              }}
-              variant="Primary"
-              style={{
-                marginTop: "10px",
-              }}
-            >
-              Next
-            </AbButton>
-          </AbStepperStep>
-          <AbStepperStep label="Pre-Transition Action">
-            <AbSelect
-              label="Pre-Transition Action"
-              onBlur={function noRefCheck() {}}
-              onChange={function noRefCheck() {}}
-              placeholder="Select one option"
-              style={widthStyle}
-            >
-              {primaryDropDown.preTranstionOptions.map((data: any): any => {
-                if (data) {
-                  return (
-                    <AbSelectOption key={data.key}>{data.text}</AbSelectOption>
-                  );
-                }
-              })}
-            </AbSelect>
-
-            <AbSelect
-              label="Pre-Transition Action"
-              onBlur={function noRefCheck() {}}
-              onChange={function noRefCheck() {}}
-              placeholder="Select one option"
-              style={widthStyle}
-            >
-              {/* {systemCodeData.map((data: any): any => {
-                if (data) {
-                  console.log(data.text);
-                  <AbSelectOption key={dat a.key}>{data.text}</AbSelectOption>;
-                }
-              })} */}
-              <AbSelectOption key={1}>Option1</AbSelectOption>;
-              <AbSelectOption key={2}>Option2</AbSelectOption>;
-              <AbSelectOption key={3}>Option3</AbSelectOption>;
-            </AbSelect>
-
-            <AbInput
-              required={true}
-              label="Pre-Transition Data"
-              onChange={function noRefCheck() {}}
-              type={AbInputTypes.Text}
-            />
-            <div>
-              <AbButton
-                style={{ marginTop: "10px", marginRight: "10px" }}
-                onClick={function noRefCheck() {
-                  setActive(0);
-                }}
-                variant="Default"
+    <ThemeProvider theme={AbDarkTheme}>
+      <AbPanel
+        isOpen={props.isOpen}
+        placement={"right"}
+        onDismiss={dismiss}
+        size="L"
+        modalLike={true}
+      >
+        <AbPanelHeader>
+          <span style={{ fontSize: "20px", fontWeight: "600" }}>
+            Transition
+          </span>
+        </AbPanelHeader>
+        <AbPanelBody>
+          <AbStepper
+            size="small"
+            showStepNumbers={false}
+            activeIndex={active}
+            onStepClick={setActive}
+            orientation="vertical"
+          >
+            <AbStepperStep label="Transition Name">
+              <AbStack style={widthStyleLabel}>
+                <AbInput
+                  value={transitionName}
+                  required={true}
+                  label="Transition Name"
+                  onChange={(e, newValue: any): any => {
+                    console.log(newValue);
+                    setTransitionName(newValue);
+                  }}
+                  type={AbInputTypes.Text}
+                />
+              </AbStack>
+              <AbSelect
+                label="System Event Code"
+                onBlur={function noRefCheck() {}}
+                onChange={onChangeSystemEventCodeHandler}
+                placeholder="Select one option"
+                style={widthStyle}
               >
-                Back
-              </AbButton>
+                {systemCodeData.map((data: any): any => {
+                  if (data) {
+                    return (
+                      <AbSelectOption key={data.key}>
+                        {data.text}
+                      </AbSelectOption>
+                    );
+                  }
+                })}
+              </AbSelect>
               <AbButton
-                style={{ marginTop: "10px" }}
-                onClick={function noRefCheck() {
-                  setActive(2);
-                }}
-                variant="Primary"
-              >
-                Next
-              </AbButton>
-            </div>
-          </AbStepperStep>
-          <AbStepperStep label="Post-Transition Action">
-            <AbSelect
-              label="Post-Transition Action"
-              onBlur={function noRefCheck() {}}
-              onChange={function noRefCheck() {}}
-              placeholder="Select one option"
-              style={widthStyle}
-            >
-              {primaryDropDown.postTranstionOptions.map((data: any): any => {
-                if (data) {
-                  return (
-                    <AbSelectOption key={data.key}>{data.text}</AbSelectOption>
-                  );
-                }
-              })}
-            </AbSelect>
-
-            <AbSelect
-              label="Post-Transition Action"
-              onBlur={function noRefCheck() {}}
-              onChange={function noRefCheck() {}}
-              placeholder="Select one option"
-              style={widthStyle}
-            >
-              {/* {systemCodeData.map((data: any): any => {
-                if (data) {
-                  console.log(data.text);
-                  <AbSelectOption key={dat a.key}>{data.text}</AbSelectOption>;
-                }
-              })} */}
-              <AbSelectOption key={1}>Option1</AbSelectOption>;
-              <AbSelectOption key={2}>Option2</AbSelectOption>;
-              <AbSelectOption key={3}>Option3</AbSelectOption>;
-            </AbSelect>
-
-            <AbInput
-              required={true}
-              label="Post-Transition Data"
-              onChange={function noRefCheck() {}}
-              type={AbInputTypes.Text}
-            />
-            <div>
-              <AbButton
-                style={{ marginTop: "10px", marginRight: "10px" }}
                 onClick={function noRefCheck() {
                   setActive(1);
                 }}
-                variant="Default"
-              >
-                Back
-              </AbButton>
-              <AbButton
-                style={{ marginTop: "10px" }}
-                onClick={function noRefCheck() {
-                  setActive(3);
-                }}
                 variant="Primary"
+                style={{
+                  marginTop: "10px",
+                }}
               >
                 Next
               </AbButton>
-            </div>
-          </AbStepperStep>
-          <AbStepperStep label="Conditional Next Step">
-            <AbSelect
-              label="Conditional Next Step"
-              onBlur={function noRefCheck() {}}
-              onChange={function noRefCheck() {}}
-              placeholder="Select one option"
-              style={widthStyle}
-            >
-              {primaryDropDown.conditionalNextState.map((data: any): any => {
-                if (data) {
-                  return (
-                    <AbSelectOption key={data.key}>{data.text}</AbSelectOption>
-                  );
-                }
-              })}
-            </AbSelect>
+            </AbStepperStep>
+            <AbStepperStep label="Pre-Transition Action">
+              <AbSelect
+                label="Pre-Transition Action Type"
+                onBlur={function noRefCheck() {}}
+                onChange={onChangePreTransitionHandler}
+                placeholder="Select one option"
+                style={widthStyle}
+              >
+                {primaryDropDown.preTransitionOptions.map((data: any): any => {
+                  if (data) {
+                    return (
+                      <AbSelectOption key={data.key}>
+                        {data.text}
+                      </AbSelectOption>
+                    );
+                  }
+                })}
+              </AbSelect>
 
-            <AbSelect
-              label="Conditional Next Step"
-              onBlur={function noRefCheck() {}}
-              onChange={function noRefCheck() {}}
-              placeholder="Select one option"
-              style={widthStyle}
-            >
-              {/* {systemCodeData.map((data: any): any => {
+              <AbSelect
+                label="Pre-Transition Action"
+                onBlur={function noRefCheck() {}}
+                onChange={function noRefCheck() {}}
+                placeholder="Select one option"
+                style={widthStyle}
+              >
+                {/* {systemCodeData.map((data: any): any => {
                 if (data) {
-                  <AbSelectOption key={data.key}>dada</AbSelectOption>;
+                  console.log(data.text);
+                  <AbSelectOption key={dat a.key}>{data.text}</AbSelectOption>;
                 }
               })} */}
-              <AbSelectOption key={1}>Option1</AbSelectOption>;
-              <AbSelectOption key={2}>Option2</AbSelectOption>;
-              <AbSelectOption key={3}>Option3</AbSelectOption>;
-            </AbSelect>
+                <AbSelectOption key={1}>Option1</AbSelectOption>;
+                <AbSelectOption key={2}>Option2</AbSelectOption>;
+                <AbSelectOption key={3}>Option3</AbSelectOption>;
+              </AbSelect>
+              <AbStack style={widthStyleLabel}>
+                <AbInput
+                  required={true}
+                  label="Pre-Transition Data"
+                  onChange={function noRefCheck() {}}
+                  type={AbInputTypes.Text}
+                />
+              </AbStack>
+              <div>
+                <AbButton
+                  style={{ marginTop: "10px", marginRight: "10px" }}
+                  onClick={function noRefCheck() {
+                    setActive(0);
+                  }}
+                  variant="Default"
+                >
+                  Back
+                </AbButton>
+                <AbButton
+                  style={{ marginTop: "10px" }}
+                  onClick={function noRefCheck() {
+                    setActive(2);
+                  }}
+                  variant="Primary"
+                >
+                  Next
+                </AbButton>
+              </div>
+            </AbStepperStep>
+            <AbStepperStep label="Post-Transition Action">
+              <AbSelect
+                label="Post-Transition Action Type"
+                onBlur={function noRefCheck() {}}
+                onChange={onChangePostTransitionHandler}
+                placeholder="Select one option"
+                style={widthStyle}
+              >
+                {primaryDropDown.postTransitionOptions.map((data: any): any => {
+                  if (data) {
+                    return (
+                      <AbSelectOption key={data.key}>
+                        {data.text}
+                      </AbSelectOption>
+                    );
+                  }
+                })}
+              </AbSelect>
 
-            <AbInput
-              required={true}
-              label="Conditional Next Step"
-              onChange={function noRefCheck() {}}
-              type={AbInputTypes.Text}
-            />
-            <div>
-              <AbButton
-                style={{ marginTop: "10px", marginRight: "10px" }}
-                onClick={function noRefCheck() {
-                  setActive(2);
-                }}
-                variant="Default"
+              <AbSelect
+                label="Post-Transition Action"
+                onBlur={function noRefCheck() {}}
+                onChange={function noRefCheck() {}}
+                placeholder="Select one option"
+                style={widthStyle}
               >
-                Back
-              </AbButton>
-              <AbButton
-                style={{ marginTop: "10px" }}
-                // onClick={function noRefCheck() {
-                //   setActive(3);
-                // }}
-                variant="Primary"
+                {/* {systemCodeData.map((data: any): any => {
+                if (data) {
+                  console.log(data.text);
+                  <AbSelectOption key={dat a.key}>{data.text}</AbSelectOption>;
+                }
+              })} */}
+                <AbSelectOption key={1}>Option1</AbSelectOption>;
+                <AbSelectOption key={2}>Option2</AbSelectOption>;
+                <AbSelectOption key={3}>Option3</AbSelectOption>;
+              </AbSelect>
+              <AbStack style={widthStyleLabel}>
+                <AbInput
+                  required={true}
+                  label="Post-Transition Data"
+                  onChange={function noRefCheck() {}}
+                  type={AbInputTypes.Text}
+                />
+              </AbStack>
+              <div>
+                <AbButton
+                  style={{ marginTop: "10px", marginRight: "10px" }}
+                  onClick={function noRefCheck() {
+                    setActive(1);
+                  }}
+                  variant="Default"
+                >
+                  Back
+                </AbButton>
+                <AbButton
+                  style={{ marginTop: "10px" }}
+                  onClick={function noRefCheck() {
+                    setActive(3);
+                  }}
+                  variant="Primary"
+                >
+                  Next
+                </AbButton>
+              </div>
+            </AbStepperStep>
+            <AbStepperStep label="Conditional Next Step">
+              <AbSelect
+                label="Conditional Type"
+                onBlur={function noRefCheck() {}}
+                onChange={onChangeConditionalNextState}
+                placeholder="Select one option"
+                style={widthStyle}
               >
-                Submit
-              </AbButton>
-            </div>
-          </AbStepperStep>
-        </AbStepper>
-      </AbPanelBody>
-    </AbPanel>
+                {primaryDropDown.conditionalNextState.map((data: any): any => {
+                  if (data) {
+                    return (
+                      <AbSelectOption key={data.key}>
+                        {data.text}
+                      </AbSelectOption>
+                    );
+                  }
+                })}
+              </AbSelect>
+
+              <AbSelect
+                label="Condition"
+                onBlur={function noRefCheck() {}}
+                onChange={function noRefCheck() {}}
+                placeholder="Select one option"
+                style={widthStyle}
+              >
+                <AbSelectOption key={1}>Option1</AbSelectOption>;
+                <AbSelectOption key={2}>Option2</AbSelectOption>;
+                <AbSelectOption key={3}>Option3</AbSelectOption>;
+              </AbSelect>
+
+              <AbSelect
+                label="Order"
+                onBlur={function noRefCheck() {}}
+                onChange={function noRefCheck() {}}
+                placeholder="Select one option"
+                style={widthStyle}
+              >
+                <AbSelectOption key={1}>1</AbSelectOption>;
+                <AbSelectOption key={2}>2</AbSelectOption>;
+                <AbSelectOption key={3}>3</AbSelectOption>;
+              </AbSelect>
+              <AbStack style={widthStyleLabel}>
+                <AbInput
+                  required={true}
+                  label="Conditional Next Step"
+                  onChange={function noRefCheck() {}}
+                  type={AbInputTypes.Text}
+                />
+              </AbStack>
+              <div>
+                <AbButton
+                  style={{ marginTop: "10px", marginRight: "10px" }}
+                  onClick={function noRefCheck() {
+                    setActive(2);
+                  }}
+                  variant="Default"
+                >
+                  Back
+                </AbButton>
+                <AbButton
+                  style={{ marginTop: "10px" }}
+                  // onClick={function noRefCheck() {
+                  //   setActive(3);
+                  // }}
+                  variant="Primary"
+                >
+                  Submit
+                </AbButton>
+              </div>
+            </AbStepperStep>
+          </AbStepper>
+        </AbPanelBody>
+      </AbPanel>
+    </ThemeProvider>
   );
 };
 

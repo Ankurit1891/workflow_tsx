@@ -8,7 +8,7 @@
     "@fluentui/react-components": "^9.15.6",
     "@mantine/core": "^6.0.2",
     "@mantine/hooks": "^6.0.2",
-    "@surya-soft/surya-ab-reactui": "^1.0.547",
+    "@surya-soft/surya-ab-reactui": "^1.0.534",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
