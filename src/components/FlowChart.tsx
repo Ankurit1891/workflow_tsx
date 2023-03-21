@@ -166,7 +166,6 @@ const FlowChart = (props: any) => {
 
     props.updatedNodes(nodes);
   };
-  console.log(nodes[0].id);
   const onNodesChange = useCallback(
     (changes: any) => setNodes((nds): any => applyNodeChanges(changes, nds)),
     [setNodes]

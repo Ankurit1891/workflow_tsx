@@ -17,7 +17,7 @@ server.get("/api/pre_transition_options", {
     { actionType: 101, text: "ApiCall", key: 1 },
     { actionType: 102, text: "Alert", key: 2 },
     { actionType: 103, text: "Hook", key: 3 },
-    { actionType: 104, text: "Limit Uilization", key: 4 },
+    { actionType: 104, text: "Limit Utilization", key: 4 },
   ],
 });
 server.get("/api/post_transition_options", {

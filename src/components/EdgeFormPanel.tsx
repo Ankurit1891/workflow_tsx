@@ -30,18 +30,34 @@ const EdgeFormPanel = (props: any) => {
   });
   const theme = useTheme();
   const [preTransitionActionType, setPreTransitionActionType] = useState({
-    actionType: "",
+    actionType: 0,
     input: "",
   });
   const [postTransitionActionType, setPostTransitionActionType] = useState({
-    actionType: "",
+    actionType: 0,
     input: "",
   });
   const [conditionalNextStateType, setConditionalNextStateType] = useState({
-    actionType: "",
+    actionType: 0,
     input: "",
   });
-  const [showFirst, setshowFirst] = useState(true);
+
+  const [preTransitionActionTypeData, setPreTransitionActionTypeData] =
+    useState({
+      actionType: 0,
+      input: "",
+    });
+  const [postTransitionActionTypeData, setPostTransitionActionTypeData] =
+    useState({
+      actionType: 0,
+      input: 0,
+    });
+  const [conditionalNextStateTypeData, setConditionalNextStateTypeData] =
+    useState({
+      actionType: "",
+      input: "",
+    });
+
   const [active, setActive] = useState(0);
   const {
     register,
@@ -57,6 +73,7 @@ const EdgeFormPanel = (props: any) => {
     setOnChangeSystemEventCode(option.text);
   };
   const onChangePreTransitionHandler = (e: any, option: any) => {
+    console.log("pre - ", option.key);
     setPreTransitionActionType((prev) => ({
       actionType: option.key,
       input: option.text,
@@ -76,6 +93,13 @@ const EdgeFormPanel = (props: any) => {
     }));
   };
 
+  const onChangePreTransitionActionTypeData = (e: any, option: any) => {
+    console.log(`onChangePreTransitionActionTypeData`, option.text);
+    setPreTransitionActionTypeData((prev) => ({
+      actionType: option.key,
+      input: option.text,
+    }));
+  };
   useEffect(() => {
     fetch("/api/event_code")
       .then((res) => res.json())
@@ -177,7 +201,7 @@ const EdgeFormPanel = (props: any) => {
                 {systemCodeData.map((data: any): any => {
                   if (data) {
                     return (
-                      <AbSelectOption key={data.key}>
+                      <AbSelectOption key={data.actionType}>
                         {data.text}
                       </AbSelectOption>
                     );
@@ -207,7 +231,7 @@ const EdgeFormPanel = (props: any) => {
                 {primaryDropDown.preTransitionOptions.map((data: any): any => {
                   if (data) {
                     return (
-                      <AbSelectOption key={data.key}>
+                      <AbSelectOption key={data.actionType}>
                         {data.text}
                       </AbSelectOption>
                     );
@@ -218,19 +242,20 @@ const EdgeFormPanel = (props: any) => {
               <AbSelect
                 label="Pre-Transition Action"
                 onBlur={function noRefCheck() {}}
-                onChange={function noRefCheck() {}}
+                onChange={onChangePreTransitionActionTypeData}
                 placeholder="Select one option"
                 style={widthStyle}
               >
-                {/* {systemCodeData.map((data: any): any => {
-                if (data) {
-                  console.log(data.text);
-                  <AbSelectOption key={dat a.key}>{data.text}</AbSelectOption>;
-                }
-              })} */}
-                <AbSelectOption key={1}>Option1</AbSelectOption>;
-                <AbSelectOption key={2}>Option2</AbSelectOption>;
-                <AbSelectOption key={3}>Option3</AbSelectOption>;
+                {systemCodeData.map((data: any): any => {
+                  if (data) {
+                    console.log("Pre-Transition Action", data.text);
+                    return (
+                      <AbSelectOption key={data.actionType}>
+                        {data.text}
+                      </AbSelectOption>
+                    );
+                  }
+                })}
               </AbSelect>
               <AbStack style={widthStyleLabel}>
                 <AbInput
@@ -272,7 +297,7 @@ const EdgeFormPanel = (props: any) => {
                 {primaryDropDown.postTransitionOptions.map((data: any): any => {
                   if (data) {
                     return (
-                      <AbSelectOption key={data.key}>
+                      <AbSelectOption key={data.actionType}>
                         {data.text}
                       </AbSelectOption>
                     );
@@ -290,7 +315,7 @@ const EdgeFormPanel = (props: any) => {
                 {/* {systemCodeData.map((data: any): any => {
                 if (data) {
                   console.log(data.text);
-                  <AbSelectOption key={dat a.key}>{data.text}</AbSelectOption>;
+                  <AbSelectOption key={dat a.actionType}>{data.text}</AbSelectOption>;
                 }
               })} */}
                 <AbSelectOption key={1}>Option1</AbSelectOption>;
@@ -337,7 +362,7 @@ const EdgeFormPanel = (props: any) => {
                 {primaryDropDown.conditionalNextState.map((data: any): any => {
                   if (data) {
                     return (
-                      <AbSelectOption key={data.key}>
+                      <AbSelectOption key={data.actionType}>
                         {data.text}
                       </AbSelectOption>
                     );
