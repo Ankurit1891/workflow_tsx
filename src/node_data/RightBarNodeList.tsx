@@ -4,7 +4,7 @@ import { GoCircleSlash } from "react-icons/go";
 
 const nodeStyle = {
   background: "transparent",
-  color: "#000000",
+  color: "#DA5454",
   width: 100,
   height: 50,
   padding: "7px",
