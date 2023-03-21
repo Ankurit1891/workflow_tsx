@@ -21,6 +21,8 @@ import {
 
 const EdgeFormPanel = (props: any) => {
   const [transitionName, setTransitionName] = useState<any>("");
+  const [preTransitionData, setPreTransitionData] = useState<any>("");
+
   const [systemCodeData, setSystemCodeData] = useState<any>([]);
   const [onChangeSystemEventCode, setOnChangeSystemEventCode] = useState();
   const [primaryDropDown, setPrimaryDropDown] = useState({
@@ -154,7 +156,9 @@ const EdgeFormPanel = (props: any) => {
     primaryDropDown,
     preTransitionActionType,
     postTransitionActionType,
-    conditionalNextStateType
+    conditionalNextStateType,
+    preTransitionActionTypeData,
+    preTransitionData
   );
   return (
     <ThemeProvider theme={AbDarkTheme}>
@@ -251,7 +255,7 @@ const EdgeFormPanel = (props: any) => {
                     console.log("Pre-Transition Action", data.text);
                     return (
                       <AbSelectOption key={data.actionType}>
-                        {data.text}
+                        {`Pre-Transition Action - ${data.text}`}
                       </AbSelectOption>
                     );
                   }
@@ -261,7 +265,10 @@ const EdgeFormPanel = (props: any) => {
                 <AbInput
                   required={true}
                   label="Pre-Transition Data"
-                  onChange={function noRefCheck() {}}
+                  onChange={(e, newValue: any): any => {
+                    console.log(newValue);
+                    setPreTransitionData(newValue);
+                  }}
                   type={AbInputTypes.Text}
                 />
               </AbStack>
