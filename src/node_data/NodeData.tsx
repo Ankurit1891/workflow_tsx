@@ -8,6 +8,9 @@ const initialNodes = [
     type: "input",
     description: "initial state",
     color: "white",
+    style: {
+      padding: "3px",
+    },
     data: {
       label: (
         <div
@@ -16,7 +19,7 @@ const initialNodes = [
             flexDirection: "column",
             height: "wrap",
             width: "wrap",
-            maxWidth: "170px",
+            maxWidth: "150px",
             border: "1px solid white",
             backgroundColor: "#656ac6",
             borderRadius: "5px",

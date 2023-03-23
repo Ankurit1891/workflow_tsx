@@ -125,6 +125,12 @@ const FlowChart = (props: any) => {
       keyId: String(keyId),
       animated: false,
       color: color,
+      style: {
+        backgroundColor: "transparent",
+        borderColor: "transparent",
+        padding: "5px",
+        width: "fit-content",
+      },
       data: {
         label: (
           <div>
@@ -185,12 +191,13 @@ const FlowChart = (props: any) => {
         id: `e${source}->${target}`,
         source: source,
         target: target,
-        strokeWidth: 3,
+        strokeWidth: 2,
+        data: "",
         type: "smoothstep",
         className: "smoothstep",
         animated: false,
         orient: "auto",
-        labelBgStyle: { fill: "grey" },
+        labelBgStyle: { fill: "#5c59599e" },
         labelStyle: {
           fill: "white",
           fontWeight: "400",
@@ -238,11 +245,11 @@ const FlowChart = (props: any) => {
 
   //function on making the mouse entering the edge
 
-  const onEndeMouseEnter = (event: any, edge: any) => {};
+  const onEdgeMouseEnter = (event: any, edge: any) => {};
 
   //function on making the mouse leaving the edge
 
-  const onEndeMouseLeave = (event: any, edge: any) => {};
+  const onEdgeMouseLeave = (event: any, edge: any) => {};
 
   // on node right click
 
@@ -354,6 +361,7 @@ const FlowChart = (props: any) => {
 
   const onAlterEdge = (text: any, desc: any, id: any) => {
     selectedEdge.label = text;
+    selectedEdge.data = desc;
     let newEdges = [];
     edges.forEach((edge: any, index: any) => {
       if (edge.id !== id) {
@@ -379,7 +387,7 @@ const FlowChart = (props: any) => {
         width: "100%",
         padding: "5px",
         height: "100%",
-        backgroundColor: props.theme ? "#e1dcdc" : "#262627",
+        backgroundColor: props.theme ? "#e1dcdc" : "#121212",
         borderRadius: "7px",
         border: props.theme ? "1px solid black" : "1px solid grey",
       }}
@@ -405,6 +413,8 @@ const FlowChart = (props: any) => {
       > */}
       {openEdgeFormModal && (
         <EdgeFormPanel
+          alterEdge={onAlterEdge}
+          edge={selectedEdge}
           isOpen={isOpen}
           dismissHandler={closePanel}
           theme={props.theme}
@@ -437,15 +447,15 @@ const FlowChart = (props: any) => {
         onNodeClick={onNodeLeftClick}
         onNodeContextMenu={onNodeRightClick}
         onEdgeContextMenu={onEdgeRightClick}
-        onEdgeMouseEnter={onEndeMouseEnter}
-        onEdgeMouseLeave={onEndeMouseLeave}
+        onEdgeMouseEnter={onEdgeMouseEnter}
+        onEdgeMouseLeave={onEdgeMouseLeave}
         onContextMenu={onCanvasRightClick}
         fitView
       >
         <Background
           variant={BackgroundVariant.Dots}
           gap={10}
-          size={0.3}
+          size={0.4}
           color={props.theme ? "black" : "white"}
         />
         <MiniMap nodeColor={nodeColor} />
@@ -461,10 +471,13 @@ const FlowChart = (props: any) => {
             style={{ width: "wrap-content", padding: "5px" }}
             onClick={() => {
               edges.map((e: any) => {
-                return console.log(e);
+                return console.log(
+                  `ID: ${e.id}, SOURCE: ${e.source}, TARGET:${e.target}, DATA:`,
+                  e.data
+                );
               });
               nodes.map((e) => {
-                return console.log(e);
+                return console.log(`ID: ${e.id}, ${e.name}`);
               });
             }}
           >
