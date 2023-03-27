@@ -11,6 +11,7 @@ const initialNodes = [
     style: {
       padding: "3px",
       backgroundColor: "transparent",
+      border: "1px transparent",
     },
     data: {
       label: (

@@ -123,6 +123,7 @@ const FlowChart = (props: any) => {
         borderColor: "transparent",
         padding: "5px",
         width: "fit-content",
+        border: "1px solid transparent",
       },
       data: {
         label: (
@@ -184,7 +185,7 @@ const FlowChart = (props: any) => {
         id: `e${source}->${target}`,
         source: source,
         target: target,
-        strokeWidth: 2,
+        strokeWidth: 1,
         data: "",
         type: "smoothstep",
         className: "smoothstep",
@@ -272,9 +273,10 @@ const FlowChart = (props: any) => {
       x: e.clientY - 30,
       y: e.clientX - 70,
     });
-    setOpenDialog((e) => {
-      return !e;
-    });
+    setOpenDialog(true);
+    // setOpenDialog((e) => {
+    //   return !e;
+    // });
   };
 
   const onAlterNode = (text: any, desc: any) => {
