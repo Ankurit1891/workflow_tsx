@@ -1,6 +1,4 @@
 import { useCallback, useState } from "react";
-// import { motion } from "framer-motion";
-// import { Panel } from "@fluentui/react/lib/Panel";
 import "reactflow/dist/style.css";
 import { BsSave2 } from "react-icons/bs";
 import { BsFillPrinterFill } from "react-icons/bs";
@@ -19,14 +17,11 @@ import { nodeStyle } from "../node_data/RightBarNodeList";
 import { initialEdges, initialNodes } from "../node_data/NodeData";
 import CustomNode from "./CustomNode";
 import { useDrop } from "react-dnd";
-// import { useDrop } from "react-dnd";
-// import EdgeModalForm from "./EdgeModalForm";
-// import html2canvas from "html2canvas";
 import OptionDialog from "./OptionDialog";
 import NodeFormModal from "./NodeFormModal";
-// import AlterNode from "./AlterNode";
 import EdgeFormPanel from "./EdgeFormPanel";
 import { useBoolean } from "@fluentui/react-hooks";
+import { JsonInput } from "@mantine/core";
 
 const FlowChart = (props: any) => {
   const [isOpen, { setTrue: openPanel, setFalse: closePanel }] =
@@ -36,7 +31,6 @@ const FlowChart = (props: any) => {
     icon: {},
     type: "",
   });
-  // const [editNodeForm, seteditNodeForm] = useState(false);
   const [nodeName, setnodeName] = useState("");
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [selectedEdge, setSelectedEdge] = useState<any>({});
@@ -458,7 +452,7 @@ const FlowChart = (props: any) => {
           size={0.4}
           color={props.theme ? "black" : "white"}
         />
-        <MiniMap nodeColor={nodeColor} />
+        <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
         <Controls
           position="top-right"
           style={{
@@ -470,15 +464,31 @@ const FlowChart = (props: any) => {
           <ControlButton
             style={{ width: "wrap-content", padding: "5px" }}
             onClick={() => {
-              edges.map((e: any) => {
-                return console.log(
-                  `ID: ${e.id}, SOURCE: ${e.source}, TARGET:${e.target}, DATA:`,
-                  e.data
-                );
+              let jsonObj: any = {
+                id: "SingleApprovalHardDeleteWorkflow",
+                States: [],
+              };
+
+              nodes.map((n) => {
+                let transition: any = [];
+                let stateObj: any = {
+                  name: n.name,
+                  Transitions: [],
+                };
+                edges.map((e: any) => {
+                  if (n.id === e.source) {
+                    transition.push(e.data);
+                  }
+                });
+                stateObj.Transitions = transition;
+                transition = [];
+                jsonObj.States.push(stateObj);
+                stateObj = {
+                  name: "",
+                  Transitions: [],
+                };
               });
-              nodes.map((e) => {
-                return console.log(`ID: ${e.id}, ${e.name}`);
-              });
+              console.log(JSON.stringify(jsonObj));
             }}
           >
             <BsFillPrinterFill />

@@ -7,7 +7,7 @@ const initialNodes = [
     name: "start",
     type: "input",
     description: "initial state",
-    color: "white",
+    color: "#656AC69F",
     style: {
       padding: "3px",
       backgroundColor: "transparent",

@@ -223,7 +223,6 @@ const EdgeFormPanel = (props: any) => {
   return (
     <ThemeProvider theme={AbDarkTheme}>
       <AbPanel
-        // dismissable={true}
         lightDismiss={true}
         isOpen={props.isOpen}
         placement={"right"}
@@ -511,7 +510,7 @@ const EdgeFormPanel = (props: any) => {
 
                       PostTransitionAction: {
                         PostTransitionType: postTransitionActionType,
-                        PreTransitionAction: postTransitionActionTypeData,
+                        PostTransitionAction: postTransitionActionTypeData,
                         PostTransitionData: postTransitionData,
                       },
 
@@ -526,7 +525,9 @@ const EdgeFormPanel = (props: any) => {
                       },
                     };
                     console.log(edgeObj);
+
                     props.alterEdge(transitionName, edgeObj, props.edge.id);
+                    props.setEdgeOpenFormModal(false);
                   }}
                   variant="Primary"
                 >
