@@ -21,7 +21,6 @@ import OptionDialog from "./OptionDialog";
 import NodeFormModal from "./NodeFormModal";
 import EdgeFormPanel from "./EdgeFormPanel";
 import { useBoolean } from "@fluentui/react-hooks";
-import { JsonInput } from "@mantine/core";
 
 const FlowChart = (props: any) => {
   const [isOpen, { setTrue: openPanel, setFalse: closePanel }] =
@@ -190,7 +189,7 @@ const FlowChart = (props: any) => {
         type: "smoothstep",
         className: "smoothstep",
         animated: false,
-        orient: "auto",
+        // orient: "auto",
         labelBgStyle: { fill: "#5c59599e" },
         labelStyle: {
           fill: "white",
@@ -415,7 +414,7 @@ const FlowChart = (props: any) => {
           setEdgeOpenFormModal={setEdgeOpenFormModal}
         />
       )}
-      {/* </motion.div> */}
+
       {/* {//Opening the form modal for nodes on right click} */}
       {openModal && (
         <NodeFormModal
