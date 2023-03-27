@@ -166,7 +166,6 @@ const EdgeFormPanel = (props: any) => {
     }));
   };
   const onChangeConditionalNextStateData = (e: any, option: any) => {
-    console.log(option);
     setConditionalNextStateTypeData((prev) => ({
       actionType: option.key,
       input: option.text,
@@ -524,7 +523,7 @@ const EdgeFormPanel = (props: any) => {
                         NextState: conditionNextStateData,
                       },
                     };
-                    console.log(edgeObj);
+                    // console.log(edgeObj);
 
                     props.alterEdge(transitionName, edgeObj, props.edge.id);
                     props.setEdgeOpenFormModal(false);

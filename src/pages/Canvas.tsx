@@ -30,7 +30,6 @@ const Canvas = (props: any) => {
     margin: any,
     key: any
   ) => {
-    console.log("this is canvas", x, y, height, backgroundColor, margin, key);
     setxx(x);
     setyy(y);
     setheight(height);
@@ -41,7 +40,6 @@ const Canvas = (props: any) => {
 
   const _onChange = (ev: any) => {
     setIsDarkTheme((prev) => {
-      console.log(prev);
       return !prev;
     });
   };

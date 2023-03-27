@@ -24,7 +24,6 @@ const NodeFormModal = ({
   const nodeFormAcceptHandler = (data: any) => {
     setOpenModal(false);
     alterNode(stateName, description);
-    console.log(data);
   };
 
   if (name === "input") {
