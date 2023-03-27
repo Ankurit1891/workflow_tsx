@@ -25,7 +25,7 @@ const nodeList = [
     nodeIcon: <VscDebugStart />,
     nodeHeight: "100px",
     nodeWidth: "fit-content",
-    nodeBackgroundColor: "#656ac6",
+    nodeBackgroundColor: "#656AC69F",
     nodeBorderRadius: "10px",
     nodeMargin: "10px",
     nodePadding: "20px",

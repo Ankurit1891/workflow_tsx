@@ -8,7 +8,7 @@ import "./OptionDialog.css";
 const OptionDialog = (props: any) => {
   const onAddStartHandler = () => {
     props.setOpenDialog((val: any) => !val);
-    props.assignNodeValues("#656ac6", <VscDebugStart />, "input", "Start");
+    props.assignNodeValues("#656AC69F", <VscDebugStart />, "input", "Start");
   };
 
   const onAddDefaultHandler = () => {

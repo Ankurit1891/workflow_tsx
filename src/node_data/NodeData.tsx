@@ -10,6 +10,7 @@ const initialNodes = [
     color: "white",
     style: {
       padding: "3px",
+      backgroundColor: "transparent",
     },
     data: {
       label: (
@@ -21,9 +22,9 @@ const initialNodes = [
             width: "wrap",
             maxWidth: "150px",
             border: "1px solid white",
-            backgroundColor: "#656ac6",
+            backgroundColor: "#656AC69F",
             borderRadius: "5px",
-            margin: "-5px",
+            margin: "0px",
             padding: "10px",
             paddingBottom: "7px",
           }}

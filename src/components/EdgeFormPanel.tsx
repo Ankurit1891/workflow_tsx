@@ -223,6 +223,8 @@ const EdgeFormPanel = (props: any) => {
   return (
     <ThemeProvider theme={AbDarkTheme}>
       <AbPanel
+        // dismissable={true}
+        lightDismiss={true}
         isOpen={props.isOpen}
         placement={"right"}
         onDismiss={dismiss}
