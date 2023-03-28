@@ -1,33 +1,7 @@
-.main-box {
-  position: absolute;
-  z-index: 200;
-  border-radius: 2px;
-  list-style: none;
-  width: 200px;
-  box-shadow: 1px 1px 4px -1px #252424;
-  height: fit-content;
-}
 .list-class {
   list-style: none;
 }
 
-.list-title {
-  padding-left: 30px;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  color: #252424e6;
-  font-size: 14px;
-  cursor: pointer;
-  margin-bottom: 1px;
-}
 .list-title :hover {
   background-color: #151412;
-}
-
-hr {
-  color: rgb(169, 171, 173);
-  opacity: 0.25;
-  margin: 0px;
-  border: 0;
-  border-top: var(--bs-border-width) solid;
 }
