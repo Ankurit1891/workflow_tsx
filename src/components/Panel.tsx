@@ -208,7 +208,6 @@ const Panel = (props: any) => {
   };
 
   const onSubmit = (data: any) => {
-    console.log(data);
     const edgeObj = {
       TransitionName: data.Transition_Name,
       SystemEventCode: onChangeSystemEventCode,
@@ -429,7 +428,6 @@ const Panel = (props: any) => {
                 >
                   {postTransitionActionDropDownList.map((data: any): any => {
                     if (data) {
-                      console.log(data);
                       return (
                         <AbSelectOption
                           key={`Post-Transition Action ${data.key}`}

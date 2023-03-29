@@ -522,7 +522,6 @@ const EdgeFormPanel = (props: any) => {
                         NextState: conditionNextStateData,
                       },
                     };
-                    // console.log(edgeObj);
 
                     props.alterEdge(transitionName, edgeObj, props.edge.id);
                     props.setEdgeOpenFormModal(false);

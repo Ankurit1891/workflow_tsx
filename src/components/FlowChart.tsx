@@ -57,7 +57,6 @@ const FlowChart = (props: any) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "div",
     drop: (item: any, monitor: any) => {
-      console.log("isOver");
       setNodeObject({
         xCords: nodes.length > 0 ? nodes[nodes.length - 1].position.x : 500,
         yCords: nodes.length > 0 ? nodes[nodes.length - 1].position.y : 150,
@@ -218,11 +217,10 @@ const FlowChart = (props: any) => {
 
   const onNodeLeftClick = (event: any, node: any) => {
     props.updatedNodes(nodes);
-    console.log(node);
+    console.log(`Node ID:${node.id} - Node Name:${node.name}`);
     setOpenDialog(false);
     if (node && node.getOutgoingEdges) {
       const outgoers = node.getOutgoingEdges();
-      console.log("Outgoing edges:", outgoers);
     }
   };
 

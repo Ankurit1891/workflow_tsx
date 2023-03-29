@@ -154,7 +154,7 @@ import { AiOutlineDoubleLeft } from "react-icons/ai";
 
 const RightBar = (props: any) => {
   const [openBar, setOpenBar] = useState(true);
-  const [isOpen, setisOpen] = useState(<AiOutlineDoubleRight />);
+  const [isOpen, setIsOpen] = useState(<AiOutlineDoubleRight />);
   const [selectedNode, setSelectedNode] = useState(null);
   let open = true;
 
@@ -173,7 +173,7 @@ const RightBar = (props: any) => {
         });
       }
       setOpenBar(open);
-      setisOpen((prev) => {
+      setIsOpen((prev) => {
         return open === true ? (
           <AiOutlineDoubleRight />
         ) : (
