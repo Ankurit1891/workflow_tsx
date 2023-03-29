@@ -399,12 +399,6 @@ const FlowChart = (props: any) => {
 
       {/* //Opening the form modal for edges */}
 
-      {/* <motion.div
-        initial={{ opacity: 0.5 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.05 }}
-      > */}
       {openEdgeFormModal && (
         // <EdgeFormPanel
         //   alterEdge={onAlterEdge}
