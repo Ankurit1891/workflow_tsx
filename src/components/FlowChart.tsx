@@ -121,7 +121,7 @@ const FlowChart = (props: any) => {
       style: {
         backgroundColor: "transparent",
         borderColor: "transparent",
-        padding: "5px",
+        padding: "8px",
         width: "fit-content",
         border: "1px solid transparent",
       },
@@ -436,7 +436,7 @@ const FlowChart = (props: any) => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        snapToGrid={true}
+        snapToGrid={false}
         onClick={() => {
           setOpenDialog(false);
         }}

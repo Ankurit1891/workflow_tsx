@@ -12,6 +12,7 @@ const initialNodes = [
       padding: "3px",
       backgroundColor: "transparent",
       border: "1px transparent",
+      width: "145px",
     },
     data: {
       label: (
@@ -19,9 +20,10 @@ const initialNodes = [
           style={{
             display: "flex",
             flexDirection: "column",
-            height: "wrap",
+            height: "55px",
             width: "wrap",
-            maxWidth: "150px",
+            minWidth: "138px",
+            maxWidth: "138px",
             border: "1px solid white",
             backgroundColor: "#656AC69F",
             borderRadius: "5px",
@@ -60,7 +62,7 @@ const initialNodes = [
         </div>
       ),
     },
-    position: { x: 500, y: 150 },
+    position: { x: 400, y: 150 },
   },
 ];
 const initialEdges: any = [];
