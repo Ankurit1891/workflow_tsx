@@ -83,14 +83,9 @@ const Panel = (props: any) => {
     setPostTransitionActionDropDownList,
   ]: any = useState([]);
   const [order, setOrder]: any = useState([]);
+  const [condition, setCondition]: any = useState([]);
   const [active, setActive] = useState(0);
-  const {
-    register,
-    handleSubmit,
-    watch,
-    control,
-    formState: {},
-  } = useForm<any>({
+  const { handleSubmit, control } = useForm<any>({
     mode: "all",
   });
 
@@ -124,13 +119,12 @@ const Panel = (props: any) => {
     }));
   };
   const onChangeConditionalNextState = (e: any, option: any) => {
-    // let key = option.key;
-    // const url = `/api/pre_transcition_action/${key}`;
-    // fetch(url)
-    //   .then((res) => res.json())
-    //   .then((json) => {
-    //     setPreTransitionActionDropDownList(json.data);
-    //   });
+    const url = `/api/conditional_next_state/condition`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((json) => {
+        setCondition(json.data);
+      });
     setConditionalNextStateType((prev) => ({
       actionType: option.key,
       input: option.text,
@@ -141,10 +135,6 @@ const Panel = (props: any) => {
       .then((json) => {
         setOrder(json.data);
       });
-    // setConditionalNextStateType((prev) => ({
-    //   actionType: option.key,
-    //   input: option.text,
-    // }));
   };
 
   const onChangePreTransitionActionTypeData = (e: any, option: any) => {
@@ -195,6 +185,7 @@ const Panel = (props: any) => {
         setPostTransitionDropDownList(json.data);
       });
   }, []);
+
   useEffect(() => {
     fetch("/api/conditional_next_state")
       .then((res) => res.json())
@@ -202,20 +193,23 @@ const Panel = (props: any) => {
         setConditionalNextStateDropDownList(json.data);
       });
   }, []);
+
   const dismiss = (): any => {
     props.setEdgeOpenFormModal(false);
     return props.dismissHandler;
   };
+
   const widthStyle = {
     width: 400,
   };
+
   const widthStyleLabel = {
     maxWidth: "400px",
   };
-  let edgeObj = {};
+
   const onSubmit = (data: any) => {
     console.log(data);
-    edgeObj = {
+    const edgeObj = {
       TransitionName: data.Transition_Name,
       SystemEventCode: onChangeSystemEventCode,
       PreTransitionAction: {
@@ -240,6 +234,7 @@ const Panel = (props: any) => {
     props.alterEdge(data.Transition_Name, edgeObj, props.edge.id);
     props.setEdgeOpenFormModal(false);
   };
+
   return (
     <ThemeProvider theme={AbDarkTheme}>
       <AbPanel
@@ -258,6 +253,7 @@ const Panel = (props: any) => {
         <AbPanelBody>
           <form onSubmit={handleSubmit(onSubmit)}>
             <AbStepper
+              key={1}
               size="small"
               showStepNumbers={false}
               activeIndex={active}
@@ -280,6 +276,7 @@ const Panel = (props: any) => {
                         message: "Enter minimum 5 characters ",
                       },
                     }}
+                    // value={transitionName}
                     required={true}
                     label="Transition Name"
                     type={AbInputTypes.Text}
@@ -288,8 +285,8 @@ const Panel = (props: any) => {
                 <AbSelect
                   label="System Event Code"
                   name={"System_Event_Code"}
-                  rules={{ required: "This field is required" }}
                   control={control}
+                  onBlur={function noRefCheck() {}}
                   onChange={onChangeSystemEventCodeHandler}
                   placeholder="Select one option"
                   style={widthStyle}
@@ -297,7 +294,7 @@ const Panel = (props: any) => {
                   {systemCodeData.map((data: any): any => {
                     if (data) {
                       return (
-                        <AbSelectOption key={data.text}>
+                        <AbSelectOption key={data.key}>
                           {data.text}
                         </AbSelectOption>
                       );
@@ -323,9 +320,6 @@ const Panel = (props: any) => {
                 <AbSelect
                   key={"PreTransitionActionType1"}
                   label="Pre-Transition Action Type"
-                  name={"Pre_Transition_Action_Type"}
-                  rules={{ required: "This field is required" }}
-                  control={control}
                   onBlur={function noRefCheck() {}}
                   onChange={onChangePreTransitionHandler}
                   placeholder="Select one option"
@@ -334,7 +328,7 @@ const Panel = (props: any) => {
                   {preTransitionDropDownList.map((data: any): any => {
                     if (data) {
                       return (
-                        <AbSelectOption key={data.text}>
+                        <AbSelectOption key={data.actionType}>
                           {data.text}
                         </AbSelectOption>
                       );
@@ -464,9 +458,6 @@ const Panel = (props: any) => {
                     key={"Post-Transition Data Input"}
                     required={true}
                     label="Post-Transition Data"
-                    // onChange={(e, newValue: any): any => {
-                    //   setPostTransitionData(newValue);
-                    // }}
                     type={AbInputTypes.Text}
                   />
                 </AbStack>
@@ -521,9 +512,15 @@ const Panel = (props: any) => {
                   placeholder="Select one option"
                   style={widthStyle}
                 >
-                  <AbSelectOption key={1}>Option1</AbSelectOption>;
-                  <AbSelectOption key={2}>Option2</AbSelectOption>;
-                  <AbSelectOption key={3}>Option3</AbSelectOption>;
+                  {condition.map((data: any): any => {
+                    if (data) {
+                      return (
+                        <AbSelectOption key={data.actionType}>
+                          {data.text}
+                        </AbSelectOption>
+                      );
+                    }
+                  })}
                 </AbSelect>
 
                 <AbSelect

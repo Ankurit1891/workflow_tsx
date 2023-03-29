@@ -116,3 +116,12 @@ server.get("/api/conditional_next_state/order", {
     { actionType: 104, text: "conditional Order 4", key: 4 },
   ],
 });
+
+server.get("/api/conditional_next_state/condition", {
+  data: [
+    { actionType: 101, text: "conditional 1", key: 1 },
+    { actionType: 102, text: "conditional 2", key: 2 },
+    { actionType: 103, text: "conditional 3", key: 3 },
+    { actionType: 104, text: "conditional 4", key: 4 },
+  ],
+});
