@@ -1,1 +1,1 @@
-use useEffect in the onChange methods
+apply form validation for panel

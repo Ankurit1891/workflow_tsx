@@ -21,6 +21,7 @@ import OptionDialog from "./OptionDialog";
 import NodeFormModal from "./NodeFormModal";
 import EdgeFormPanel from "./EdgeFormPanel";
 import { useBoolean } from "@fluentui/react-hooks";
+import Panel from "./Panel";
 
 const FlowChart = (props: any) => {
   const [isOpen, { setTrue: openPanel, setFalse: closePanel }] =
@@ -407,7 +408,15 @@ const FlowChart = (props: any) => {
         transition={{ duration: 0.05 }}
       > */}
       {openEdgeFormModal && (
-        <EdgeFormPanel
+        // <EdgeFormPanel
+        //   alterEdge={onAlterEdge}
+        //   edge={selectedEdge}
+        //   isOpen={isOpen}
+        //   dismissHandler={closePanel}
+        //   theme={props.theme}
+        //   setEdgeOpenFormModal={setEdgeOpenFormModal}
+        // />
+        <Panel
           alterEdge={onAlterEdge}
           edge={selectedEdge}
           isOpen={isOpen}

@@ -14,30 +14,30 @@ server.get("/api/event_code", {
 });
 server.get("/api/pre_transition_options", {
   data: [
-    { actionType: 101, text: "pre ApiCall", key: 1 },
-    { actionType: 102, text: "pre Alert", key: 2 },
-    { actionType: 103, text: "pre Hook", key: 3 },
-    { actionType: 104, text: "pre Limit Utilization", key: 4 },
+    { actionType: 101, text: "pre ApiCall", key: 11 },
+    { actionType: 102, text: "pre Alert", key: 12 },
+    { actionType: 103, text: "pre Hook", key: 13 },
+    { actionType: 104, text: "pre Limit Utilization", key: 14 },
   ],
 });
 server.get("/api/post_transition_options", {
   data: [
-    { actionType: 101, text: "post ApiCall", key: 1 },
-    { actionType: 102, text: "post Alert", key: 2 },
-    { actionType: 103, text: "post Hook", key: 3 },
-    { actionType: 104, text: "post Limit Uilization", key: 4 },
+    { actionType: 101, text: "post ApiCall", key: 21 },
+    { actionType: 102, text: "post Alert", key: 22 },
+    { actionType: 103, text: "post Hook", key: 23 },
+    { actionType: 104, text: "post Limit Utilization", key: 24 },
   ],
 });
 server.get("/api/conditional_next_state", {
   data: [
-    { actionType: 101, text: "conditional ApiCall", key: 1 },
-    { actionType: 102, text: "conditional Alert", key: 2 },
-    { actionType: 103, text: "conditional Hook", key: 3 },
-    { actionType: 104, text: "conditional Limit Uilization", key: 4 },
+    { actionType: 101, text: "conditional ApiCall", key: 31 },
+    { actionType: 102, text: "conditional Alert", key: 32 },
+    { actionType: 103, text: "conditional Hook", key: 33 },
+    { actionType: 104, text: "conditional Limit Utilization", key: 4 },
   ],
 });
 
-server.get("/api/pre_transcition_action/102", {
+server.get("/api/pre_transition_action/102", {
   data: [
     { key: 1, text: "PRE SEND Email 1" },
     { key: 2, text: "PRE SEND Email 2" },
@@ -46,7 +46,7 @@ server.get("/api/pre_transcition_action/102", {
   ],
 });
 
-server.get("/api/pre_transcition_action/103", {
+server.get("/api/pre_transition_action/103", {
   data: [
     { key: 1, text: "PRE HOOK 1" },
     { key: 2, text: "PRE HOOK 2" },
@@ -55,7 +55,7 @@ server.get("/api/pre_transcition_action/103", {
   ],
 });
 
-server.get("/api/pre_transcition_action/104", {
+server.get("/api/pre_transition_action/104", {
   data: [
     { key: 1, text: "PRE LIMIT UTILIZATION 1" },
     { key: 2, text: "PRE LIMIT UTILIZATION 2" },
@@ -64,7 +64,7 @@ server.get("/api/pre_transcition_action/104", {
   ],
 });
 
-server.get("/api/pre_transcition_action/101", {
+server.get("/api/pre_transition_action/101", {
   data: [
     { key: 1, text: "PRE API Call 1" },
     { key: 2, text: "PRE API Call 2" },
@@ -73,7 +73,7 @@ server.get("/api/pre_transcition_action/101", {
   ],
 });
 
-server.get("/api/post_transcition_action/102", {
+server.get("/api/post_transition_action/102", {
   data: [
     { key: 1, text: "POST SEND Email 1" },
     { key: 2, text: "POST SEND Email 2" },
@@ -82,7 +82,7 @@ server.get("/api/post_transcition_action/102", {
   ],
 });
 
-server.get("/api/post_transcition_action/103", {
+server.get("/api/post_transition_action/103", {
   data: [
     { key: 1, text: "POST HOOK 1" },
     { key: 2, text: "POST HOOK 2" },
@@ -91,7 +91,7 @@ server.get("/api/post_transcition_action/103", {
   ],
 });
 
-server.get("/api/post_transcition_action/104", {
+server.get("/api/post_transition_action/104", {
   data: [
     { key: 1, text: "POST LIMIT UTILIZATION 1" },
     { key: 2, text: "POST LIMIT UTILIZATION 2" },
@@ -100,7 +100,7 @@ server.get("/api/post_transcition_action/104", {
   ],
 });
 
-server.get("/api/post_transcition_action/101", {
+server.get("/api/post_transition_action/101", {
   data: [
     { key: 1, text: "POST API Call 1" },
     { key: 2, text: "POST API Call 2" },

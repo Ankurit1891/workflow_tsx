@@ -2,7 +2,6 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React, { useState, useEffect } from "react";
 import { ThemeProvider, useTheme } from "@fluentui/react";
-// import event_code from "../api_data/event_code";
 import { useForm } from "react-hook-form";
 
 import {
@@ -105,7 +104,7 @@ const EdgeFormPanel = (props: any) => {
   };
   const onChangePreTransitionHandler = (e: any, option: any) => {
     let key = option.key;
-    const url = `/api/pre_transcition_action/${key}`;
+    const url = `/api/pre_transition_action/${key}`;
     fetch(url)
       .then((res) => res.json())
       .then((json) => {
@@ -118,7 +117,7 @@ const EdgeFormPanel = (props: any) => {
   };
   const onChangePostTransitionHandler = (e: any, option: any) => {
     let key = option.key;
-    const url = `/api/post_transcition_action/${key}`;
+    const url = `/api/post_transition_action/${key}`;
     fetch(url)
       .then((res) => res.json())
       .then((json) => {
