@@ -134,3 +134,7 @@ path.react-flow__edge-path {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.theme-button:hover{
+  cursor: pointer;
+}

@@ -75,7 +75,7 @@ const Canvas = (props: any) => {
               }}
             >
               <h1  className="gradient-text" style={{fontSize:'30px'}}>Work Flow</h1>
-              <div style={{marginRight:'20px' ,border:!isDarkTheme?'1px solid white':'1px solid black', borderRadius:'30px',padding:'4px 14px 0px'}} onClick={_onChange}>{isDarkTheme?<MdDarkMode color="#474646" size={"20px"}/>:<MdLightMode color="grey" size={"20px"}/>}</div>
+              <div className="theme-button" style={{marginRight:'20px' ,border:!isDarkTheme?'1px solid white':'1px solid black', borderRadius:'30px',padding:'4px 14px 0px'}} onClick={_onChange}>{isDarkTheme?<MdDarkMode color="#474646" size={"20px"}/>:<MdLightMode color="grey" size={"20px"}/>}</div>
             </div>
             <FlowChart
               updatedNodes={updatedNodes}
