@@ -129,8 +129,8 @@ path.react-flow__edge-path {
   align-items: stretch;
 }
 
-.react-flow__node {
-  /* padding: 10px; */
-  /* background-color: #000000; */
-  /* background-color: transparent; */
+.gradient-text {
+  background: linear-gradient(to left,#6ac8c5, #588dbb, #424695, #0e0797);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
