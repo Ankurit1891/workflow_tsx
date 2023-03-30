@@ -127,7 +127,7 @@ const FlowChart = (props: any) => {
       },
       data: {
         label: (
-          <div>
+          <>
             <CustomNode
               NodeIcon={icon}
               NodeDescription={description}
@@ -137,7 +137,7 @@ const FlowChart = (props: any) => {
               NodeName={name}
               parent={"flowchart"}
             ></CustomNode>
-          </div>
+          </>
         ),
         style: { nodeStyle },
       },

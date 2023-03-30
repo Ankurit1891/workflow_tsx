@@ -177,6 +177,7 @@ const EdgeFormPanel = (props: any) => {
       input: option.text,
     }));
   };
+  
   useEffect(() => {
     fetch("/api/event_code")
       .then((res) => res.json())
@@ -200,6 +201,7 @@ const EdgeFormPanel = (props: any) => {
         setPostTransitionDropDownList(json.data);
       });
   }, []);
+
   useEffect(() => {
     fetch("/api/conditional_next_state")
       .then((res) => res.json())
@@ -207,6 +209,7 @@ const EdgeFormPanel = (props: any) => {
         setConditionalNextStateDropDownList(json.data);
       });
   }, []);
+
   const dismiss = (): any => {
     props.setEdgeOpenFormModal(false);
     return props.dismissHandler;
@@ -500,6 +503,7 @@ const EdgeFormPanel = (props: any) => {
                     const edgeObj = {
                       TransitionName: transitionName,
                       SystemEventCode: onChangeSystemEventCode,
+
                       PreTransitionAction: {
                         PreTransitionType: preTransitionActionType,
                         PreTransitionAction: preTransitionActionTypeData,
@@ -514,15 +518,11 @@ const EdgeFormPanel = (props: any) => {
 
                       ConditionalNextStates: {
                         ConditionType: conditionalNextStateType,
-
                         Condition: conditionalNextStateTypeData,
-
                         Order: conditionalOrder,
-
                         NextState: conditionNextStateData,
                       },
                     };
-
                     props.alterEdge(transitionName, edgeObj, props.edge.id);
                     props.setEdgeOpenFormModal(false);
                   }}
