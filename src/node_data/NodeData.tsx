@@ -15,6 +15,7 @@ const initialNodes = [
       width: "145px",
     },
     data: {
+      isSelectable: false,
       label: (
         <div
           style={{

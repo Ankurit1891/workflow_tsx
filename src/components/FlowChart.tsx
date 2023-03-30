@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import "reactflow/dist/style.css";
 import { BsSave2 } from "react-icons/bs";
 import { BsFillPrinterFill } from "react-icons/bs";
@@ -22,6 +22,7 @@ import NodeFormModal from "./NodeFormModal";
 import EdgeFormPanel from "./EdgeFormPanel";
 import { useBoolean } from "@fluentui/react-hooks";
 import Panel from "./Panel";
+import DialogBox from "./DialogBox";
 
 const FlowChart = (props: any) => {
   const [isOpen, { setTrue: openPanel, setFalse: closePanel }] =
@@ -31,6 +32,7 @@ const FlowChart = (props: any) => {
     icon: {},
     type: "",
   });
+  const [openDialogBox, setOpenDialogBox] = useState(false);
   const [nodeName, setnodeName] = useState("");
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [selectedEdge, setSelectedEdge] = useState<any>({});
@@ -126,6 +128,7 @@ const FlowChart = (props: any) => {
         border: "1px solid transparent",
       },
       data: {
+         isSelectable: true,
         label: (
           <>
             <CustomNode
@@ -171,11 +174,7 @@ const FlowChart = (props: any) => {
     [setNodes]
   );
 
-  const nodeTypes: any = {
-    default: {
-      className: "react-flow__node",
-    },
-  };
+
   // onconnect the edge (adding the edge)
 
   const onConnect = (params: any) => {
@@ -315,7 +314,11 @@ const FlowChart = (props: any) => {
     setNodes(newNodes);
     props.updatedNodes(nodes);
   };
-
+  const nodeEditDialog=(event: any, node: any)=>{
+    event.stopPropagation();
+    event.preventDefault();
+    setOpenDialogBox(true);
+  }
   // removes node and add a new one
   const onNodeRightClick = (event: any, node: any) => {
     setOpenDialog(false);
@@ -373,8 +376,17 @@ const FlowChart = (props: any) => {
     setOpenModal(true);
     props.updatedNodes(nodes);
   };
+  const reactFlowWrapper = useRef(null);
+
+  const onKeyDown = (event:any) => {
+    if (event.key === 'Backspace') {
+      console.log('first');
+      event.preventDefault();
+    }
+  };
   return (
     <div
+    onKeyDown={onKeyDown}
       ref={drop}
       style={{
         position: "relative",
@@ -396,7 +408,7 @@ const FlowChart = (props: any) => {
           setOpenDialog={setOpenDialog}
         ></OptionDialog>
       )}
-
+      {openDialogBox && <DialogBox setOpenDialogBox={setOpenDialogBox}></DialogBox>}
       {/* //Opening the form modal for edges */}
 
       {openEdgeFormModal && (
@@ -430,6 +442,7 @@ const FlowChart = (props: any) => {
         />
       )}
       <ReactFlow
+      ref={reactFlowWrapper}
         // nodeTypes={nodeTypes}
         nodes={nodes}
         edges={edges}
@@ -441,7 +454,7 @@ const FlowChart = (props: any) => {
           setOpenDialog(false);
         }}
         onNodeClick={onNodeLeftClick}
-        onNodeContextMenu={onNodeRightClick}
+        onNodeContextMenu={nodeEditDialog}
         onEdgeContextMenu={onEdgeRightClick}
         onEdgeMouseEnter={onEdgeMouseEnter}
         onEdgeMouseLeave={onEdgeMouseLeave}
