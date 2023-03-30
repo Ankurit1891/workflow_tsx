@@ -128,7 +128,7 @@ const FlowChart = (props: any) => {
         border: "1px solid transparent",
       },
       data: {
-         isSelectable: true,
+        isSelectable: true,
         label: (
           <>
             <CustomNode
@@ -173,7 +173,6 @@ const FlowChart = (props: any) => {
     (changes: any) => setNodes((nds): any => applyNodeChanges(changes, nds)),
     [setNodes]
   );
-
 
   // onconnect the edge (adding the edge)
 
@@ -314,31 +313,35 @@ const FlowChart = (props: any) => {
     setNodes(newNodes);
     props.updatedNodes(nodes);
   };
-  const nodeEditDialog=(event: any, node: any)=>{
+  const nodeEditDialog = (event: any, node: any) => {
+    setSelectedNode(node);
+    setOpenDialogBox(true);
     event.stopPropagation();
     event.preventDefault();
-    setOpenDialogBox(true);
-  }
+    // editNode(event, node);
+  };
   // removes node and add a new one
   const onNodeRightClick = (event: any, node: any) => {
-    setOpenDialog(false);
+    setOpenDialogBox(false);
+
     event.stopPropagation();
     event.preventDefault();
-    editNode(event, node);
+    // editNode(event, node);
+  };
+
+  const submitEditForm = (name: any, node: any) => {
+    editNode(name, node);
+    console.log(name,node);
   };
   //edit node
-  const editNode = (event: any, node: any) => {
+  const editNode = (name: any, node: any) => {
     if (node.id !== "0") {
       const nodeCp = node;
       const id = node.id;
-      let name = prompt("Name");
-      let desc = prompt("desc");
       if (name === "" || name === null) {
         name = node.name;
       }
-      if (desc === "") {
-        desc = node.description;
-      }
+      const desc = "";
       removeNode(node.id);
       onAddNode(
         nodeCp.keyId,
@@ -378,15 +381,15 @@ const FlowChart = (props: any) => {
   };
   const reactFlowWrapper = useRef(null);
 
-  const onKeyDown = (event:any) => {
-    if (event.key === 'Backspace') {
-      console.log('first');
+  const onKeyDown = (event: any) => {
+    if (event.key === "Backspace") {
+      console.log("first");
       event.preventDefault();
     }
   };
   return (
     <div
-    onKeyDown={onKeyDown}
+      onKeyDown={onKeyDown}
       ref={drop}
       style={{
         position: "relative",
@@ -408,7 +411,14 @@ const FlowChart = (props: any) => {
           setOpenDialog={setOpenDialog}
         ></OptionDialog>
       )}
-      {openDialogBox && <DialogBox setOpenDialogBox={setOpenDialogBox}></DialogBox>}
+      {openDialogBox && (
+        <DialogBox 
+        setOpenDialogBox={setOpenDialogBox}
+        submitEditForm={submitEditForm}
+        node={selectedNode}>
+          
+        </DialogBox>
+      )}
       {/* //Opening the form modal for edges */}
 
       {openEdgeFormModal && (
@@ -442,7 +452,7 @@ const FlowChart = (props: any) => {
         />
       )}
       <ReactFlow
-      ref={reactFlowWrapper}
+        ref={reactFlowWrapper}
         // nodeTypes={nodeTypes}
         nodes={nodes}
         edges={edges}
