@@ -20,8 +20,15 @@ const DialogBox = (props: any) => {
     props.submitEditForm(data.Node_name,props.node);
     dismissHandler();
   };
+  const dialogContentProps = {
+    title: 'Edit State Name',
+    closeButtonAriaLabel: 'Close',
+    subText: 'Enter the new state name of the selected state',
+  };
+  
   return (
-    <Dialog hidden={false} onDismiss={dismissHandler}>
+   
+    <Dialog hidden={false} onDismiss={dismissHandler} dialogContentProps={dialogContentProps} >
       <form onSubmit={handleSubmit(onSubmit)}>
         <AbInput
           name={"Node_name"}
@@ -38,7 +45,7 @@ const DialogBox = (props: any) => {
             },
           }}
           required={true}
-          label="Node Name"
+          label="State Name"
           type={AbInputTypes.Text}
         />
         <DialogFooter>
@@ -49,10 +56,11 @@ const DialogBox = (props: any) => {
           >
             Submit
           </AbButton>
-          <DefaultButton text="Cancel" onClick={dismissHandler} />
+          <DefaultButton text="Cancel"style={{ marginTop: "10px" }} onClick={dismissHandler} />
         </DialogFooter>
       </form>
     </Dialog>
+
   );
 };
 

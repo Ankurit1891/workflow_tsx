@@ -21,7 +21,7 @@ const OptionDialog = (props: any) => {
     left: props.yCords,
     backgroundColor: props.theme ? "#f3f2f1" : "#000000",
     position: "absolute",
-    zIndex: "200",
+    zIndex: "400",
     borderRadius: "2px",
     listStyle: "none",
     width: "200px",

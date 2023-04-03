@@ -313,17 +313,17 @@ const FlowChart = (props: any) => {
     setNodes(newNodes);
     props.updatedNodes(nodes);
   };
-  const nodeEditDialog = (event: any, node: any) => {
-    setSelectedNode(node);
-    setOpenDialogBox(true);
-    event.stopPropagation();
-    event.preventDefault();
-    // editNode(event, node);
-  };
+  // const nodeEditDialog = (event: any, node: any) => {
+  //   setSelectedNode(node);
+  //   setOpenDialogBox(true);
+  //   event.stopPropagation();
+  //   event.preventDefault();
+  //   // editNode(event, node);
+  // };
   // removes node and add a new one
   const onNodeRightClick = (event: any, node: any) => {
-    setOpenDialogBox(false);
-
+    setSelectedNode(node);
+    setOpenDialogBox(true);
     event.stopPropagation();
     event.preventDefault();
     // editNode(event, node);
@@ -464,7 +464,7 @@ const FlowChart = (props: any) => {
           setOpenDialog(false);
         }}
         onNodeClick={onNodeLeftClick}
-        onNodeContextMenu={nodeEditDialog}
+        onNodeContextMenu={onNodeRightClick}
         onEdgeContextMenu={onEdgeRightClick}
         onEdgeMouseEnter={onEdgeMouseEnter}
         onEdgeMouseLeave={onEdgeMouseLeave}

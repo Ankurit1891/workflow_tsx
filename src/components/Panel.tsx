@@ -30,7 +30,10 @@ const Panel = (props: any) => {
   const [systemCodeData, setSystemCodeData] = useState<any>([]);
 
   // system event code change handler
-  const [onChangeSystemEventCode, setOnChangeSystemEventCode] = useState();
+  const [onChangeSystemEventCode, setOnChangeSystemEventCode] = useState({
+    actionType: "",
+    input: "",
+  });
 
   // primary Drop Down List
   const [preTransitionDropDownList, setPreTransitionDropDownList]: any =
@@ -87,10 +90,21 @@ const Panel = (props: any) => {
   const [active, setActive] = useState(0);
   const { handleSubmit, control } = useForm<any>({
     mode: "all",
+    defaultValues:{
+      Transition_Name: props.edge.data.TransitionName,
+      Pre_Transition_Data:props.edge.data.PreTransitionAction?.PreTransitionData,
+      Post_Transition_Data:props.edge.data.PostTransitionAction?.PostTransitionData,
+      Conditional_Next_Step_Data:props.edge.data.ConditionalNextStates?.NextState,
+      // System_Event_Code:props.edge.data.SystemEventCode
+    }
   });
 
   const onChangeSystemEventCodeHandler = (e: any, option: any) => {
-    setOnChangeSystemEventCode(option.text);
+
+   return setOnChangeSystemEventCode((prev) => ({
+    actionType: option.key,
+    input: option.text,
+  }));
   };
   const onChangePreTransitionHandler = (e: any, option: any) => {
     let key = option.key;
@@ -162,38 +176,53 @@ const Panel = (props: any) => {
       input: option.text,
     }));
   };
+
+
   useEffect(() => {
     fetch("/api/event_code")
-      .then((res) => res.json())
-      .then((json) => {
-        setSystemCodeData(json.codes);
-      });
-  }, []);
-
-  useEffect(() => {
+    .then((res) => res.json())
+    .then((json) => {
+      setSystemCodeData(json.codes);
+    });
     fetch("/api/pre_transition_options")
-      .then((res) => res.json())
-      .then((json) => {
-        setPreTransitionDropDownList(json.data);
-      });
-  }, []);
-
-  useEffect(() => {
+    .then((res) => res.json())
+    .then((json) => {
+      setPreTransitionDropDownList(json.data);
+    });
     fetch("/api/post_transition_options")
       .then((res) => res.json())
       .then((json) => {
         setPostTransitionDropDownList(json.data);
       });
-  }, []);
-
-  useEffect(() => {
-    fetch("/api/conditional_next_state")
+      fetch("/api/conditional_next_state")
       .then((res) => res.json())
       .then((json) => {
         setConditionalNextStateDropDownList(json.data);
       });
   }, []);
 
+  useEffect(() => {
+    if(props.edge.data!=="")
+    {
+      setConditionalOrder(() => ({
+        actionType: props.edge.data.ConditionalNextStates.Order.actionType,
+        input: props.edge.data.ConditionalNextStates.Order.actionType.input,
+      }));
+      setConditionalNextStateTypeData((prev) => ({
+        actionType: props.edge.data.ConditionalNextStates.Condition.actionType,
+        input:props.edge.data.ConditionalNextStates.Condition.input,
+      }));
+      setOnChangeSystemEventCode((prev) => ({
+        actionType: props.edge.data.SystemEventCode.actionType,
+        input:props.edge.data.SystemEventCode.input,
+      }));
+    }
+    else{
+      console.log('first')
+    }
+
+  }, []);
+  
   const dismiss = (): any => {
     props.setEdgeOpenFormModal(false);
     return props.dismissHandler;
@@ -234,6 +263,7 @@ const Panel = (props: any) => {
     props.setEdgeOpenFormModal(false);
   };
 
+
   return (
     <ThemeProvider theme={AbDarkTheme}>
       <AbPanel
@@ -262,6 +292,7 @@ const Panel = (props: any) => {
               <AbStepperStep label="Transition Name" key="Transition Name">
                 <AbStack style={widthStyleLabel}>
                   <AbInput
+                    //defaultValue={props.edge.data.TransitionName}
                     name={"Transition_Name"}
                     control={control}
                     rules={{
@@ -275,17 +306,17 @@ const Panel = (props: any) => {
                         message: "Enter minimum 5 characters ",
                       },
                     }}
-                    // value={transitionName}
                     required={true}
                     label="Transition Name"
                     type={AbInputTypes.Text}
                   />
                 </AbStack>
                 <AbSelect
+                  // name={'System_Event_Code'}
+                  key={"System_Event_Code"}
                   label="System Event Code"
-                  name={"System_Event_Code"}
-                  control={control}
-                  onBlur={function noRefCheck() {}}
+                  // control={control}
+                  defaultSelectedKey={props.edge.data.SystemEventCode}
                   onChange={onChangeSystemEventCodeHandler}
                   placeholder="Select one option"
                   style={widthStyle}
@@ -293,7 +324,7 @@ const Panel = (props: any) => {
                   {systemCodeData.map((data: any): any => {
                     if (data) {
                       return (
-                        <AbSelectOption key={data.key}>
+                        <AbSelectOption key={data.text}>
                           {data.text}
                         </AbSelectOption>
                       );
@@ -355,6 +386,7 @@ const Panel = (props: any) => {
                 </AbSelect>
                 <AbStack style={widthStyleLabel}>
                   <AbInput
+                    //defaultValue={props.edge.data.PreTransitionAction.PreTransitionData}
                     name={"Pre_Transition_Data"}
                     control={control}
                     rules={{
@@ -440,6 +472,7 @@ const Panel = (props: any) => {
                 </AbSelect>
                 <AbStack style={widthStyleLabel}>
                   <AbInput
+                  //defaultValue={props.edge.data.PostTransitionAction.PostTransitionData}
                     name={"Post_Transition_Data"}
                     control={control}
                     rules={{
@@ -481,7 +514,7 @@ const Panel = (props: any) => {
                 </div>
               </AbStepperStep>
               <AbStepperStep
-                label="Conditional Next Step"
+                label="Conditional Next State"
                 key="Conditional Next Step"
               >
                 <AbSelect
@@ -523,7 +556,7 @@ const Panel = (props: any) => {
 
                 <AbSelect
                   label="Order"
-                  onBlur={function noRefCheck() {}}
+                  // defaultSelectedKey={props.edge.data.ConditionalNextStates.Order.actionType}
                   onChange={onChangeConditionalOrder}
                   placeholder="Select one option"
                   style={widthStyle}
@@ -540,6 +573,7 @@ const Panel = (props: any) => {
                 </AbSelect>
                 <AbStack style={widthStyleLabel}>
                   <AbInput
+                    //defaultValue={props.edge.data.ConditionalNextStates.NextState}
                     name={"Conditional_Next_Step_Data"}
                     control={control}
                     rules={{
