@@ -126,6 +126,7 @@ const FlowChart = (props: any) => {
         padding: "8px",
         width: "fit-content",
         border: "1px solid transparent",
+      
       },
       data: {
         isSelectable: true,

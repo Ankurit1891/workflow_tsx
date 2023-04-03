@@ -11,6 +11,9 @@ import { useForm } from "react-hook-form";
 const DialogBox = (props: any) => {
   const { handleSubmit, control } = useForm<any>({
     mode: "all",
+    defaultValues:{
+      Node_name:props.node?.name
+    }
   });
   const dismissHandler = () => {
     props.setOpenDialogBox((val: any) => !val);
@@ -25,12 +28,13 @@ const DialogBox = (props: any) => {
     closeButtonAriaLabel: 'Close',
     subText: 'Enter the new state name of the selected state',
   };
-  
+
   return (
    
     <Dialog hidden={false} onDismiss={dismissHandler} dialogContentProps={dialogContentProps} >
       <form onSubmit={handleSubmit(onSubmit)}>
         <AbInput
+        key={'Node_name'}
           name={"Node_name"}
           control={control}
           rules={{
@@ -49,6 +53,8 @@ const DialogBox = (props: any) => {
           type={AbInputTypes.Text}
         />
         <DialogFooter>
+          
+          <DefaultButton text="Cancel"style={{ marginTop: "10px" }} onClick={dismissHandler} />
           <AbButton
             type={AbButtonType.submit}
             style={{ marginTop: "10px" }}
@@ -56,7 +62,6 @@ const DialogBox = (props: any) => {
           >
             Submit
           </AbButton>
-          <DefaultButton text="Cancel"style={{ marginTop: "10px" }} onClick={dismissHandler} />
         </DialogFooter>
       </form>
     </Dialog>

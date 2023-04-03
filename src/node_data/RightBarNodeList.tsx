@@ -1,6 +1,9 @@
 import { VscDebugStart } from "react-icons/vsc";
 import { SiMobxstatetree } from "react-icons/si";
 import { GoCircleSlash } from "react-icons/go";
+import { AiTwotonePushpin } from "react-icons/ai";
+
+
 
 const nodeStyle = {
   background: "transparent",
@@ -39,9 +42,7 @@ const nodeList = [
     nodeIcon: <SiMobxstatetree />,
     nodeHeight: "100px",
     nodeWidth: "fit-content",
-    // nodeBackgroundColor: "#208d7c",
     nodeBackgroundColor: "#5c59599e",
-
     nodeBorderRadius: "10px",
     nodeMargin: "10px",
     nodePadding: "20px",
@@ -49,20 +50,20 @@ const nodeList = [
     nodeName: "STATE",
     nodeType: "default",
   },
-  // {
-  //   key: "type3",
-  //   nodeID: "type3",
-  //   nodeIcon: <AiTwotonePushpin />,
-  //   nodeHeight: "100px",
-  //   nodeWidth: "fit-content",
-  //   nodeBackgroundColor: "#27294e",
-  //   nodeBorderRadius: "10px",
-  //   nodeMargin: "10px",
-  //   nodePadding: "20px",
-  //   nodeDescription: "Add Plugin",
-  //   nodeName: "ADD PLUGIN",
-  //   nodeType: "default",
-  // },
+  {
+    key: "type3",
+    nodeID: "type3",
+    nodeIcon: <AiTwotonePushpin />,
+    nodeHeight: "100px",
+    nodeWidth: "fit-content",
+    nodeBackgroundColor: "#27294e",
+    nodeBorderRadius: "10px",
+    nodeMargin: "10px",
+    nodePadding: "20px",
+    nodeDescription: "Add Plugin",
+    nodeName: "ADD PLUGIN",
+    nodeType: "default",
+  },
   // {
   //   key: "type4",
   //   nodeID: "type4",

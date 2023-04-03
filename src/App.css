@@ -138,3 +138,10 @@ path.react-flow__edge-path {
 .theme-button:hover{
   cursor: pointer;
 }
+
+.rhombus {
+  
+  background-color: #6ac695a7;
+  transform: rotate(45deg);
+  border-radius: 5px;
+}
