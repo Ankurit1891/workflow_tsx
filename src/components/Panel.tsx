@@ -221,7 +221,7 @@ const Panel = (props: any) => {
       console.log('first')
     }
 
-  }, []);
+  }, [props.edge.data]);
   
   const dismiss = (): any => {
     props.setEdgeOpenFormModal(false);
