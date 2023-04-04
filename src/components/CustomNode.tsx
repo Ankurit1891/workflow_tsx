@@ -103,7 +103,35 @@ const CustomNode = (props: any) => {
             height: props.parent === "rightBar" ? '100px' : '65px',
             border:props.parent === "rightBar"&& props.theme ? '1px solid black' :props.parent === "rightBar"&& props.theme===false? '1px solid #ffffff':'1px solid #ffffff',
             
-          }}></motion.div></div>}
+          }}>
+            <div style={{ display: "flex", flexDirection: "column" ,transform:'rotate(-45deg)'}}>
+          <span
+            style={{
+              color: "white",
+              marginTop: props.parent==='rightBar'?"-2px":'-10px',
+              marginLeft:props.parent==='rightBar'?'18px':'-33px'
+            }}
+          >
+            {props.NodeIcon}
+          </span>
+            <span style={ {color: "white", fontWeight: "600",marginLeft:props.parent==='rightBar'?'-14px':'-35px'}}>
+              <i>{props.NodeName}</i>
+              </span>
+        </div>
+        <br />
+        <div style={{ textAlign: "left" }}>
+          <span
+            style={{
+              color: "white",
+              fontWeight: "300",
+              textAlign: "left",
+              fontSize: props.parent === "rightBar" ? "15px" : "9px",
+            }}
+          ></span>
+        </div>
+            
+            
+            </motion.div></div>}
     </>
   );
 };

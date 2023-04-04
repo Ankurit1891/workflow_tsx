@@ -12,6 +12,7 @@ import ReactFlow, {
   Controls,
   BackgroundVariant,
 } from "reactflow";
+
 import "../App.css";
 import { nodeStyle } from "../node_data/RightBarNodeList";
 import { initialEdges, initialNodes } from "../node_data/NodeData";
@@ -115,7 +116,7 @@ const FlowChart = (props: any) => {
       icon: icon,
       name: name,
       description: description,
-      type: type,
+      type: color==='#6ac695a7'?'diamond':type,
       key: `${Math.trunc(Math.random() * 500)}`,
       keyId: String(keyId),
       animated: false,
@@ -126,7 +127,7 @@ const FlowChart = (props: any) => {
         padding: "8px",
         width: "fit-content",
         border: "1px solid transparent",
-      
+
       },
       data: {
         isSelectable: true,
@@ -174,6 +175,13 @@ const FlowChart = (props: any) => {
     (changes: any) => setNodes((nds): any => applyNodeChanges(changes, nds)),
     [setNodes]
   );
+  const nodeTypes = {
+    diamond: (
+      <div className="diamond">
+        <div className="diamond__content">Diamond Node</div>
+      </div>
+    ),
+  };
 
   // onconnect the edge (adding the edge)
 
@@ -251,19 +259,6 @@ const FlowChart = (props: any) => {
     return node.color === "white" ? "grey" : node.color;
   };
 
-  // exporting the workflow to chart
-
-  // const exportFlowchart = () => {
-  //   const flowchart = document.querySelector(".react-flow");
-  //   html2canvas(flowchart).then((canvas) => {
-  //     const dataUrl = canvas.toDataURL();
-  //     const link = document.createElement("a");
-  //     link.download = "flowchart.png";
-  //     link.href = dataUrl;
-  //     link.click();
-  //   });
-  // };
-
   const onCanvasRightClick = (e: any) => {
     props.updatedNodes(nodes);
     e.preventDefault();
@@ -272,9 +267,6 @@ const FlowChart = (props: any) => {
       y: e.clientX - 70,
     });
     setOpenDialog(true);
-    // setOpenDialog((e) => {
-    //   return !e;
-    // });
   };
 
   const onAlterNode = (text: any, desc: any) => {
@@ -314,13 +306,7 @@ const FlowChart = (props: any) => {
     setNodes(newNodes);
     props.updatedNodes(nodes);
   };
-  // const nodeEditDialog = (event: any, node: any) => {
-  //   setSelectedNode(node);
-  //   setOpenDialogBox(true);
-  //   event.stopPropagation();
-  //   event.preventDefault();
-  //   // editNode(event, node);
-  // };
+
   // removes node and add a new one
   const onNodeRightClick = (event: any, node: any) => {
     setSelectedNode(node);
@@ -452,9 +438,9 @@ const FlowChart = (props: any) => {
           alterNode={onAlterNode}
         />
       )}
+      
       <ReactFlow
         ref={reactFlowWrapper}
-        // nodeTypes={nodeTypes}
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
@@ -470,6 +456,7 @@ const FlowChart = (props: any) => {
         onEdgeMouseEnter={onEdgeMouseEnter}
         onEdgeMouseLeave={onEdgeMouseLeave}
         onContextMenu={onCanvasRightClick}
+        
         fitView
       >
         <Background
