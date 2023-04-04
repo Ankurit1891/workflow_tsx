@@ -1,7 +1,7 @@
 import { VscDebugStart } from "react-icons/vsc";
 import { SiMobxstatetree } from "react-icons/si";
 import { GoCircleSlash } from "react-icons/go";
-import { AiTwotonePushpin } from "react-icons/ai";
+import { GrDirections } from "react-icons/gr";
 
 
 
@@ -53,7 +53,7 @@ const nodeList = [
   {
     key: "type3",
     nodeID: "type3",
-    nodeIcon: <AiTwotonePushpin />,
+    nodeIcon: <GrDirections />,
     nodeHeight: "100px",
     nodeWidth: "fit-content",
     nodeBackgroundColor: "#27294e",

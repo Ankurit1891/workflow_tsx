@@ -65,12 +65,12 @@ const CustomNode = (props: any) => {
             style={{
               color: "white",
               marginRight: "10px",
-              marginTop: "-2px",
+              marginTop: props.parent==='rightBar'?"-2px":'5px',
             }}
           >
             {props.NodeIcon}
           </span>
-          <div style={{ color: "white", fontWeight: "600", textAlign: "left" }}>
+          <div style={{ color: "white", fontWeight: "600", textAlign: "left" ,marginTop:props.parent==='rightBar'?"-3px":'-5px'}}>
             <i>{props.NodeName}</i>
           </div>
         </div>
