@@ -136,7 +136,7 @@ const CustomNode = (props: any) => {
                 style={{
                   color: "white",
                   fontWeight: "600",
-                  marginLeft: props.parent === "rightBar" ? "-34px" : "-35px",
+                  marginLeft: props.parent === "rightBar" ? "-13px" : "-35px",
                   fontSize: props.parent === "rightBar" ? "18px" : "",
                   marginTop: props.parent === "rightBar" ? "14px" : "",
                 }}
