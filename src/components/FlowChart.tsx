@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { useCallback, useRef, useState } from "react";
 import "reactflow/dist/style.css";
 import { BsSave2 } from "react-icons/bs";
@@ -116,7 +117,7 @@ const FlowChart = (props: any) => {
       icon: icon,
       name: name,
       description: description,
-      type: color==='#6ac695a7'?'diamond':type,
+      type: color === "#6ac695a7" ? "diamond" : type,
       key: `${Math.trunc(Math.random() * 500)}`,
       keyId: String(keyId),
       animated: false,
@@ -127,7 +128,6 @@ const FlowChart = (props: any) => {
         padding: "8px",
         width: "fit-content",
         border: "1px solid transparent",
-
       },
       data: {
         isSelectable: true,
@@ -224,11 +224,10 @@ const FlowChart = (props: any) => {
 
   const onNodeLeftClick = (event: any, node: any) => {
     props.updatedNodes(nodes);
-    console.log(`Node ID:${node.id} - Node Name:${node.name}`);
+    console.log(
+      `Node ID:${node.id} - Node Name:${node.name} - Node Type:${node.description}`
+    );
     setOpenDialog(false);
-    if (node && node.getOutgoingEdges) {
-      const outgoers = node.getOutgoingEdges();
-    }
   };
 
   //function on edge right click
@@ -238,9 +237,20 @@ const FlowChart = (props: any) => {
     event.stopPropagation();
     event.preventDefault();
     setSelectedEdge(edge);
+    nodes.map((node) => {
+      if (node.id === edge.source) {
+        if (node.description !== "condition") {
+          openPanel();
+          setEdgeOpenFormModal(true);
+        }
+      }
+    });
+    //TODO: print the source node
+
+    // openPanel();
+    // setEdgeOpenFormModal(true);
+
     // setIsPanelOpen(true);
-    openPanel();
-    setEdgeOpenFormModal(true);
   };
 
   //function on making the mouse entering the edge
@@ -318,7 +328,7 @@ const FlowChart = (props: any) => {
 
   const submitEditForm = (name: any, node: any) => {
     editNode(name, node);
-    console.log(name,node);
+    console.log(name, node);
   };
   //edit node
   const editNode = (name: any, node: any) => {
@@ -400,17 +410,24 @@ const FlowChart = (props: any) => {
         ></OptionDialog>
       )}
       {openDialogBox && (
-        <DialogBox 
-        setOpenDialogBox={setOpenDialogBox}
-        submitEditForm={submitEditForm}
-        node={selectedNode}>
-          
-        </DialogBox>
+        <DialogBox
+          setOpenDialogBox={setOpenDialogBox}
+          submitEditForm={submitEditForm}
+          node={selectedNode}
+        ></DialogBox>
       )}
       {/* //Opening the form modal for edges */}
 
       {openEdgeFormModal && (
-        // <EdgeFormPanel
+        <EdgeFormPanel
+        alterEdge={onAlterEdge}
+        edge={selectedEdge}
+        isOpen={isOpen}
+        dismissHandler={closePanel}
+        theme={props.theme}
+        setEdgeOpenFormModal={setEdgeOpenFormModal}
+        />
+        // <Panel
         //   alterEdge={onAlterEdge}
         //   edge={selectedEdge}
         //   isOpen={isOpen}
@@ -418,14 +435,6 @@ const FlowChart = (props: any) => {
         //   theme={props.theme}
         //   setEdgeOpenFormModal={setEdgeOpenFormModal}
         // />
-        <Panel
-          alterEdge={onAlterEdge}
-          edge={selectedEdge}
-          isOpen={isOpen}
-          dismissHandler={closePanel}
-          theme={props.theme}
-          setEdgeOpenFormModal={setEdgeOpenFormModal}
-        />
       )}
 
       {/* {//Opening the form modal for nodes on right click} */}
@@ -515,7 +524,6 @@ const FlowChart = (props: any) => {
           </ControlButton>
         </Controls>
       </ReactFlow>
-
     </div>
   );
 };

@@ -21,6 +21,7 @@ const NodeFormModal = ({
   theme,
   name,
 }: any) => {
+  let description="";
   const nodeFormAcceptHandler = (data: any) => {
     setOpenModal(false);
     alterNode(stateName, description);
@@ -28,13 +29,21 @@ const NodeFormModal = ({
 
   if (name === "input") {
     name = "Start";
+    description='start';
   } else if (name === "default") {
     name = "Continuation";
+    description='default';
+
   } else if (name === "output") {
     name = "Finish";
+    description='finish';
+
   }else if(name==='condition')
   {
-    name='Condition'
+    name='Condition';
+    description='condition';
+
+    
   }
   initializeIcons();
   const contentStyles = mergeStyleSets({
@@ -86,7 +95,6 @@ const NodeFormModal = ({
     mode: "all",
   });
   const stateName = watch("stateName");
-  const description = watch("description");
   return (
     <div>
       <Modal

@@ -6,7 +6,7 @@ const initialNodes = [
     key: "0",
     name: "start",
     type: "input",
-    description: "initial state",
+    description: "start",
     color: "#656AC69F",
     style: {
       padding: "3px",

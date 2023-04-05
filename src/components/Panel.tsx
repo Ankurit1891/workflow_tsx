@@ -507,6 +507,7 @@ const Panel = (props: any) => {
                     onClick={function noRefCheck() {
                       setActive(3);
                     }}
+                    // type={AbButtonType.submit}
                     variant="Primary"
                   >
                     Next

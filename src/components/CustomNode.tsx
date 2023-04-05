@@ -43,6 +43,8 @@ const CustomNode = (props: any) => {
           key={props.key}
           whileHover={{
             scale: props.parent === "rightBar" ? 1.1 : 1,
+            marginTop: props.parent === "rightBar" ? "15px" : "-5px",
+            marginBottom: props.parent === "rightBar" ? "15px" : "-5px",
           }}
           className="custom-node"
           style={{
@@ -98,6 +100,8 @@ const CustomNode = (props: any) => {
               rotate: 45,
               scale: props.parent === "rightBar" ? 1.1 : 1,
               cursor: "pointer",
+              marginTop: props.parent === "rightBar" ? "35px" : "7px",
+              marginBottom: props.parent === "rightBar" ? "35px" : "7px",
             }}
             style={{
               marginLeft: props.parent === "rightBar" ? "40px" : "5px",
