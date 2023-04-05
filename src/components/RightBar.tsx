@@ -57,6 +57,7 @@ const RightBar = (props: any) => {
             scale: 1.1,
             originX: 0,
             originY: 0,
+            cursor:'pointer'
           }}
           className="sidebar-button"
           onClick={sidebarOnClickHandler}

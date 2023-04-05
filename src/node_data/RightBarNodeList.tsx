@@ -1,7 +1,7 @@
 import { VscDebugStart } from "react-icons/vsc";
 import { SiMobxstatetree } from "react-icons/si";
 import { GoCircleSlash } from "react-icons/go";
-import { GrDirections } from "react-icons/gr";
+import { GiAntibody } from "react-icons/gi";
 
 
 
@@ -53,15 +53,15 @@ const nodeList = [
   {
     key: "type3",
     nodeID: "type3",
-    nodeIcon: <GrDirections />,
+    nodeIcon: <GiAntibody color="#ffffff"/>,
     nodeHeight: "100px",
     nodeWidth: "fit-content",
     nodeBackgroundColor: "#27294e",
     nodeBorderRadius: "10px",
     nodeMargin: "10px",
     nodePadding: "20px",
-    nodeDescription: "Add Plugin",
-    nodeName: "ADD PLUGIN",
+    nodeDescription: "Add Condition",
+    nodeName: "ADD CONDITION",
     nodeType: "default",
   },
   // {

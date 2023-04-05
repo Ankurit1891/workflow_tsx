@@ -40,7 +40,7 @@ const DialogBox = (props: any) => {
           rules={{
             required: "This field is required",
             maxLength: {
-              value: 10,
+              value: 7,
               message: "Maximum length exceeded",
             },
             minLength: {

@@ -32,6 +32,9 @@ const NodeFormModal = ({
     name = "Continuation";
   } else if (name === "output") {
     name = "Finish";
+  }else if(name==='condition')
+  {
+    name='Condition'
   }
   initializeIcons();
   const contentStyles = mergeStyleSets({

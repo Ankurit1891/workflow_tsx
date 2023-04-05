@@ -374,6 +374,7 @@ const FlowChart = (props: any) => {
       event.preventDefault();
     }
   };
+
   return (
     <div
       onKeyDown={onKeyDown}
@@ -438,7 +439,7 @@ const FlowChart = (props: any) => {
           alterNode={onAlterNode}
         />
       )}
-      
+
       <ReactFlow
         ref={reactFlowWrapper}
         nodes={nodes}
@@ -456,7 +457,6 @@ const FlowChart = (props: any) => {
         onEdgeMouseEnter={onEdgeMouseEnter}
         onEdgeMouseLeave={onEdgeMouseLeave}
         onContextMenu={onCanvasRightClick}
-        
         fitView
       >
         <Background
@@ -515,6 +515,7 @@ const FlowChart = (props: any) => {
           </ControlButton>
         </Controls>
       </ReactFlow>
+
     </div>
   );
 };

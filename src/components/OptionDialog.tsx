@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import { VscDebugStart } from "react-icons/vsc";
 import { SiMobxstatetree } from "react-icons/si";
 import { GoCircleSlash } from "react-icons/go";
+import { GiAntibody } from "react-icons/gi";
+
+
 import "./OptionDialog.css";
 
 const OptionDialog = (props: any) => {
@@ -50,6 +53,10 @@ const OptionDialog = (props: any) => {
     props.setOpenDialog((val: any) => !val);
     props.assignNodeValues("#000000", <GoCircleSlash />, "output", "Finish");
   };
+  const onAddCondition = () => {
+    props.setOpenDialog((val: any) => !val);
+    props.assignNodeValues("#27294e", <GiAntibody />, "condition", "Condition");
+  };
   return (
     <div className="main-box" style={mainBoxStyle}>
       <ul className="list-class">
@@ -79,6 +86,24 @@ const OptionDialog = (props: any) => {
           style={listTitleStyle}
         >
           Add State
+        </motion.li>
+        <hr
+          style={{
+            color: "rgb(169, 171, 173)",
+            opacity: "0.25",
+            margin: "0px",
+            border: "0",
+            borderTop: "var(--bs-border-width) solid",
+          }}
+        />
+        <motion.li
+          className="list-title"
+          onClick={onAddCondition}
+          initial={{ backgroundColor: props.theme ? "#f3f2f1" : "#000000" }}
+          whileHover={{ backgroundColor: props.theme ? "#E9E3DE" : "#141414" }}
+          style={listTitleStyle}
+        >
+          Add Condition
         </motion.li>
         <hr
           style={{
