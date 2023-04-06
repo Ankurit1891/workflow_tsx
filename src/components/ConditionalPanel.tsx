@@ -23,16 +23,20 @@ const ConditionalPanel = (props: any) => {
   const [condition, setCondition]: any = useState([]);
   const [order, setOrder]: any = useState([]);
 
-  const [conditionalNextStateType, setConditionalNextStateType] = useState(props.edge.data?.Condition_Type?.actionType??{
+const [selectedKeyConditionType, setSetSelectedKeyConditionType] = useState(props.edge.data?.Condition_Type?.actionType??"");
+const [selectedKeyCondition, setSelectedKeyCondition] = useState(props.edge.data?.Condition?.actionType??"");
+const [selectedKeyOrder, setSelectedKeyOrder] = useState(props.edge.data?.Order?.actionType??"");
+
+  const [conditionalNextStateType, setConditionalNextStateType] = useState(props.edge.data?.Condition_Type??{
     actionType: 0,
     input: "",
   });
-  const [conditionalOrder, setConditionalOrder] = useState<any>(props.edge.data?.Condition_Type?.actionType??{
+  const [conditionalOrder, setConditionalOrder] = useState<any>(props.edge.data?.Order??{
     actionType: 0,
     input: "",
   });
-  const [conditionalNextStateTypeData, setConditionalNextStateTypeData] =
-    useState({
+  const [conditionData, setConditionData] =
+    useState(props.edge.data?.Condition??{
       actionType: "",
       input: "",
     });
@@ -42,7 +46,7 @@ const ConditionalPanel = (props: any) => {
     mode: "all",
     defaultValues: {
       Conditional_Next_Step_Data:
-        props.edge.data.ConditionalNextStates?.NextState,
+        props.edge.data.Condition_Name,
     },
   });
   const dismiss = (): any => {
@@ -58,53 +62,64 @@ const ConditionalPanel = (props: any) => {
     maxWidth: "400px",
   };
   useEffect(() => {
+    if(props.edge.data)
+    {
+      console.log(props.edge.data?.Condition_Type?.actionType);
+      console.log(props.edge.data?.Order?.actionType);
+      console.log(props.edge.data?.Condition?.actionType);
+    }
     fetch("/api/conditional_next_state")
       .then((res) => res.json())
       .then((json) => {
         setConditionalNextStateDropDownList(json.data);
       });
-  }, []);
-
-  const onChangeConditionalNextState = (e: any, option: any) => {
-    const url = `/api/conditional_next_state/condition`;
+      const url = `/api/conditional_next_state/condition`;
     fetch(url)
       .then((res) => res.json())
       .then((json) => {
         setCondition(json.data);
       });
+      const url1 = `/api/conditional_next_state/order`;
+    fetch(url1)
+      .then((res) => res.json())
+      .then((json) => {
+        setOrder(json.data);
+      });
+  }, []);
+
+  const onChangeConditionType = (e: any, option: any) => {
+    setSetSelectedKeyConditionType(option.key);
+    
 
     setConditionalNextStateType(() => ({
       actionType: option.key,
       input: option.text,
     }));
 
-    const url1 = `/api/conditional_next_state/order`;
-    fetch(url1)
-      .then((res) => res.json())
-      .then((json) => {
-        setOrder(json.data);
-      });
+    
   };
 
-  const onChangeConditionalNextStateData = (e: any, option: any) => {
-    setConditionalNextStateTypeData(() => ({
+  const onChangeCondition = (e: any, option: any) => {
+    setSelectedKeyCondition(option.key);
+    setConditionData(() => ({
       actionType: option.key,
       input: option.text,
     }));
   };
 
-  const onSubmit = (data: any) => {
-    console.log('NAME: ',data.Conditional_Next_Step_Data , ' Conditional Type : ',conditionalNextStateType, ' Condition: ',conditionalNextStateTypeData , " Order: ",conditionalOrder);
+  const onSubmit = handleSubmit((data: any) => {
+    console.log('NAME: ',data.Conditional_Next_Step_Data , ' Conditional Type : ',conditionalNextStateType, ' Condition: ',conditionData , " Order: ",conditionalOrder);
     const conditionEdgeObject={
         Condition_Name:data.Conditional_Next_Step_Data,
         Condition_Type:conditionalNextStateType,
-        Condition:conditionalNextStateTypeData,
+        Condition:conditionData,
         Order:conditionalOrder,
     }
     props.alterConditionalEdge(data.Conditional_Next_Step_Data, conditionEdgeObject, props.edge.id);
     props.setOpenConditionalPanel(false);
-  };
-  const onChangeConditionalOrder = (e: any, option: any) => {
+  });
+  const onChangeOrder = (e: any, option: any) => {
+    setSelectedKeyOrder(option.key);
     setConditionalOrder(() => ({
       actionType: option.key,
       input: option.text,
@@ -126,7 +141,7 @@ const ConditionalPanel = (props: any) => {
           </span>
         </AbPanelHeader>
         <AbPanelBody>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form >
           <AbStack style={widthStyleLabel}>
               <AbInput
                 name={"Conditional_Next_Step_Data"}
@@ -149,9 +164,10 @@ const ConditionalPanel = (props: any) => {
               />
             </AbStack>
             <AbSelect
+              defaultSelectedKey={selectedKeyConditionType}
               key={"conditionalType1"}
               label="Conditional Type"
-              onChange={onChangeConditionalNextState}
+              onChange={onChangeConditionType}
               placeholder="Select one option"
               style={widthStyle}
             >
@@ -168,7 +184,8 @@ const ConditionalPanel = (props: any) => {
 
             <AbSelect
               label="Condition"
-              onChange={onChangeConditionalNextStateData}
+              defaultSelectedKey={selectedKeyCondition}
+              onChange={onChangeCondition}
               placeholder="Select one option"
               style={widthStyle}
             >
@@ -185,7 +202,8 @@ const ConditionalPanel = (props: any) => {
 
             <AbSelect
               label="Order"
-              onChange={onChangeConditionalOrder}
+              onChange={onChangeOrder}
+              defaultSelectedKey={selectedKeyOrder}
               placeholder="Select one option"
               style={widthStyle}
             >
@@ -202,6 +220,7 @@ const ConditionalPanel = (props: any) => {
 
             <div>
               <AbButton
+              onClick={onSubmit}
                 type={AbButtonType.submit}
                 style={{ marginTop: "10px" }}
                 variant="Primary"

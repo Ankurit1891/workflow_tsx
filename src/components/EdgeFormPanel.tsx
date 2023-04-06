@@ -176,6 +176,7 @@ const EdgeFormPanel = (props: any) => {
         setSystemCodeData(json.codes);
       });
     if (props.edge.data !== "") {
+
       setSelectedKeySystemCodeData(props.edge.data.SystemEventCode?.actionType);
       const url = `/api/pre_transition_action/${selectedKeyPre_Transition_Action_Type}`;
       fetch(url)
@@ -215,8 +216,8 @@ const EdgeFormPanel = (props: any) => {
     maxWidth: "400px",
   };
 
-  const onSubmit = (data: any) => {
-    console.log('ada');
+  const onSubmit = handleSubmit((data: any) => {
+    console.log("ada");
     const edgeObj = {
       TransitionName: data.Transition_Name,
       SystemEventCode: onChangeSystemEventCode,
@@ -235,27 +236,26 @@ const EdgeFormPanel = (props: any) => {
     console.log(edgeObj);
     props.alterEdge(data.Transition_Name, edgeObj, props.edge.id);
     props.setEdgeOpenFormModal(false);
-  };
+  })
 
   return (
     <ThemeProvider theme={AbDarkTheme}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-      <AbPanel
-      key={props.edge.id}
-        lightDismiss={true}
-        isOpen={props.isOpen}
-        placement={"right"}
-        onDismiss={dismiss}
-        size="L"
-        modalLike={true}
-      >
-        
-        <AbPanelHeader>
-          <span style={{ fontSize: "20px", fontWeight: "600" }}>
-            Transition
-          </span>
-        </AbPanelHeader>
-        {/* <form onSubmit={handleSubmit(onSubmit)}> */}
+      <form key={props.edge.id}>
+        <AbPanel
+          key={props.edge.id}
+          lightDismiss={true}
+          isOpen={props.isOpen}
+          placement={"right"}
+          onDismiss={dismiss}
+          size="L"
+          modalLike={true}
+        >
+          <AbPanelHeader>
+            <span style={{ fontSize: "20px", fontWeight: "600" }}>
+              Transition
+            </span>
+          </AbPanelHeader>
+          {/* <form onSubmit={handleSubmit(onSubmit)}> */}
           <AbPanelBody>
             <AbStepper
               key={props.edge.id}
@@ -431,7 +431,6 @@ const EdgeFormPanel = (props: any) => {
                     type={AbInputTypes.Text}
                   />
                 </AbStack>
-
               </AbStepperStep>
             </AbStepper>
           </AbPanelBody>
@@ -457,6 +456,7 @@ const EdgeFormPanel = (props: any) => {
               )}
               {active === 2 && (
                 <AbButton
+                  onClick={onSubmit}
                   type={AbButtonType.submit}
                   style={{ marginTop: "10px" }}
                   variant="Primary"
@@ -466,8 +466,8 @@ const EdgeFormPanel = (props: any) => {
               )}
             </div>
           </AbPanelFooter>
-      </AbPanel>
-        </form>
+        </AbPanel>
+      </form>
     </ThemeProvider>
   );
 };
