@@ -22,28 +22,46 @@ import {
 const EdgeFormPanel = (props: any) => {
   const [selectedKeySystemCodeData, setSelectedKeySystemCodeData] = useState(
     props.edge.data.SystemEventCode?.actionType ?? ""
-  );
+  );// selected key for system event code
   const [
     selectedKeyPre_Transition_Action_Type,
     setSelectedKeyPre_Transition_Action_Type,
   ] = useState(
     props.edge.data.PreTransitionAction?.PreTransitionType.actionType ?? ""
-  );
+  ); // 1st pre drop down
+
+
   const [
     selectedKeyPre_Transition_Action,
     setSelectedKeyPre_Transition_Action,
   ] = useState(
     props.edge.data.PreTransitionAction?.PreTransitionAction.actionType ?? ""
-  );
-  const [selectedKeyPost_Transition_Action_Type, setSelectedKeyPost_Transition_Action_Type] = useState(props.edge.data.PostTransitionAction?.PostTransitionType.actionType ?? "");
+  );// 2nd pre drop down
+
+
+  const [
+    selectedKeyPost_Transition_Action_Type,
+    setSelectedKeyPost_Transition_Action_Type,
+  ] = useState(
+    props.edge.data.PostTransitionAction?.PostTransitionType.actionType ?? ""
+  );// 1st post drop down
+
+  const [
+    selectedKeyPost_Transition_Action,
+    setSelectedKeyPost_Transition_Action,
+  ] = useState(
+    props.edge.data.PostTransitionAction?.PostTransitionAction.actionType ?? ""
+  );// 2nd post drop down
+
 
   // system event code drop down list
   const [systemCodeData, setSystemCodeData] = useState<any>([]);
   // system event code change handler
-  const [onChangeSystemEventCode, setOnChangeSystemEventCode] = useState({
-    actionType: "",
-    input: "",
-  });
+
+  const [onChangeSystemEventCode, setOnChangeSystemEventCode] = useState(
+    props.edge.data.SystemEventCode??{actionType:"",input:""}
+  );
+
 
   // primary Drop Down List
   const [preTransitionDropDownList, setPreTransitionDropDownList]: any =
@@ -52,23 +70,23 @@ const EdgeFormPanel = (props: any) => {
     useState([]);
 
   // primary drop down handler
-  const [preTransitionActionType, setPreTransitionActionType] = useState({
+  const [preTransitionActionType, setPreTransitionActionType] = useState(props.edge.data?.PreTransitionAction?.PreTransitionType??{
     actionType: 0,
     input: "",
   });
-  const [postTransitionActionType, setPostTransitionActionType] = useState({
+  const [postTransitionActionType, setPostTransitionActionType] = useState(props.edge.data?.PostTransitionAction?.PostTransitionType??{
     actionType: 0,
     input: "",
   });
 
   // secondary drop down handler
   const [preTransitionActionTypeData, setPreTransitionActionTypeData] =
-    useState({
+    useState(props.edge.data?.PreTransitionAction?.PreTransitionAction??{
       actionType: 0,
       input: "",
     });
   const [postTransitionActionTypeData, setPostTransitionActionTypeData] =
-    useState({
+    useState(props.edge.data?.PostTransitionAction?.PostTransitionAction??{
       actionType: 0,
       input: 0,
     });
@@ -97,7 +115,7 @@ const EdgeFormPanel = (props: any) => {
 
   const onChangeSystemEventCodeHandler = (e: any, option: any) => {
     setSelectedKeySystemCodeData(option.key);
-    return setOnChangeSystemEventCode((prev) => ({
+    return setOnChangeSystemEventCode(() => ({
       actionType: option.key,
       input: option.text,
     }));
@@ -111,7 +129,7 @@ const EdgeFormPanel = (props: any) => {
       .then((json) => {
         setPreTransitionActionDropDownList(json.data);
       });
-    setPreTransitionActionType((prev) => ({
+    setPreTransitionActionType(() => ({
       actionType: option.key,
       input: option.text,
     }));
@@ -125,7 +143,7 @@ const EdgeFormPanel = (props: any) => {
       .then((json) => {
         setPostTransitionActionDropDownList(json.data);
       });
-    setPostTransitionActionType((prev) => ({
+    setPostTransitionActionType(() => ({
       actionType: option.key,
       input: option.text,
     }));
@@ -133,13 +151,14 @@ const EdgeFormPanel = (props: any) => {
 
   const onChangePreTransitionActionTypeData = (e: any, option: any) => {
     setSelectedKeyPre_Transition_Action(option.key);
-    setPreTransitionActionTypeData((prev) => ({
+    setPreTransitionActionTypeData(() => ({
       actionType: option.key,
       input: option.text,
     }));
   };
   const onChangePostTransitionActionTypeData = (e: any, option: any) => {
-    setPostTransitionActionTypeData((prev) => ({
+    setSelectedKeyPost_Transition_Action(option.key);
+    setPostTransitionActionTypeData(() => ({
       actionType: option.key,
       input: option.text,
     }));
@@ -152,12 +171,22 @@ const EdgeFormPanel = (props: any) => {
         setSystemCodeData(json.codes);
       });
     if (props.edge.data !== "") {
-      const option = {
-        key: props.edge.data.SystemEventCode?.actionType,
-        text: props.edge.data.SystemEventCode?.input,
-      };
-      console.log(option);
-      onChangeSystemEventCodeHandler("a", option);
+      console.log(
+        selectedKeyPre_Transition_Action_Type,
+        selectedKeyPost_Transition_Action_Type
+      );
+      const url = `/api/pre_transition_action/${selectedKeyPre_Transition_Action_Type}`;
+      fetch(url)
+        .then((res) => res.json())
+        .then((json) => {
+          setPreTransitionActionDropDownList(json.data);
+        });
+        const url1 = `/api/post_transition_action/${selectedKeyPost_Transition_Action_Type}`;
+    fetch(url1)
+      .then((res) => res.json())
+      .then((json) => {
+        setPostTransitionActionDropDownList(json.data);
+      });
     }
     fetch("/api/pre_transition_options")
       .then((res) => res.json())
@@ -308,7 +337,7 @@ const EdgeFormPanel = (props: any) => {
                 <AbSelect
                   key={"PreTransitionAction2"}
                   label="Pre-Transition Action"
-                  defaultChecked={selectedKeyPre_Transition_Action}
+                  defaultSelectedKey={selectedKeyPre_Transition_Action}
                   onChange={onChangePreTransitionActionTypeData}
                   placeholder="Select one option"
                   style={widthStyle}
@@ -325,7 +354,7 @@ const EdgeFormPanel = (props: any) => {
                 </AbSelect>
                 <AbStack style={widthStyleLabel}>
                   <AbInput
-                  name={"Pre_Transition_Data"}
+                    name={"Pre_Transition_Data"}
                     control={control}
                     rules={{
                       required: "This field is required",
@@ -356,9 +385,7 @@ const EdgeFormPanel = (props: any) => {
                   </AbButton>
                   <AbButton
                     style={{ marginTop: "10px" }}
-                    onClick={()=>
-                      setActive(2)
-                    }
+                    onClick={() => setActive(2)}
                     variant="Primary"
                   >
                     Next
@@ -370,7 +397,7 @@ const EdgeFormPanel = (props: any) => {
                 key="Post-Transition Action"
               >
                 <AbSelect
-                required={true}
+                  required={true}
                   key={"PostTransitionActionType1"}
                   label="Post-Transition Action Type"
                   onChange={onChangePostTransitionHandler}
@@ -391,6 +418,7 @@ const EdgeFormPanel = (props: any) => {
                 <AbSelect
                   key={"PostTransitionAction2"}
                   label="Post-Transition Action"
+                  defaultSelectedKey={selectedKeyPost_Transition_Action}
                   onChange={onChangePostTransitionActionTypeData}
                   placeholder="Select one option"
                   style={widthStyle}
@@ -398,9 +426,7 @@ const EdgeFormPanel = (props: any) => {
                   {postTransitionActionDropDownList.map((data: any): any => {
                     if (data) {
                       return (
-                        <AbSelectOption
-                          key={`Post-Transition Action ${data.key}`}
-                        >
+                        <AbSelectOption key={data.key}>
                           {data.text}
                         </AbSelectOption>
                       );
