@@ -266,7 +266,7 @@ const FlowChart = (props: any) => {
 
   // on node right click
 
-  // mini-map node colour
+  // mini-map node color
 
   const nodeColor = (node: any) => {
     return node.color === "white" ? "grey" : node.color;

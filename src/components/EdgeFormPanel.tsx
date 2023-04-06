@@ -305,17 +305,6 @@ const EdgeFormPanel = (props: any) => {
                     }
                   })}
                 </AbSelect>
-                {/* <AbButton
-                  onClick={function noRefCheck() {
-                    setActive(1);
-                  }}
-                  variant="Primary"
-                  style={{
-                    marginTop: "10px",
-                  }}
-                >
-                  Next
-                </AbButton> */}
               </AbStepperStep>
               <AbStepperStep
                 label="Pre-Transition Action"
@@ -379,24 +368,6 @@ const EdgeFormPanel = (props: any) => {
                     type={AbInputTypes.Text}
                   />
                 </AbStack>
-                {/* <div>
-                  <AbButton
-                    style={{ marginTop: "10px", marginRight: "10px" }}
-                    onClick={function noRefCheck() {
-                      setActive(0);
-                    }}
-                    variant="Default"
-                  >
-                    Back
-                  </AbButton>
-                  <AbButton
-                    style={{ marginTop: "10px" }}
-                    onClick={() => setActive(2)}
-                    variant="Primary"
-                  >
-                    Next
-                  </AbButton>
-                </div> */}
               </AbStepperStep>
               <AbStepperStep
                 label="Post-Transition Action"
@@ -460,22 +431,7 @@ const EdgeFormPanel = (props: any) => {
                     type={AbInputTypes.Text}
                   />
                 </AbStack>
-                <div>
-                  {/* <AbButton
-                    style={{ marginTop: "10px", marginRight: "10px" }}
-                    onClick={() => setActive(1)}
-                    variant="Default"
-                  >
-                    Back
-                  </AbButton> */}
-                  {/* <AbButton
-                    type={AbButtonType.submit}
-                    style={{ marginTop: "10px" }}
-                    variant="Primary"
-                  >
-                    Submit
-                  </AbButton> */}
-                </div>
+
               </AbStepperStep>
             </AbStepper>
           </AbPanelBody>
