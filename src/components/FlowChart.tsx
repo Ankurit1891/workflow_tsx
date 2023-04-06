@@ -25,10 +25,15 @@ import EdgeFormPanel from "./EdgeFormPanel";
 import { useBoolean } from "@fluentui/react-hooks";
 import Panel from "./Panel";
 import DialogBox from "./DialogBox";
+import ConditionalPanel from "./ConditionalPanel";
 
 const FlowChart = (props: any) => {
   const [isOpen, { setTrue: openPanel, setFalse: closePanel }] =
     useBoolean(false);
+  const [
+    isOpenConditional,
+    { setTrue: openPanelConditional, setFalse: closePanelConditional },
+  ] = useBoolean(false);
   const [nodeValues, setnodeValues] = useState({
     color: "",
     icon: {},
@@ -57,6 +62,7 @@ const FlowChart = (props: any) => {
   const [nodes, setNodes] = useState(initialNodes);
   const [openModal, setOpenModal] = useState(false);
   const [openEdgeFormModal, setEdgeOpenFormModal] = useState(false);
+  const [openConditionalPanel, setOpenConditionalPanel] = useState(false);
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "div",
@@ -242,15 +248,12 @@ const FlowChart = (props: any) => {
         if (node.description !== "condition") {
           openPanel();
           setEdgeOpenFormModal(true);
+        } else {
+          openPanelConditional();
+          setOpenConditionalPanel(true);
         }
       }
     });
-    //TODO: print the source node
-
-    // openPanel();
-    // setEdgeOpenFormModal(true);
-
-    // setIsPanelOpen(true);
   };
 
   //function on making the mouse entering the edge
@@ -370,6 +373,20 @@ const FlowChart = (props: any) => {
     setEdges(newEdges);
   };
 
+  const alterConditionalEdge = (text: any, data: any, id: any) => {
+    selectedEdge.label = text;
+    selectedEdge.data = data;
+    let newEdges = [];
+    edges.forEach((edge: any, index: any) => {
+      if (edge.id !== id) {
+        newEdges.push(edge);
+      }
+    });
+    newEdges.push(selectedEdge);
+    newEdges.sort();
+    setEdges(newEdges);
+  };
+
   const assignNodeValues = (color: any, icon: any, type: any, text: any) => {
     setnodeValues({ color: color, icon: icon, type: type });
     setnodeName(text);
@@ -420,13 +437,14 @@ const FlowChart = (props: any) => {
 
       {openEdgeFormModal && (
         <EdgeFormPanel
-        alterEdge={onAlterEdge}
-        edge={selectedEdge}
-        isOpen={isOpen}
-        dismissHandler={closePanel}
-        theme={props.theme}
-        setEdgeOpenFormModal={setEdgeOpenFormModal}
+          alterEdge={onAlterEdge}
+          edge={selectedEdge}
+          isOpen={isOpen}
+          dismissHandler={closePanel}
+          theme={props.theme}
+          setEdgeOpenFormModal={setEdgeOpenFormModal}
         />
+
         // <Panel
         //   alterEdge={onAlterEdge}
         //   edge={selectedEdge}
@@ -435,6 +453,16 @@ const FlowChart = (props: any) => {
         //   theme={props.theme}
         //   setEdgeOpenFormModal={setEdgeOpenFormModal}
         // />
+      )}
+      {openConditionalPanel && (
+        <ConditionalPanel
+          alterConditionalEdge={alterConditionalEdge}
+          edge={selectedEdge}
+          isOpen={isOpenConditional}
+          dismissHandler={closePanelConditional}
+          theme={props.theme}
+          setOpenConditionalPanel={setOpenConditionalPanel}
+        />
       )}
 
       {/* {//Opening the form modal for nodes on right click} */}
@@ -517,7 +545,9 @@ const FlowChart = (props: any) => {
           </ControlButton>
           <ControlButton
             onClick={() => {
-              // exportFlowchart();
+              edges.map((e: any) => {
+                console.log(e);
+              });
             }}
           >
             <BsSave2 />

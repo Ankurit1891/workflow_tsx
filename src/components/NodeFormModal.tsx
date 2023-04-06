@@ -24,7 +24,8 @@ const NodeFormModal = ({
   let description="";
   const nodeFormAcceptHandler = (data: any) => {
     setOpenModal(false);
-    alterNode(stateName, description);
+    
+    alterNode(stateName, nodeData.type);
   };
 
   if (name === "input") {
@@ -41,9 +42,7 @@ const NodeFormModal = ({
   }else if(name==='condition')
   {
     name='Condition';
-    description='condition';
-
-    
+    description='condition';    
   }
   initializeIcons();
   const contentStyles = mergeStyleSets({

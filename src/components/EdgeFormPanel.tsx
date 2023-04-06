@@ -11,6 +11,7 @@ import {
   AbInputTypes,
   AbPanel,
   AbPanelBody,
+  AbPanelFooter,
   AbPanelHeader,
   AbSelect,
   AbSelectOption,
@@ -22,7 +23,7 @@ import {
 const EdgeFormPanel = (props: any) => {
   const [selectedKeySystemCodeData, setSelectedKeySystemCodeData] = useState(
     props.edge.data.SystemEventCode?.actionType ?? ""
-  );// selected key for system event code
+  ); // selected key for system event code
   const [
     selectedKeyPre_Transition_Action_Type,
     setSelectedKeyPre_Transition_Action_Type,
@@ -30,38 +31,34 @@ const EdgeFormPanel = (props: any) => {
     props.edge.data.PreTransitionAction?.PreTransitionType.actionType ?? ""
   ); // 1st pre drop down
 
-
   const [
     selectedKeyPre_Transition_Action,
     setSelectedKeyPre_Transition_Action,
   ] = useState(
     props.edge.data.PreTransitionAction?.PreTransitionAction.actionType ?? ""
-  );// 2nd pre drop down
-
+  ); // 2nd pre drop down
 
   const [
     selectedKeyPost_Transition_Action_Type,
     setSelectedKeyPost_Transition_Action_Type,
   ] = useState(
     props.edge.data.PostTransitionAction?.PostTransitionType.actionType ?? ""
-  );// 1st post drop down
+  ); // 1st post drop down
 
   const [
     selectedKeyPost_Transition_Action,
     setSelectedKeyPost_Transition_Action,
   ] = useState(
     props.edge.data.PostTransitionAction?.PostTransitionAction.actionType ?? ""
-  );// 2nd post drop down
-
+  ); // 2nd post drop down
 
   // system event code drop down list
   const [systemCodeData, setSystemCodeData] = useState<any>([]);
   // system event code change handler
 
   const [onChangeSystemEventCode, setOnChangeSystemEventCode] = useState(
-    props.edge.data.SystemEventCode??{actionType:"",input:""}
+    props.edge.data.SystemEventCode ?? { actionType: "", input: "" }
   );
-
 
   // primary Drop Down List
   const [preTransitionDropDownList, setPreTransitionDropDownList]: any =
@@ -70,26 +67,34 @@ const EdgeFormPanel = (props: any) => {
     useState([]);
 
   // primary drop down handler
-  const [preTransitionActionType, setPreTransitionActionType] = useState(props.edge.data?.PreTransitionAction?.PreTransitionType??{
-    actionType: 0,
-    input: "",
-  });
-  const [postTransitionActionType, setPostTransitionActionType] = useState(props.edge.data?.PostTransitionAction?.PostTransitionType??{
-    actionType: 0,
-    input: "",
-  });
+  const [preTransitionActionType, setPreTransitionActionType] = useState(
+    props.edge.data?.PreTransitionAction?.PreTransitionType ?? {
+      actionType: 0,
+      input: "",
+    }
+  );
+  const [postTransitionActionType, setPostTransitionActionType] = useState(
+    props.edge.data?.PostTransitionAction?.PostTransitionType ?? {
+      actionType: 0,
+      input: "",
+    }
+  );
 
   // secondary drop down handler
   const [preTransitionActionTypeData, setPreTransitionActionTypeData] =
-    useState(props.edge.data?.PreTransitionAction?.PreTransitionAction??{
-      actionType: 0,
-      input: "",
-    });
+    useState(
+      props.edge.data?.PreTransitionAction?.PreTransitionAction ?? {
+        actionType: 0,
+        input: "",
+      }
+    );
   const [postTransitionActionTypeData, setPostTransitionActionTypeData] =
-    useState(props.edge.data?.PostTransitionAction?.PostTransitionAction??{
-      actionType: 0,
-      input: 0,
-    });
+    useState(
+      props.edge.data?.PostTransitionAction?.PostTransitionAction ?? {
+        actionType: 0,
+        input: 0,
+      }
+    );
 
   // secondary drop down list
   const [
@@ -171,22 +176,19 @@ const EdgeFormPanel = (props: any) => {
         setSystemCodeData(json.codes);
       });
     if (props.edge.data !== "") {
-      console.log(
-        selectedKeyPre_Transition_Action_Type,
-        selectedKeyPost_Transition_Action_Type
-      );
+      setSelectedKeySystemCodeData(props.edge.data.SystemEventCode?.actionType);
       const url = `/api/pre_transition_action/${selectedKeyPre_Transition_Action_Type}`;
       fetch(url)
         .then((res) => res.json())
         .then((json) => {
           setPreTransitionActionDropDownList(json.data);
         });
-        const url1 = `/api/post_transition_action/${selectedKeyPost_Transition_Action_Type}`;
-    fetch(url1)
-      .then((res) => res.json())
-      .then((json) => {
-        setPostTransitionActionDropDownList(json.data);
-      });
+      const url1 = `/api/post_transition_action/${selectedKeyPost_Transition_Action_Type}`;
+      fetch(url1)
+        .then((res) => res.json())
+        .then((json) => {
+          setPostTransitionActionDropDownList(json.data);
+        });
     }
     fetch("/api/pre_transition_options")
       .then((res) => res.json())
@@ -214,6 +216,7 @@ const EdgeFormPanel = (props: any) => {
   };
 
   const onSubmit = (data: any) => {
+    console.log('ada');
     const edgeObj = {
       TransitionName: data.Transition_Name,
       SystemEventCode: onChangeSystemEventCode,
@@ -236,7 +239,9 @@ const EdgeFormPanel = (props: any) => {
 
   return (
     <ThemeProvider theme={AbDarkTheme}>
+      <form onSubmit={handleSubmit(onSubmit)}>
       <AbPanel
+      key={props.edge.id}
         lightDismiss={true}
         isOpen={props.isOpen}
         placement={"right"}
@@ -244,15 +249,16 @@ const EdgeFormPanel = (props: any) => {
         size="L"
         modalLike={true}
       >
+        
         <AbPanelHeader>
           <span style={{ fontSize: "20px", fontWeight: "600" }}>
             Transition
           </span>
         </AbPanelHeader>
-        <AbPanelBody>
-          <form onSubmit={handleSubmit(onSubmit)}>
+        {/* <form onSubmit={handleSubmit(onSubmit)}> */}
+          <AbPanelBody>
             <AbStepper
-              key={1}
+              key={props.edge.id}
               size="small"
               showStepNumbers={false}
               activeIndex={active}
@@ -299,7 +305,7 @@ const EdgeFormPanel = (props: any) => {
                     }
                   })}
                 </AbSelect>
-                <AbButton
+                {/* <AbButton
                   onClick={function noRefCheck() {
                     setActive(1);
                   }}
@@ -309,7 +315,7 @@ const EdgeFormPanel = (props: any) => {
                   }}
                 >
                   Next
-                </AbButton>
+                </AbButton> */}
               </AbStepperStep>
               <AbStepperStep
                 label="Pre-Transition Action"
@@ -373,7 +379,7 @@ const EdgeFormPanel = (props: any) => {
                     type={AbInputTypes.Text}
                   />
                 </AbStack>
-                <div>
+                {/* <div>
                   <AbButton
                     style={{ marginTop: "10px", marginRight: "10px" }}
                     onClick={function noRefCheck() {
@@ -390,7 +396,7 @@ const EdgeFormPanel = (props: any) => {
                   >
                     Next
                   </AbButton>
-                </div>
+                </div> */}
               </AbStepperStep>
               <AbStepperStep
                 label="Post-Transition Action"
@@ -455,26 +461,57 @@ const EdgeFormPanel = (props: any) => {
                   />
                 </AbStack>
                 <div>
-                  <AbButton
+                  {/* <AbButton
                     style={{ marginTop: "10px", marginRight: "10px" }}
                     onClick={() => setActive(1)}
                     variant="Default"
                   >
                     Back
-                  </AbButton>
-                  <AbButton
+                  </AbButton> */}
+                  {/* <AbButton
                     type={AbButtonType.submit}
                     style={{ marginTop: "10px" }}
                     variant="Primary"
                   >
                     Submit
-                  </AbButton>
+                  </AbButton> */}
                 </div>
               </AbStepperStep>
             </AbStepper>
-          </form>
-        </AbPanelBody>
+          </AbPanelBody>
+          <AbPanelFooter>
+            <div>
+              {active > 0 && (
+                <AbButton
+                  style={{ marginTop: "10px", marginRight: "10px" }}
+                  onClick={() => setActive((prev) => prev - 1)}
+                  variant="Default"
+                >
+                  Back
+                </AbButton>
+              )}
+              {active >= 0 && active < 2 && (
+                <AbButton
+                  style={{ marginTop: "10px", marginRight: "10px" }}
+                  onClick={() => setActive((prev) => prev + 1)}
+                  variant="Primary"
+                >
+                  Next
+                </AbButton>
+              )}
+              {active === 2 && (
+                <AbButton
+                  type={AbButtonType.submit}
+                  style={{ marginTop: "10px" }}
+                  variant="Primary"
+                >
+                  Submit
+                </AbButton>
+              )}
+            </div>
+          </AbPanelFooter>
       </AbPanel>
+        </form>
     </ThemeProvider>
   );
 };
