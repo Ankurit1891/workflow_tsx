@@ -53,7 +53,7 @@ const nodeList = [
   {
     key: "type3",
     nodeID: "type3",
-    nodeIcon: <GiAntibody color="#ffffff"/>,
+    nodeIcon: <GiAntibody />,
     nodeHeight: "100px",
     nodeWidth: "fit-content",
     nodeBackgroundColor: "#27294e",

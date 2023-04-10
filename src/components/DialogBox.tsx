@@ -1,6 +1,6 @@
 import React from "react";
 import { Dialog, DialogFooter } from "@fluentui/react/lib/Dialog";
-import { PrimaryButton, DefaultButton } from "@fluentui/react/lib/Button";
+import { DefaultButton } from "@fluentui/react/lib/Button";
 import {
   AbButton,
   AbButtonType,
@@ -45,7 +45,7 @@ const DialogBox = (props: any) => {
             },
             minLength: {
               value: 3,
-              message: "Enter minimum 5 characters ",
+              message: "Enter minimum 3 characters ",
             },
           }}
           required={true}

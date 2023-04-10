@@ -23,7 +23,6 @@ import OptionDialog from "./OptionDialog";
 import NodeFormModal from "./NodeFormModal";
 import EdgeFormPanel from "./EdgeFormPanel";
 import { useBoolean } from "@fluentui/react-hooks";
-import Panel from "./Panel";
 import DialogBox from "./DialogBox";
 import ConditionalPanel from "./ConditionalPanel";
 
@@ -129,6 +128,7 @@ const FlowChart = (props: any) => {
       animated: false,
       color: color,
       style: {
+        backdropFilter: 'blur(2px)',
         backgroundColor: "transparent",
         borderColor: "transparent",
         padding: "8px",
@@ -444,15 +444,6 @@ const FlowChart = (props: any) => {
           theme={props.theme}
           setEdgeOpenFormModal={setEdgeOpenFormModal}
         />
-
-        // <Panel
-        //   alterEdge={onAlterEdge}
-        //   edge={selectedEdge}
-        //   isOpen={isOpen}
-        //   dismissHandler={closePanel}
-        //   theme={props.theme}
-        //   setEdgeOpenFormModal={setEdgeOpenFormModal}
-        // />
       )}
       {openConditionalPanel && (
         <ConditionalPanel

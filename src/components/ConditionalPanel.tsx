@@ -62,12 +62,7 @@ const [selectedKeyOrder, setSelectedKeyOrder] = useState(props.edge.data?.Order?
     maxWidth: "400px",
   };
   useEffect(() => {
-    if(props.edge.data)
-    {
-      // console.log(props.edge.data?.Condition_Type?.actionType);
-      // console.log(props.edge.data?.Order?.actionType);
-      // console.log(props.edge.data?.Condition?.actionType);
-    }
+
     fetch("/api/conditional_next_state")
       .then((res) => res.json())
       .then((json) => {
