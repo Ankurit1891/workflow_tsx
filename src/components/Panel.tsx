@@ -218,7 +218,7 @@ const Panel = (props: any) => {
       }));
     }
     else{
-      console.log('first')
+      // console.log('first')
     }
 
   }, [props.edge.data]);

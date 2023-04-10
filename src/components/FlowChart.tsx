@@ -119,7 +119,7 @@ const FlowChart = (props: any) => {
     }
 
     const newNode = {
-      id: id === null ? `${nodes.length}` : id === 0 ? "0" : id,
+      id: id === null ? `${nodes.length}` : (id === 0) ? "0" : id,
       icon: icon,
       name: name,
       description: description,
@@ -230,9 +230,9 @@ const FlowChart = (props: any) => {
 
   const onNodeLeftClick = (event: any, node: any) => {
     props.updatedNodes(nodes);
-    console.log(
-      `Node ID:${node.id} - Node Name:${node.name} - Node Type:${node.description}`
-    );
+    // console.log(
+    //   `Node ID:${node.id} - Node Name:${node.name} - Node Type:${node.description}`
+    // );
     setOpenDialog(false);
   };
 
@@ -283,7 +283,7 @@ const FlowChart = (props: any) => {
   };
 
   const onAlterNode = (text: any, desc: any) => {
-    if (nodeValues.color !== "#656ac6") {
+    if (nodeValues.type !== "input") {
       onAddNode(
         1212,
         nodeValues.color,
@@ -331,7 +331,7 @@ const FlowChart = (props: any) => {
 
   const submitEditForm = (name: any, node: any) => {
     editNode(name, node);
-    console.log(name, node);
+    // console.log(name, node);
   };
   //edit node
   const editNode = (name: any, node: any) => {
@@ -397,7 +397,7 @@ const FlowChart = (props: any) => {
 
   const onKeyDown = (event: any) => {
     if (event.key === "Backspace") {
-      console.log("first");
+      // console.log("first");
       event.preventDefault();
     }
   };
@@ -456,6 +456,7 @@ const FlowChart = (props: any) => {
       )}
       {openConditionalPanel && (
         <ConditionalPanel
+        nodes={nodes}
           alterConditionalEdge={alterConditionalEdge}
           edge={selectedEdge}
           isOpen={isOpenConditional}
@@ -514,29 +515,53 @@ const FlowChart = (props: any) => {
           <ControlButton
             style={{ width: "wrap-content", padding: "5px" }}
             onClick={() => {
-              let jsonObj: any = {
+                let jsonObj: any = {
                 id: "SingleApprovalHardDeleteWorkflow",
                 States: [],
               };
-
+              let conditionalNodeArray:string[]=[];
+              nodes.map((n)=>{
+                
+                if(n.description==='condition')
+                {
+                  conditionalNodeArray.push(n.id);
+                }
+              })
               nodes.map((n) => {
+                if(n.description!=='condition')
+              {
                 let transition: any = [];
                 let stateObj: any = {
                   name: n.name,
                   Transitions: [],
                 };
                 edges.map((e: any) => {
+                  let conditionalData:any[]=[]
                   if (n.id === e.source) {
+                    if(conditionalNodeArray.includes(e.target))
+                    {
+                        const target=e.target;
+                        edges.map((edge:any)=>{
+                          if(edge.source===target)
+                          {
+                            conditionalData.push(edge.data);
+                          }
+                        })
+                    }
+                    e.data['Conditional_Next_State']=conditionalData;
                     transition.push(e.data);
                   }
+                  conditionalData=[];
                 });
                 stateObj.Transitions = transition;
-                transition = [];
                 jsonObj.States.push(stateObj);
+                
+                transition = [];
                 stateObj = {
                   name: "",
                   Transitions: [],
                 };
+              }
               });
               console.log(JSON.stringify(jsonObj));
             }}

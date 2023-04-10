@@ -64,9 +64,9 @@ const [selectedKeyOrder, setSelectedKeyOrder] = useState(props.edge.data?.Order?
   useEffect(() => {
     if(props.edge.data)
     {
-      console.log(props.edge.data?.Condition_Type?.actionType);
-      console.log(props.edge.data?.Order?.actionType);
-      console.log(props.edge.data?.Condition?.actionType);
+      // console.log(props.edge.data?.Condition_Type?.actionType);
+      // console.log(props.edge.data?.Order?.actionType);
+      // console.log(props.edge.data?.Condition?.actionType);
     }
     fetch("/api/conditional_next_state")
       .then((res) => res.json())
@@ -108,12 +108,20 @@ const [selectedKeyOrder, setSelectedKeyOrder] = useState(props.edge.data?.Order?
   };
 
   const onSubmit = handleSubmit((data: any) => {
-    console.log('NAME: ',data.Conditional_Next_Step_Data , ' Conditional Type : ',conditionalNextStateType, ' Condition: ',conditionData , " Order: ",conditionalOrder);
+    let nextStateName="";
+    props.nodes.map((node:any)=>{
+      if(props.edge.target===node.id)
+      {
+        nextStateName=node.name;
+      }
+    })
+    // console.log('NAME: ',data.Conditional_Next_Step_Data , ' Conditional Type : ',conditionalNextStateType, ' Condition: ',conditionData , " Order: ",conditionalOrder);
     const conditionEdgeObject={
         Condition_Name:data.Conditional_Next_Step_Data,
         Condition_Type:conditionalNextStateType,
         Condition:conditionData,
         Order:conditionalOrder,
+        Conditional_Next_State:nextStateName,
     }
     props.alterConditionalEdge(data.Conditional_Next_Step_Data, conditionEdgeObject, props.edge.id);
     props.setOpenConditionalPanel(false);

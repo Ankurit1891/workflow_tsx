@@ -217,7 +217,7 @@ const EdgeFormPanel = (props: any) => {
   };
 
   const onSubmit = handleSubmit((data: any) => {
-    console.log("ada");
+    // console.log("ada");
     const edgeObj = {
       TransitionName: data.Transition_Name,
       SystemEventCode: onChangeSystemEventCode,
@@ -233,7 +233,7 @@ const EdgeFormPanel = (props: any) => {
         PostTransitionData: data.Post_Transition_Data,
       },
     };
-    console.log(edgeObj);
+    // console.log(edgeObj);
     props.alterEdge(data.Transition_Name, edgeObj, props.edge.id);
     props.setEdgeOpenFormModal(false);
   })

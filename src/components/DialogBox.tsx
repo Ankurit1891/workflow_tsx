@@ -19,7 +19,7 @@ const DialogBox = (props: any) => {
     props.setOpenDialogBox((val: any) => !val);
   };
   const onSubmit = (data: any) => {
-    console.log(data);
+    // console.log(data);
     props.submitEditForm(data.Node_name,props.node);
     dismissHandler();
   };
