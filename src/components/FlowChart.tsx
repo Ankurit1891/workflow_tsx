@@ -128,7 +128,7 @@ const FlowChart = (props: any) => {
       animated: false,
       color: color,
       style: {
-        backdropFilter: 'blur(2px)',
+        // backdropFilter: 'blur(2px)',
         backgroundColor: "transparent",
         borderColor: "transparent",
         padding: "8px",
@@ -204,10 +204,11 @@ const FlowChart = (props: any) => {
         className: "smoothstep",
         animated: false,
         // orient: "auto",
-        labelBgStyle: { fill: "#5c59599e" },
+        labelBgStyle: { fill: "#5c59599e" ,  backdropFilter: 'blur(2px)',},
         labelStyle: {
           fill: "white",
           fontWeight: "400",
+          backdropFilter: 'blur(2px)',
         },
         labelShowBg: true,
         label: "",
@@ -230,15 +231,17 @@ const FlowChart = (props: any) => {
 
   const onNodeLeftClick = (event: any, node: any) => {
     props.updatedNodes(nodes);
-    // console.log(
-    //   `Node ID:${node.id} - Node Name:${node.name} - Node Type:${node.description}`
-    // );
+    console.log(
+      `Node ID:${node.id} - Node Name:${node.name} - Node Type:${node.description}`
+    );
+    setSelectedNode(node);
     setOpenDialog(false);
   };
 
   //function on edge right click
 
   const onEdgeRightClick = (event: any, edge: any) => {
+    setSelectedNode({});
     props.updatedNodes(nodes);
     event.stopPropagation();
     event.preventDefault();
@@ -273,6 +276,7 @@ const FlowChart = (props: any) => {
   };
 
   const onCanvasRightClick = (e: any) => {
+    setSelectedNode({});
     props.updatedNodes(nodes);
     e.preventDefault();
     setCoords({
@@ -322,6 +326,7 @@ const FlowChart = (props: any) => {
 
   // removes node and add a new one
   const onNodeRightClick = (event: any, node: any) => {
+    // setSelectedNode({});
     setSelectedNode(node);
     setOpenDialogBox(true);
     event.stopPropagation();
@@ -478,6 +483,7 @@ const FlowChart = (props: any) => {
         onConnect={onConnect}
         snapToGrid={false}
         onClick={() => {
+          // setSelectedNode({});
           setOpenDialog(false);
         }}
         onNodeClick={onNodeLeftClick}
@@ -539,7 +545,7 @@ const FlowChart = (props: any) => {
                           }
                         })
                     }
-                    e.data['Conditional_Next_State']=conditionalData;
+                    e.data['ConditionalNextState']=conditionalData;
                     transition.push(e.data);
                   }
                   conditionalData=[];

@@ -51,7 +51,7 @@ const OptionDialog = (props: any) => {
 
   const onAddTerminateHandler = () => {
     props.setOpenDialog((val: any) => !val);
-    props.assignNodeValues("#000000", <GoCircleSlash />, "output", "Finish");
+    props.assignNodeValues("#00000065", <GoCircleSlash />, "output", "Finish");
   };
   const onAddCondition = () => {
     props.setOpenDialog((val: any) => !val);

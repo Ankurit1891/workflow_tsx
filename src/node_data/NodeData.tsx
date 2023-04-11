@@ -9,7 +9,7 @@ const initialNodes = [
     description: "start",
     color: "#656AC69F",
     style: {
-      backdropFilter: 'blur(2px)',
+      // backdropFilter: 'blur(2px)',
       padding: "3px",
       backgroundColor: "transparent",
       border: "1px transparent",

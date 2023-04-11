@@ -112,11 +112,11 @@ const [selectedKeyOrder, setSelectedKeyOrder] = useState(props.edge.data?.Order?
     })
     // console.log('NAME: ',data.Conditional_Next_Step_Data , ' Conditional Type : ',conditionalNextStateType, ' Condition: ',conditionData , " Order: ",conditionalOrder);
     const conditionEdgeObject={
-        Condition_Name:data.Conditional_Next_Step_Data,
-        Condition_Type:conditionalNextStateType,
+        ConditionName:data.Conditional_Next_Step_Data,
+        ConditionType:conditionalNextStateType,
         Condition:conditionData,
         Order:conditionalOrder,
-        Conditional_Next_State:nextStateName,
+        ConditionalNextStateName:nextStateName,
     }
     props.alterConditionalEdge(data.Conditional_Next_Step_Data, conditionEdgeObject, props.edge.id);
     props.setOpenConditionalPanel(false);
