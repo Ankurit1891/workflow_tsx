@@ -200,6 +200,7 @@ const FlowChart = (props: any) => {
         target: target,
         strokeWidth: 1,
         data: "",
+        objectModal:"",
         type: "smoothstep",
         className: "smoothstep",
         animated: false,
@@ -364,9 +365,10 @@ const FlowChart = (props: any) => {
     }
   };
 
-  const onAlterEdge = (text: any, desc: any, id: any) => {
+  const onAlterEdge = (text: any, desc: any,desc1:any, id: any) => {
     selectedEdge.label = text;
     selectedEdge.data = desc;
+    selectedEdge.objectModal=desc1;
     let newEdges = [];
     edges.forEach((edge: any, index: any) => {
       if (edge.id !== id) {
@@ -378,9 +380,10 @@ const FlowChart = (props: any) => {
     setEdges(newEdges);
   };
 
-  const alterConditionalEdge = (text: any, data: any, id: any) => {
+  const alterConditionalEdge = (text: any, data: any, data1:any,  id: any) => {
     selectedEdge.label = text;
     selectedEdge.data = data;
+    selectedEdge.objectModal=data1;
     let newEdges = [];
     edges.forEach((edge: any, index: any) => {
       if (edge.id !== id) {
@@ -533,7 +536,7 @@ const FlowChart = (props: any) => {
                   Transitions: [],
                 };
                 edges.map((e: any) => {
-                  let conditionalData:any[]=[]
+                  let conditionalData:any[]=[];
                   if (n.id === e.source) {
                     if(conditionalNodeArray.includes(e.target))
                     {
@@ -541,12 +544,23 @@ const FlowChart = (props: any) => {
                         edges.map((edge:any)=>{
                           if(edge.source===target)
                           {
-                            conditionalData.push(edge.data);
+                            conditionalData.push(edge.objectModal);
                           }
                         })
                     }
-                    e.data['ConditionalNextState']=conditionalData;
-                    transition.push(e.data);
+                    if(conditionalData.length!==0)
+                    {
+                      e.objectModal['ConditionalNextState']=conditionalData;
+                    }
+                    else{
+                      nodes.map((n)=>{
+                        if(n.id===e.target)
+                        {
+                          e.objectModal['ConditionalNextState']={NextState:n.name};
+                        }
+                      })
+                    }
+                    transition.push(e.objectModal);
                   }
                   conditionalData=[];
                 });

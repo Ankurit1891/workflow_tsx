@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import {
   AbButton,
   AbButtonType,
-  AbDarkTheme,
   AbInput,
   AbInputTypes,
   AbPanel,
@@ -116,9 +115,17 @@ const [selectedKeyOrder, setSelectedKeyOrder] = useState(props.edge.data?.Order?
         ConditionType:conditionalNextStateType,
         Condition:conditionData,
         Order:conditionalOrder,
-        ConditionalNextStateName:nextStateName,
+        NextState:nextStateName,
     }
-    props.alterConditionalEdge(data.Conditional_Next_Step_Data, conditionEdgeObject, props.edge.id);
+    const objectModal=
+    {
+      ConditionName:data.Conditional_Next_Step_Data,
+        ConditionType:conditionalNextStateType.input,
+        Condition:conditionData.input,
+        Order:conditionalOrder.input,
+        NextState:nextStateName,
+    }
+    props.alterConditionalEdge(data.Conditional_Next_Step_Data, conditionEdgeObject, objectModal,props.edge.id);
     props.setOpenConditionalPanel(false);
   });
   const onChangeOrder = (e: any, option: any) => {

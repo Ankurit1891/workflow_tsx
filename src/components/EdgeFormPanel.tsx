@@ -233,8 +233,22 @@ const EdgeFormPanel = (props: any) => {
         PostTransitionData: data.Post_Transition_Data,
       },
     };
-    // console.log(edgeObj);
-    props.alterEdge(data.Transition_Name, edgeObj, props.edge.id);
+    const objectModal={
+      TransitionName: data.Transition_Name,
+      SystemEventCode: onChangeSystemEventCode.input,
+      PreTransitionAction: {
+        PreTransitionType: preTransitionActionType,
+        PreTransitionAction: preTransitionActionTypeData,
+        PreTransitionData: data.Pre_Transition_Data,
+      },
+
+      PostTransitionAction: {
+        PostTransitionType: postTransitionActionType,
+        PostTransitionAction: postTransitionActionTypeData,
+        PostTransitionData: data.Post_Transition_Data,
+      },
+    };
+    props.alterEdge(data.Transition_Name, edgeObj, objectModal, props.edge.id);
     props.setEdgeOpenFormModal(false);
   })
 
