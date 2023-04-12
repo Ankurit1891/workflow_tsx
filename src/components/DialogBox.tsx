@@ -44,8 +44,8 @@ const DialogBox = (props: any) => {
               message: "Maximum length exceeded",
             },
             minLength: {
-              value: 3,
-              message: "Enter minimum 3 characters ",
+              value: 5,
+              message: "Enter minimum 5 characters ",
             },
           }}
           required={true}

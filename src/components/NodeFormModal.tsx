@@ -140,8 +140,8 @@ const NodeFormModal = ({
                 label="State Name"
                 rules={{
                   required: "This is required",
-                  minLength: { value: 3, message: "Minimun value 3" },
-                  maxLength: { value: 15, message: "Maximum val 10" },
+                  minLength: { value: 5, message: "Minimum value 5" },
+                  maxLength: { value: 15, message: "Maximum length exceeded" },
                 }}
                 placeholder="Enter state name  here"
               />
