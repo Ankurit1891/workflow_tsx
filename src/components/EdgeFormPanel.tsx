@@ -287,7 +287,7 @@ const EdgeFormPanel = (props: any) => {
                     rules={{
                       required: "This field is required",
                       maxLength: {
-                        value: 10,
+                        value: 20,
                         message: "Maximum length exceeded",
                       },
                       minLength: {

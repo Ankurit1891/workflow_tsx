@@ -91,7 +91,7 @@ const CustomNode = (props: any) => {
       ) : (
         <div
           ref={drag}
-          style={{ backgroundColor: "transparent", transform: "rotate(0deg)" }}
+          style={{ backgroundColor: "transparent", transform: "rotate(0deg)" ,width:props.parent==='rightBar'?'':'5px',height:props.parent==='rightBar'?'':'0px',display:'flex',justifyContent:'center',alignItems:'center',padding:'0px',margin:'0px'}}
         >
           <motion.div
             className="rhombus"
@@ -100,23 +100,23 @@ const CustomNode = (props: any) => {
               rotate: 45,
               scale: props.parent === "rightBar" ? 1.1 : 1,
               cursor: "pointer",
-              marginTop: props.parent === "rightBar" ? "35px" : "7px",
-              marginBottom: props.parent === "rightBar" ? "35px" : "7px",
+              marginTop: props.parent === "rightBar" ? "35px" : "0px",
+              marginBottom: props.parent === "rightBar" ? "35px" : "0px",
             }}
             style={{
-              marginLeft: props.parent === "rightBar" ? "40px" : "5px",
-              marginRight: props.parent === "rightBar" ? "47px" : "5px",
-              paddingLeft: props.parent === "rightBar" ? "0px" : "5px",
-              marginTop: props.parent === "rightBar" ? "30px" : "7px",
-              marginBottom: props.parent === "rightBar" ? "30px" : "7px",
-              width: props.parent === "rightBar" ? "120px" : "65px",
-              height: props.parent === "rightBar" ? "120px" : "65px",
+              marginLeft: props.parent === "rightBar" ? "40px" : "0px",
+              marginRight: props.parent === "rightBar" ? "47px" : "0px",
+              paddingLeft: props.parent === "rightBar" ? "0px" : "0px",
+              marginTop: props.parent === "rightBar" ? "30px" : "-10px",
+              marginBottom: props.parent === "rightBar" ? "30px" : "-10px",
+              width: props.parent === "rightBar" ? "120px" : "5px",
+              height: props.parent === "rightBar" ? "120px" : "5px",
               border:
                 props.parent === "rightBar" && props.theme
                   ? "1px solid black"
                   : props.parent === "rightBar" && props.theme === false
-                  ? "1px solid #ffffff"
-                  : "1px solid #ffffff",
+                  ? "0px solid #ffffff"
+                  : "0px solid #ffffff",
             }}
           >
             <div
@@ -129,23 +129,23 @@ const CustomNode = (props: any) => {
               <span
                 style={{
                   color: "#ffffff",
-                  marginTop: props.parent === "rightBar" ? "-2px" : "-10px",
-                  marginLeft: props.parent === "rightBar" ? "25px" : "-33px",
+                  marginTop: props.parent === "rightBar" ? "-2px" : "0px",
+                  marginLeft: props.parent === "rightBar" ? "25px" : "0px",
                   fontSize: props.parent === "rightBar" ? "18px" : "",
                 }}
               >
-                {props.NodeIcon}
+                 {props.parent === "rightBar" ?props.NodeIcon:""}
               </span>
               <span
                 style={{
                   color: "white",
                   fontWeight: "600",
-                  marginLeft: props.parent === "rightBar" ? "-13px" : "-35px",
+                  marginLeft: props.parent === "rightBar" ? "-13px" : "",
                   fontSize: props.parent === "rightBar" ? "18px" : "",
                   marginTop: props.parent === "rightBar" ? "14px" : "",
                 }}
               >
-                <i>{props.NodeName}</i>
+                <i>{props.parent === "rightBar" ?props.NodeName:""}</i>
               </span>
             </div>
             <br />
