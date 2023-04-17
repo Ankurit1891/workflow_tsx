@@ -12,6 +12,8 @@ import ReactFlow, {
   MiniMap,
   Controls,
   BackgroundVariant,
+  Handle,
+  NodeMouseHandler,
 } from "reactflow";
 
 import "../App.css";
@@ -118,7 +120,7 @@ const FlowChart = (props: any) => {
     }
 
     const newNode = {
-      id: id === null ? `${nodes.length}` : (id === 0) ? "0" : id,
+      id: id === null ? `${nodes.length}` : id === 0 ? "0" : id,
       icon: icon,
       name: name,
       description: description,
@@ -135,6 +137,7 @@ const FlowChart = (props: any) => {
         width: "fit-content",
         border: "1px solid transparent",
       },
+
       data: {
         isSelectable: true,
         label: (
@@ -200,16 +203,16 @@ const FlowChart = (props: any) => {
         target: target,
         strokeWidth: 1,
         data: "",
-        objectModal:"",
+        objectModal: "",
         type: "smoothstep",
         className: "smoothstep",
         animated: false,
         // orient: "auto",
-        labelBgStyle: { fill: "#5c59599e" ,  backdropFilter: 'blur(2px)',},
+        labelBgStyle: { fill: "#5c59599e", backdropFilter: "blur(2px)" },
         labelStyle: {
           fill: "white",
           fontWeight: "400",
-          backdropFilter: 'blur(2px)',
+          backdropFilter: "blur(2px)",
         },
         labelShowBg: true,
         label: "",
@@ -253,8 +256,8 @@ const FlowChart = (props: any) => {
           openPanel();
           setEdgeOpenFormModal(true);
         } else {
-          openPanelConditional();
-          setOpenConditionalPanel(true);
+          // openPanelConditional();
+          // setOpenConditionalPanel(true);
         }
       }
     });
@@ -365,10 +368,10 @@ const FlowChart = (props: any) => {
     }
   };
 
-  const onAlterEdge = (text: any, desc: any,desc1:any, id: any) => {
+  const onAlterEdge = (text: any, desc: any, desc1: any, id: any) => {
     selectedEdge.label = text;
     selectedEdge.data = desc;
-    selectedEdge.objectModal=desc1;
+    selectedEdge.objectModal = desc1;
     let newEdges = [];
     edges.forEach((edge: any, index: any) => {
       if (edge.id !== id) {
@@ -380,10 +383,10 @@ const FlowChart = (props: any) => {
     setEdges(newEdges);
   };
 
-  const alterConditionalEdge = (text: any, data: any, data1:any,  id: any) => {
+  const alterConditionalEdge = (text: any, data: any, data1: any, id: any) => {
     selectedEdge.label = text;
     selectedEdge.data = data;
-    selectedEdge.objectModal=data1;
+    selectedEdge.objectModal = data1;
     let newEdges = [];
     edges.forEach((edge: any, index: any) => {
       if (edge.id !== id) {
@@ -409,7 +412,15 @@ const FlowChart = (props: any) => {
       event.preventDefault();
     }
   };
-
+  const onNodeDoubleClick: any = (event: any, node: any) => {
+    setSelectedNode(node);
+    props.updatedNodes(nodes);
+    if(node.description==='condition')
+    {
+      openPanelConditional();
+      setOpenConditionalPanel(true);
+    }
+  };
   return (
     <div
       onKeyDown={onKeyDown}
@@ -455,7 +466,7 @@ const FlowChart = (props: any) => {
       )}
       {openConditionalPanel && (
         <ConditionalPanel
-        nodes={nodes}
+          nodes={nodes}
           alterConditionalEdge={alterConditionalEdge}
           edge={selectedEdge}
           isOpen={isOpenConditional}
@@ -489,6 +500,7 @@ const FlowChart = (props: any) => {
           // setSelectedNode({});
           setOpenDialog(false);
         }}
+        onNodeDoubleClick={onNodeDoubleClick}
         onNodeClick={onNodeLeftClick}
         onNodeContextMenu={onNodeRightClick}
         onEdgeContextMenu={onEdgeRightClick}
@@ -515,64 +527,58 @@ const FlowChart = (props: any) => {
           <ControlButton
             style={{ width: "wrap-content", padding: "5px" }}
             onClick={() => {
-                let jsonObj: any = {
+              let jsonObj: any = {
                 id: "SingleApprovalHardDeleteWorkflow",
                 States: [],
               };
-              let conditionalNodeArray:string[]=[];
-              nodes.map((n)=>{
-                
-                if(n.description==='condition')
-                {
+              let conditionalNodeArray: string[] = [];
+              nodes.map((n) => {
+                if (n.description === "condition") {
                   conditionalNodeArray.push(n.id);
                 }
-              })
+              });
               nodes.map((n) => {
-                if(n.description!=='condition')
-              {
-                let transition: any = [];
-                let stateObj: any = {
-                  name: n.name,
-                  Transitions: [],
-                };
-                edges.map((e: any) => {
-                  let conditionalData:any[]=[];
-                  if (n.id === e.source) {
-                    if(conditionalNodeArray.includes(e.target))
-                    {
-                        const target=e.target;
-                        edges.map((edge:any)=>{
-                          if(edge.source===target)
-                          {
+                if (n.description !== "condition") {
+                  let transition: any = [];
+                  let stateObj: any = {
+                    name: n.name,
+                    Transitions: [],
+                  };
+                  edges.map((e: any) => {
+                    let conditionalData: any[] = [];
+                    if (n.id === e.source) {
+                      if (conditionalNodeArray.includes(e.target)) {
+                        const target = e.target;
+                        edges.map((edge: any) => {
+                          if (edge.source === target) {
                             conditionalData.push(edge.objectModal);
                           }
-                        })
+                        });
+                      }
+                      if (conditionalData.length !== 0) {
+                        e.objectModal["ConditionalNextState"] = conditionalData;
+                      } else {
+                        nodes.map((n) => {
+                          if (n.id === e.target) {
+                            e.objectModal["ConditionalNextState"] = {
+                              NextState: n.name,
+                            };
+                          }
+                        });
+                      }
+                      transition.push(e.objectModal);
                     }
-                    if(conditionalData.length!==0)
-                    {
-                      e.objectModal['ConditionalNextState']=conditionalData;
-                    }
-                    else{
-                      nodes.map((n)=>{
-                        if(n.id===e.target)
-                        {
-                          e.objectModal['ConditionalNextState']={NextState:n.name};
-                        }
-                      })
-                    }
-                    transition.push(e.objectModal);
-                  }
-                  conditionalData=[];
-                });
-                stateObj.Transitions = transition;
-                jsonObj.States.push(stateObj);
-                
-                transition = [];
-                stateObj = {
-                  name: "",
-                  Transitions: [],
-                };
-              }
+                    conditionalData = [];
+                  });
+                  stateObj.Transitions = transition;
+                  jsonObj.States.push(stateObj);
+
+                  transition = [];
+                  stateObj = {
+                    name: "",
+                    Transitions: [],
+                  };
+                }
               });
               console.log(JSON.stringify(jsonObj));
             }}
