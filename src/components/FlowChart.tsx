@@ -420,6 +420,7 @@ const FlowChart = (props: any) => {
       openPanelConditional();
       setOpenConditionalPanel(true);
     }
+    console.log('hi');
   };
   return (
     <div
