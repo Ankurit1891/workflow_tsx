@@ -1,5 +1,6 @@
 /* eslint-disable array-callback-return */
 import { useCallback, useRef, useState } from "react";
+import { create } from "zustand";
 import "reactflow/dist/style.css";
 import { BsSave2 } from "react-icons/bs";
 import { BsFillPrinterFill } from "react-icons/bs";
@@ -14,6 +15,7 @@ import ReactFlow, {
   BackgroundVariant,
   Handle,
   NodeMouseHandler,
+  Position,
 } from "reactflow";
 
 import "../App.css";
@@ -27,10 +29,20 @@ import EdgeFormPanel from "./EdgeFormPanel";
 import { useBoolean } from "@fluentui/react-hooks";
 import DialogBox from "./DialogBox";
 import ConditionalPanel from "./ConditionalPanel";
+import ConditionalNodePanel from "./ConditionalNodePanel";
+// import { shallow } from "zustand/shallow";
+
+import "reactflow/dist/style.css";
+
+const useMyStore = create((set) => ({
+  storeNode: { initialNodes },
+  setStoreNode: (newNode: any) => set({ storeNode: newNode }),
+}));
 
 const FlowChart = (props: any) => {
   const [isOpen, { setTrue: openPanel, setFalse: closePanel }] =
     useBoolean(false);
+
   const [
     isOpenConditional,
     { setTrue: openPanelConditional, setFalse: closePanelConditional },
@@ -40,6 +52,8 @@ const FlowChart = (props: any) => {
     icon: {},
     type: "",
   });
+  const storeNode = useMyStore((state: any) => state.storeNode);
+  const setStoreNode = useMyStore((state: any) => state.setStoreNode);
   const [openDialogBox, setOpenDialogBox] = useState(false);
   const [nodeName, setnodeName] = useState("");
   const [coords, setCoords] = useState({ x: 0, y: 0 });
@@ -137,11 +151,22 @@ const FlowChart = (props: any) => {
         width: "fit-content",
         border: "1px solid transparent",
       },
-
+      sourceHandles: [
+        {
+          id: 'source1',
+          position: Position.Top,
+        },
+        {
+          id: 'source1',
+          position: Position.Left,
+        },
+      ],
+      // targetPosition: [Position.Left],
       data: {
         isSelectable: true,
         label: (
           <>
+            
             <CustomNode
               NodeIcon={icon}
               NodeDescription={description}
@@ -170,16 +195,23 @@ const FlowChart = (props: any) => {
     };
     if (id !== 0) {
       setNodes((prevNode) => {
+        const arr = [newNode, ...prevNode];
+        setStoreNode(arr);
+        console.log(arr);
         return [...prevNode, newNode];
       });
     } else if (nodes[0].id !== "0") {
       setNodes((prevNode) => {
+        const arr = [newNode, ...prevNode];
+        setStoreNode(arr);
+        console.log(arr);
         return [newNode, ...prevNode];
       });
     }
 
     props.updatedNodes(nodes);
   };
+
   const onNodesChange = useCallback(
     (changes: any) => setNodes((nds): any => applyNodeChanges(changes, nds)),
     [setNodes]
@@ -195,10 +227,12 @@ const FlowChart = (props: any) => {
   // onconnect the edge (adding the edge)
 
   const onConnect = (params: any) => {
+    console.log(params);
     if (!openEdgeFormModal) {
       const { source, target } = params;
       const newEdge = {
         id: `e${source}->${target}`,
+        sourceHandle: params.sourceHandle,
         source: source,
         target: target,
         strokeWidth: 1,
@@ -207,7 +241,7 @@ const FlowChart = (props: any) => {
         type: "smoothstep",
         className: "smoothstep",
         animated: false,
-        // orient: "auto",
+
         labelBgStyle: { fill: "#5c59599e", backdropFilter: "blur(2px)" },
         labelStyle: {
           fill: "white",
@@ -223,6 +257,7 @@ const FlowChart = (props: any) => {
       };
       setEdges([...edges, newEdge]);
       props.updatedNodes(nodes);
+      // console.log(storeNode)
     }
   };
 
@@ -404,7 +439,7 @@ const FlowChart = (props: any) => {
     setOpenModal(true);
     props.updatedNodes(nodes);
   };
-  const reactFlowWrapper = useRef(null);
+  // const reactFlowWrapper = useRef(null);
 
   const onKeyDown = (event: any) => {
     if (event.key === "Backspace") {
@@ -415,12 +450,11 @@ const FlowChart = (props: any) => {
   const onNodeDoubleClick: any = (event: any, node: any) => {
     setSelectedNode(node);
     props.updatedNodes(nodes);
-    if(node.description==='condition')
-    {
+    if (node.description === "condition") {
       openPanelConditional();
       setOpenConditionalPanel(true);
     }
-    console.log('hi');
+    console.log("hi");
   };
   return (
     <div
@@ -466,13 +500,19 @@ const FlowChart = (props: any) => {
         />
       )}
       {openConditionalPanel && (
-        <ConditionalPanel
-          nodes={nodes}
-          alterConditionalEdge={alterConditionalEdge}
-          edge={selectedEdge}
-          isOpen={isOpenConditional}
+        // <ConditionalPanel
+        //   nodes={nodes}
+        //   alterConditionalEdge={alterConditionalEdge}
+        //   edge={selectedEdge}
+        //   isOpen={isOpenConditional}
+        //   dismissHandler={closePanelConditional}
+        //   theme={props.theme}
+        //   setOpenConditionalPanel={setOpenConditionalPanel}
+        // />
+        <ConditionalNodePanel
+          node={selectedNode}
           dismissHandler={closePanelConditional}
-          theme={props.theme}
+          isOpen={isOpenConditional}
           setOpenConditionalPanel={setOpenConditionalPanel}
         />
       )}
@@ -490,7 +530,7 @@ const FlowChart = (props: any) => {
       )}
 
       <ReactFlow
-        ref={reactFlowWrapper}
+        // ref={reactFlowWrapper}
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}

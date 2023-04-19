@@ -3,12 +3,13 @@ import React from "react";
 import { useDrag } from "react-dnd";
 import { motion } from "framer-motion";
 import "../App.css";
-import { Handle, Position } from 'reactflow';
+// import { Handle, Position } from "react-flow-renderer";
+import { Handle, Position } from "reactflow";
 const CustomNode = (props: any) => {
   const x = Math.trunc(Math.random() * 500);
   const y = Math.trunc(Math.random() * 50);
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: "div",    
+    type: "div",
     item: {
       id: props.NodeID,
       x: x,
@@ -39,7 +40,7 @@ const CustomNode = (props: any) => {
     <>
       {props.NodebackgroundColor !== "#27294e" ? (
         <motion.div
-          ref={drag}
+          ref={props.parent === "rightBar" ? drag:null}
           key={props.key}
           whileHover={{
             scale: props.parent === "rightBar" ? 1.1 : 1,
@@ -63,11 +64,43 @@ const CustomNode = (props: any) => {
             paddingBottom: props.parent === "rightBar" ? "15px" : "7px",
           }}
         >
-          {console.log(props.NodebackgroundColor)}
+          {props.parent !== "rightBar" && (
+            <Handle
+            onConnect={(params) => {
+              console.log(params);
+            }}
+            id={`${props.nodeID}_S_R`}
+              type="source"
+              position={Position.Right}
+            />
+          )}
+          {props.parent !== "rightBar" && (
+            <Handle
+              type="source"
+              onConnect={(params) => {
+                console.log(params);
+              }}
+              id={`${props.nodeID}_S_B`}
+              position={Position.Bottom}
+            // isConnectable={true}
+            />
+          )}
+          {props.parent !== "rightBar" && (
+            <Handle
+            id={`${props.nodeID}_S_T`}
+            isConnectable={true}
+            // isConnectable={true}
+              type="target"
+              position={Position.Top}
+            />
+          )}
           <div style={{ display: "flex", flexDirection: "row" }}>
             <span
               style={{
-                color: props.NodebackgroundColor==='#FFFFFF'?"#000000":'#ffffff',
+                color:
+                  props.NodebackgroundColor === "#FFFFFF"
+                    ? "#000000"
+                    : "#ffffff",
                 marginRight: "10px",
                 marginTop: props.parent === "rightBar" ? "-2px" : "5px",
                 fontSize: props.parent === "rightBar" ? "18px" : "",
@@ -77,7 +110,10 @@ const CustomNode = (props: any) => {
             </span>
             <div
               style={{
-                color: props.NodebackgroundColor==='#FFFFFF'?"#000000":'#ffffff',
+                color:
+                  props.NodebackgroundColor === "#FFFFFF"
+                    ? "#000000"
+                    : "#ffffff",
                 fontWeight: "600",
                 textAlign: "left",
                 marginTop: props.parent === "rightBar" ? "-3px" : "-5px",
@@ -145,8 +181,9 @@ const CustomNode = (props: any) => {
                   fontSize: props.parent === "rightBar" ? "18px" : "",
                 }}
               >
-                {props.NodeIcon}</span>
-                <span
+                {props.NodeIcon}
+              </span>
+              <span
                 style={{
                   color: "white",
                   fontWeight: "600",
