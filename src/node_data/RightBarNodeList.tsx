@@ -42,7 +42,7 @@ const nodeList = [
     nodeIcon: <SiMobxstatetree />,
     nodeHeight: "100px",
     nodeWidth: "fit-content",
-    nodeBackgroundColor: "#63616142",
+    nodeBackgroundColor: "#FFFFFF",
     nodeBorderRadius: "10px",
     nodeMargin: "10px",
     nodePadding: "20px",

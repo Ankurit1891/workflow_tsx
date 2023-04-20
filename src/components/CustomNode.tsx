@@ -3,7 +3,8 @@ import React from "react";
 import { useDrag } from "react-dnd";
 import { motion } from "framer-motion";
 import "../App.css";
-
+// import { Handle, Position } from "react-flow-renderer";
+import { Handle, Position } from "reactflow";
 const CustomNode = (props: any) => {
   const x = Math.trunc(Math.random() * 500);
   const y = Math.trunc(Math.random() * 50);
@@ -39,7 +40,7 @@ const CustomNode = (props: any) => {
     <>
       {props.NodebackgroundColor !== "#27294e" ? (
         <motion.div
-          ref={drag}
+          ref={props.parent === "rightBar" ? drag : null}
           key={props.key}
           whileHover={{
             scale: props.parent === "rightBar" ? 1.1 : 1,
@@ -66,7 +67,10 @@ const CustomNode = (props: any) => {
           <div style={{ display: "flex", flexDirection: "row" }}>
             <span
               style={{
-                color: "white",
+                color:
+                  props.NodebackgroundColor === "#FFFFFF"
+                    ? "#000000"
+                    : "#ffffff",
                 marginRight: "10px",
                 marginTop: props.parent === "rightBar" ? "-2px" : "5px",
                 fontSize: props.parent === "rightBar" ? "18px" : "",
@@ -76,7 +80,10 @@ const CustomNode = (props: any) => {
             </span>
             <div
               style={{
-                color: "white",
+                color:
+                  props.NodebackgroundColor === "#FFFFFF"
+                    ? "#000000"
+                    : "#ffffff",
                 fontWeight: "600",
                 textAlign: "left",
                 marginTop: props.parent === "rightBar" ? "-3px" : "-5px",
@@ -86,13 +93,54 @@ const CustomNode = (props: any) => {
               <i>{props.NodeName}</i>
             </div>
           </div>
+
           <br />
         </motion.div>
       ) : (
         <div
-          ref={drag}
-          style={{ backgroundColor: "transparent", transform: "rotate(0deg)" ,width:props.parent==='rightBar'?'':'5px',height:props.parent==='rightBar'?'':'0px',display:'flex',justifyContent:'center',alignItems:'center',padding:'0px',margin:'0px'}}
+          ref={props.parent === "rightBar" ? drag : null}
+          style={{
+            zIndex:'0',
+            backgroundColor: "transparent",
+            transform: "rotate(0deg)",
+            width: props.parent === "rightBar" ? "" : "100px",
+            height: props.parent === "rightBar" ? "" : "100px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "0px",
+            margin: "0px",
+          }}
         >
+          {props.parent !== "rightBar" && (
+            <div>
+              <Handle
+                onConnect={(params) => console.log("handle onConnect", params)}
+                type="source"
+                position={Position.Bottom}
+                id={`${props.id}_S_B`}
+                key={`${props.id}_S_B`}
+                isConnectable={true}
+              />
+              <Handle
+                onConnect={(params) => console.log("handle onConnect", params)}
+                type="source"
+                position={Position.Right}
+                id={`${props.id}_S_R`}
+                key={`${props.id}_S_R`}
+                isConnectable={true}
+              />
+              <Handle
+              
+                onConnect={(params) => console.log("handle onConnect", params)}
+                type="target"
+                position={Position.Top}
+                id={`${props.id}_T_T`}
+                key={`${props.id}_T_T`}
+                isConnectable={true}
+              />
+            </div>
+          )}
           <motion.div
             className="rhombus"
             initial={{ rotate: 45 }}
@@ -109,14 +157,14 @@ const CustomNode = (props: any) => {
               paddingLeft: props.parent === "rightBar" ? "0px" : "0px",
               marginTop: props.parent === "rightBar" ? "30px" : "-10px",
               marginBottom: props.parent === "rightBar" ? "30px" : "-10px",
-              width: props.parent === "rightBar" ? "120px" : "5px",
-              height: props.parent === "rightBar" ? "120px" : "5px",
+              width: props.parent === "rightBar" ? "120px" : "70px",
+              height: props.parent === "rightBar" ? "120px" : "70px",
               border:
                 props.parent === "rightBar" && props.theme
                   ? "1px solid black"
                   : props.parent === "rightBar" && props.theme === false
-                  ? "0px solid #ffffff"
-                  : "0px solid #ffffff",
+                  ? "1px solid #ffffff"
+                  : "1px solid #ffffff",
             }}
           >
             <div
@@ -129,23 +177,23 @@ const CustomNode = (props: any) => {
               <span
                 style={{
                   color: "#ffffff",
-                  marginTop: props.parent === "rightBar" ? "-2px" : "0px",
-                  marginLeft: props.parent === "rightBar" ? "25px" : "0px",
+                  marginTop: props.parent === "rightBar" ? "-2px" : "-10px",
+                  marginLeft: props.parent === "rightBar" ? "25px" : "-29px",
                   fontSize: props.parent === "rightBar" ? "18px" : "",
                 }}
               >
-                 {props.parent === "rightBar" ?props.NodeIcon:""}
+                {props.NodeIcon}
               </span>
               <span
                 style={{
                   color: "white",
                   fontWeight: "600",
-                  marginLeft: props.parent === "rightBar" ? "-13px" : "",
+                  marginLeft: props.parent === "rightBar" ? "-13px" : "-30px",
                   fontSize: props.parent === "rightBar" ? "18px" : "",
-                  marginTop: props.parent === "rightBar" ? "14px" : "",
+                  marginTop: props.parent === "rightBar" ? "14px" : "10px",
                 }}
               >
-                <i>{props.parent === "rightBar" ?props.NodeName:""}</i>
+                <i>{props.NodeName}</i>
               </span>
             </div>
             <br />

@@ -1,5 +1,6 @@
 /* eslint-disable array-callback-return */
 import { useCallback, useRef, useState } from "react";
+import { create } from "zustand";
 import "reactflow/dist/style.css";
 import { BsSave2 } from "react-icons/bs";
 import { BsFillPrinterFill } from "react-icons/bs";
@@ -12,6 +13,9 @@ import ReactFlow, {
   MiniMap,
   Controls,
   BackgroundVariant,
+  Handle,
+  NodeMouseHandler,
+  Position,
 } from "reactflow";
 
 import "../App.css";
@@ -25,10 +29,20 @@ import EdgeFormPanel from "./EdgeFormPanel";
 import { useBoolean } from "@fluentui/react-hooks";
 import DialogBox from "./DialogBox";
 import ConditionalPanel from "./ConditionalPanel";
+import ConditionalNodePanel from "./ConditionalNodePanel";
+// import { shallow } from "zustand/shallow";
+
+import "reactflow/dist/style.css";
+
+const useMyStore = create((set) => ({
+  storeNode: { initialNodes },
+  setStoreNode: (newNode: any) => set({ storeNode: newNode }),
+}));
 
 const FlowChart = (props: any) => {
   const [isOpen, { setTrue: openPanel, setFalse: closePanel }] =
     useBoolean(false);
+
   const [
     isOpenConditional,
     { setTrue: openPanelConditional, setFalse: closePanelConditional },
@@ -38,6 +52,8 @@ const FlowChart = (props: any) => {
     icon: {},
     type: "",
   });
+  const storeNode = useMyStore((state: any) => state.storeNode);
+  const setStoreNode = useMyStore((state: any) => state.setStoreNode);
   const [openDialogBox, setOpenDialogBox] = useState(false);
   const [nodeName, setnodeName] = useState("");
   const [coords, setCoords] = useState({ x: 0, y: 0 });
@@ -116,9 +132,9 @@ const FlowChart = (props: any) => {
         type = "default";
         break;
     }
-
+    const uid=id === null ? `${nodes.length}` : id === 0 ? "0" : id;
     const newNode = {
-      id: id === null ? `${nodes.length}` : (id === 0) ? "0" : id,
+      id: uid,
       icon: icon,
       name: name,
       description: description,
@@ -128,18 +144,20 @@ const FlowChart = (props: any) => {
       animated: false,
       color: color,
       style: {
-        // backdropFilter: 'blur(2px)',
         backgroundColor: "transparent",
         borderColor: "transparent",
-        padding: "8px",
+        padding: color === "#27294e"?"0px":'7px',
         width: "fit-content",
         border: "1px solid transparent",
       },
+      
       data: {
         isSelectable: true,
         label: (
           <>
+            
             <CustomNode
+              id={uid}
               NodeIcon={icon}
               NodeDescription={description}
               Nodeheight={height}
@@ -167,16 +185,23 @@ const FlowChart = (props: any) => {
     };
     if (id !== 0) {
       setNodes((prevNode) => {
+        const arr = [newNode, ...prevNode];
+        setStoreNode(arr);
+        console.log(arr);
         return [...prevNode, newNode];
       });
     } else if (nodes[0].id !== "0") {
       setNodes((prevNode) => {
+        const arr = [newNode, ...prevNode];
+        setStoreNode(arr);
+        console.log(arr);
         return [newNode, ...prevNode];
       });
     }
 
     props.updatedNodes(nodes);
   };
+
   const onNodesChange = useCallback(
     (changes: any) => setNodes((nds): any => applyNodeChanges(changes, nds)),
     [setNodes]
@@ -192,24 +217,27 @@ const FlowChart = (props: any) => {
   // onconnect the edge (adding the edge)
 
   const onConnect = (params: any) => {
+    console.log(params);
     if (!openEdgeFormModal) {
       const { source, target } = params;
       const newEdge = {
         id: `e${source}->${target}`,
+        sourceHandle: params.sourceHandle,
+        targetHandle:params.targetHandle,
         source: source,
         target: target,
         strokeWidth: 1,
         data: "",
-        objectModal:"",
+        objectModal: "",
         type: "smoothstep",
         className: "smoothstep",
         animated: false,
-        // orient: "auto",
-        labelBgStyle: { fill: "#5c59599e" ,  backdropFilter: 'blur(2px)',},
+
+        labelBgStyle: { fill: "#5c59599e", backdropFilter: "blur(2px)" },
         labelStyle: {
           fill: "white",
           fontWeight: "400",
-          backdropFilter: 'blur(2px)',
+          backdropFilter: "blur(2px)",
         },
         labelShowBg: true,
         label: "",
@@ -220,6 +248,7 @@ const FlowChart = (props: any) => {
       };
       setEdges([...edges, newEdge]);
       props.updatedNodes(nodes);
+      // console.log(storeNode)
     }
   };
 
@@ -253,8 +282,8 @@ const FlowChart = (props: any) => {
           openPanel();
           setEdgeOpenFormModal(true);
         } else {
-          openPanelConditional();
-          setOpenConditionalPanel(true);
+          // openPanelConditional();
+          // setOpenConditionalPanel(true);
         }
       }
     });
@@ -365,10 +394,10 @@ const FlowChart = (props: any) => {
     }
   };
 
-  const onAlterEdge = (text: any, desc: any,desc1:any, id: any) => {
+  const onAlterEdge = (text: any, desc: any, desc1: any, id: any) => {
     selectedEdge.label = text;
     selectedEdge.data = desc;
-    selectedEdge.objectModal=desc1;
+    selectedEdge.objectModal = desc1;
     let newEdges = [];
     edges.forEach((edge: any, index: any) => {
       if (edge.id !== id) {
@@ -380,10 +409,10 @@ const FlowChart = (props: any) => {
     setEdges(newEdges);
   };
 
-  const alterConditionalEdge = (text: any, data: any, data1:any,  id: any) => {
+  const alterConditionalEdge = (text: any, data: any, data1: any, id: any) => {
     selectedEdge.label = text;
     selectedEdge.data = data;
-    selectedEdge.objectModal=data1;
+    selectedEdge.objectModal = data1;
     let newEdges = [];
     edges.forEach((edge: any, index: any) => {
       if (edge.id !== id) {
@@ -401,7 +430,7 @@ const FlowChart = (props: any) => {
     setOpenModal(true);
     props.updatedNodes(nodes);
   };
-  const reactFlowWrapper = useRef(null);
+  // const reactFlowWrapper = useRef(null);
 
   const onKeyDown = (event: any) => {
     if (event.key === "Backspace") {
@@ -409,7 +438,15 @@ const FlowChart = (props: any) => {
       event.preventDefault();
     }
   };
-
+  const onNodeDoubleClick: any = (event: any, node: any) => {
+    setSelectedNode(node);
+    props.updatedNodes(nodes);
+    if (node.description === "condition") {
+      openPanelConditional();
+      setOpenConditionalPanel(true);
+    }
+    console.log("hi");
+  };
   return (
     <div
       onKeyDown={onKeyDown}
@@ -454,13 +491,19 @@ const FlowChart = (props: any) => {
         />
       )}
       {openConditionalPanel && (
-        <ConditionalPanel
-        nodes={nodes}
-          alterConditionalEdge={alterConditionalEdge}
-          edge={selectedEdge}
-          isOpen={isOpenConditional}
+        // <ConditionalPanel
+        //   nodes={nodes}
+        //   alterConditionalEdge={alterConditionalEdge}
+        //   edge={selectedEdge}
+        //   isOpen={isOpenConditional}
+        //   dismissHandler={closePanelConditional}
+        //   theme={props.theme}
+        //   setOpenConditionalPanel={setOpenConditionalPanel}
+        // />
+        <ConditionalNodePanel
+          node={selectedNode}
           dismissHandler={closePanelConditional}
-          theme={props.theme}
+          isOpen={isOpenConditional}
           setOpenConditionalPanel={setOpenConditionalPanel}
         />
       )}
@@ -478,7 +521,6 @@ const FlowChart = (props: any) => {
       )}
 
       <ReactFlow
-        ref={reactFlowWrapper}
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
@@ -489,6 +531,7 @@ const FlowChart = (props: any) => {
           // setSelectedNode({});
           setOpenDialog(false);
         }}
+        onNodeDoubleClick={onNodeDoubleClick}
         onNodeClick={onNodeLeftClick}
         onNodeContextMenu={onNodeRightClick}
         onEdgeContextMenu={onEdgeRightClick}
@@ -515,64 +558,58 @@ const FlowChart = (props: any) => {
           <ControlButton
             style={{ width: "wrap-content", padding: "5px" }}
             onClick={() => {
-                let jsonObj: any = {
+              let jsonObj: any = {
                 id: "SingleApprovalHardDeleteWorkflow",
                 States: [],
               };
-              let conditionalNodeArray:string[]=[];
-              nodes.map((n)=>{
-                
-                if(n.description==='condition')
-                {
+              let conditionalNodeArray: string[] = [];
+              nodes.map((n) => {
+                if (n.description === "condition") {
                   conditionalNodeArray.push(n.id);
                 }
-              })
+              });
               nodes.map((n) => {
-                if(n.description!=='condition')
-              {
-                let transition: any = [];
-                let stateObj: any = {
-                  name: n.name,
-                  Transitions: [],
-                };
-                edges.map((e: any) => {
-                  let conditionalData:any[]=[];
-                  if (n.id === e.source) {
-                    if(conditionalNodeArray.includes(e.target))
-                    {
-                        const target=e.target;
-                        edges.map((edge:any)=>{
-                          if(edge.source===target)
-                          {
+                if (n.description !== "condition") {
+                  let transition: any = [];
+                  let stateObj: any = {
+                    name: n.name,
+                    Transitions: [],
+                  };
+                  edges.map((e: any) => {
+                    let conditionalData: any[] = [];
+                    if (n.id === e.source) {
+                      if (conditionalNodeArray.includes(e.target)) {
+                        const target = e.target;
+                        edges.map((edge: any) => {
+                          if (edge.source === target) {
                             conditionalData.push(edge.objectModal);
                           }
-                        })
+                        });
+                      }
+                      if (conditionalData.length !== 0) {
+                        e.objectModal["ConditionalNextState"] = conditionalData;
+                      } else {
+                        nodes.map((n) => {
+                          if (n.id === e.target) {
+                            e.objectModal["ConditionalNextState"] = {
+                              NextState: n.name,
+                            };
+                          }
+                        });
+                      }
+                      transition.push(e.objectModal);
                     }
-                    if(conditionalData.length!==0)
-                    {
-                      e.objectModal['ConditionalNextState']=conditionalData;
-                    }
-                    else{
-                      nodes.map((n)=>{
-                        if(n.id===e.target)
-                        {
-                          e.objectModal['ConditionalNextState']={NextState:n.name};
-                        }
-                      })
-                    }
-                    transition.push(e.objectModal);
-                  }
-                  conditionalData=[];
-                });
-                stateObj.Transitions = transition;
-                jsonObj.States.push(stateObj);
-                
-                transition = [];
-                stateObj = {
-                  name: "",
-                  Transitions: [],
-                };
-              }
+                    conditionalData = [];
+                  });
+                  stateObj.Transitions = transition;
+                  jsonObj.States.push(stateObj);
+
+                  transition = [];
+                  stateObj = {
+                    name: "",
+                    Transitions: [],
+                  };
+                }
               });
               console.log(JSON.stringify(jsonObj));
             }}
