@@ -132,9 +132,9 @@ const FlowChart = (props: any) => {
         type = "default";
         break;
     }
-
+    const uid=id === null ? `${nodes.length}` : id === 0 ? "0" : id;
     const newNode = {
-      id: id === null ? `${nodes.length}` : id === 0 ? "0" : id,
+      id: uid,
       icon: icon,
       name: name,
       description: description,
@@ -144,30 +144,20 @@ const FlowChart = (props: any) => {
       animated: false,
       color: color,
       style: {
-        // backdropFilter: 'blur(2px)',
         backgroundColor: "transparent",
         borderColor: "transparent",
-        padding: "8px",
+        padding: color === "#27294e"?"0px":'7px',
         width: "fit-content",
         border: "1px solid transparent",
       },
-      sourceHandles: [
-        {
-          id: 'source1',
-          position: Position.Top,
-        },
-        {
-          id: 'source1',
-          position: Position.Left,
-        },
-      ],
-      // targetPosition: [Position.Left],
+      
       data: {
         isSelectable: true,
         label: (
           <>
             
             <CustomNode
+              id={uid}
               NodeIcon={icon}
               NodeDescription={description}
               Nodeheight={height}
@@ -233,6 +223,7 @@ const FlowChart = (props: any) => {
       const newEdge = {
         id: `e${source}->${target}`,
         sourceHandle: params.sourceHandle,
+        targetHandle:params.targetHandle,
         source: source,
         target: target,
         strokeWidth: 1,
@@ -530,7 +521,6 @@ const FlowChart = (props: any) => {
       )}
 
       <ReactFlow
-        // ref={reactFlowWrapper}
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}

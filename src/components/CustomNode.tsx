@@ -40,7 +40,7 @@ const CustomNode = (props: any) => {
     <>
       {props.NodebackgroundColor !== "#27294e" ? (
         <motion.div
-          ref={props.parent === "rightBar" ? drag:null}
+          ref={props.parent === "rightBar" ? drag : null}
           key={props.key}
           whileHover={{
             scale: props.parent === "rightBar" ? 1.1 : 1,
@@ -64,36 +64,6 @@ const CustomNode = (props: any) => {
             paddingBottom: props.parent === "rightBar" ? "15px" : "7px",
           }}
         >
-          {props.parent !== "rightBar" && (
-            <Handle
-            onConnect={(params) => {
-              console.log(params);
-            }}
-            id={`${props.nodeID}_S_R`}
-              type="source"
-              position={Position.Right}
-            />
-          )}
-          {props.parent !== "rightBar" && (
-            <Handle
-              type="source"
-              onConnect={(params) => {
-                console.log(params);
-              }}
-              id={`${props.nodeID}_S_B`}
-              position={Position.Bottom}
-            // isConnectable={true}
-            />
-          )}
-          {props.parent !== "rightBar" && (
-            <Handle
-            id={`${props.nodeID}_S_T`}
-            isConnectable={true}
-            // isConnectable={true}
-              type="target"
-              position={Position.Top}
-            />
-          )}
           <div style={{ display: "flex", flexDirection: "row" }}>
             <span
               style={{
@@ -123,16 +93,18 @@ const CustomNode = (props: any) => {
               <i>{props.NodeName}</i>
             </div>
           </div>
+
           <br />
         </motion.div>
       ) : (
         <div
-          ref={drag}
+          ref={props.parent === "rightBar" ? drag : null}
           style={{
+            zIndex:'0',
             backgroundColor: "transparent",
             transform: "rotate(0deg)",
-            width: props.parent === "rightBar" ? "" : "90px",
-            height: props.parent === "rightBar" ? "" : "90px",
+            width: props.parent === "rightBar" ? "" : "100px",
+            height: props.parent === "rightBar" ? "" : "100px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -140,6 +112,35 @@ const CustomNode = (props: any) => {
             margin: "0px",
           }}
         >
+          {props.parent !== "rightBar" && (
+            <div>
+              <Handle
+                onConnect={(params) => console.log("handle onConnect", params)}
+                type="source"
+                position={Position.Bottom}
+                id={`${props.id}_S_B`}
+                key={`${props.id}_S_B`}
+                isConnectable={true}
+              />
+              <Handle
+                onConnect={(params) => console.log("handle onConnect", params)}
+                type="source"
+                position={Position.Right}
+                id={`${props.id}_S_R`}
+                key={`${props.id}_S_R`}
+                isConnectable={true}
+              />
+              <Handle
+              
+                onConnect={(params) => console.log("handle onConnect", params)}
+                type="target"
+                position={Position.Top}
+                id={`${props.id}_T_T`}
+                key={`${props.id}_T_T`}
+                isConnectable={true}
+              />
+            </div>
+          )}
           <motion.div
             className="rhombus"
             initial={{ rotate: 45 }}
