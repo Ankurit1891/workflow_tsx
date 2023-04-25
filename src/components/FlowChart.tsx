@@ -17,7 +17,7 @@ import ReactFlow, {
   NodeMouseHandler,
   Position,
 } from "reactflow";
-
+import ButtonEdge from './ButtonEdge';
 import "../App.css";
 import { nodeStyle } from "../node_data/RightBarNodeList";
 import { initialEdges, initialNodes } from "../node_data/NodeData";
@@ -132,7 +132,7 @@ const FlowChart = (props: any) => {
         type = "default";
         break;
     }
-    const uid=id === null ? `${nodes.length}` : id === 0 ? "0" : id;
+    const uid = id === null ? `${nodes.length}` : id === 0 ? "0" : id;
     const newNode = {
       id: uid,
       icon: icon,
@@ -146,16 +146,15 @@ const FlowChart = (props: any) => {
       style: {
         backgroundColor: "transparent",
         borderColor: "transparent",
-        padding: color === "#27294e"?"0px":'7px',
+        padding: color === "#27294e" ? "0px" : "7px",
         width: "fit-content",
         border: "1px solid transparent",
       },
-      
+
       data: {
         isSelectable: true,
         label: (
           <>
-            
             <CustomNode
               id={uid}
               NodeIcon={icon}
@@ -217,20 +216,26 @@ const FlowChart = (props: any) => {
   // onconnect the edge (adding the edge)
 
   const onConnect = (params: any) => {
-    console.log(params);
+    let type= "smoothstep";
     if (!openEdgeFormModal) {
       const { source, target } = params;
+      nodes.map((node) => {
+        if (node.id === source && node.description === "condition" ) {
+          console.log(params);
+          type= 'buttonedge';
+        }
+      });
       const newEdge = {
         id: `e${source}->${target}`,
         sourceHandle: params.sourceHandle,
-        targetHandle:params.targetHandle,
+        targetHandle: params.targetHandle,
         source: source,
         target: target,
         strokeWidth: 1,
         data: "",
         objectModal: "",
-        type: "smoothstep",
-        className: "smoothstep",
+        type: type,
+        className: type,
         animated: false,
 
         labelBgStyle: { fill: "#5c59599e", backdropFilter: "blur(2px)" },
@@ -447,6 +452,10 @@ const FlowChart = (props: any) => {
     }
     console.log("hi");
   };
+  const edgeTypes:any = {
+    buttonedge: ButtonEdge,
+  };
+  
   return (
     <div
       onKeyDown={onKeyDown}
@@ -531,6 +540,7 @@ const FlowChart = (props: any) => {
           // setSelectedNode({});
           setOpenDialog(false);
         }}
+        
         onNodeDoubleClick={onNodeDoubleClick}
         onNodeClick={onNodeLeftClick}
         onNodeContextMenu={onNodeRightClick}
@@ -538,6 +548,7 @@ const FlowChart = (props: any) => {
         onEdgeMouseEnter={onEdgeMouseEnter}
         onEdgeMouseLeave={onEdgeMouseLeave}
         onContextMenu={onCanvasRightClick}
+        edgeTypes={edgeTypes}
         fitView
       >
         <Background
@@ -619,6 +630,9 @@ const FlowChart = (props: any) => {
           <ControlButton
             onClick={() => {
               edges.map((e: any) => {
+                console.log(e);
+              });
+              nodes.map((e) => {
                 console.log(e);
               });
             }}

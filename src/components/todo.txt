@@ -1,1 +1,3 @@
-submit the form for the normal panel
+on drop add node
+adding drop down for the edge after condition
+open panel for condition

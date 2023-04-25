@@ -8,6 +8,7 @@ import { server } from "./api_data/event_code";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 server;
 root.render(
   <React.StrictMode>
