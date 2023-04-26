@@ -144,6 +144,7 @@ const FlowChart = (props: any) => {
       animated: false,
       color: color,
       style: {
+        backdropFilter: "blur(1px)",
         backgroundColor: "transparent",
         borderColor: "transparent",
         padding: color === "#27294e" ? "0px" : "7px",
@@ -201,6 +202,10 @@ const FlowChart = (props: any) => {
     props.updatedNodes(nodes);
   };
 
+  const onEdgeDropDownChange = (val:any,id:any) => {
+    console.log('this is sone data',val , 'id ',id);
+  };
+
   const onNodesChange = useCallback(
     (changes: any) => setNodes((nds): any => applyNodeChanges(changes, nds)),
     [setNodes]
@@ -213,10 +218,16 @@ const FlowChart = (props: any) => {
     ),
   };
 
+  // const onDropdownChange=(val:any,id:any)=>{
+  //   onEdgeDropDownChange(val,id);
+  // }
   // onconnect the edge (adding the edge)
-
+  const da=()=>{
+    console.log('w');
+  }
   const onConnect = (params: any) => {
     let type= "smoothstep";
+    let dropdownData='True';
     if (!openEdgeFormModal) {
       const { source, target } = params;
       nodes.map((node) => {
@@ -232,12 +243,12 @@ const FlowChart = (props: any) => {
         source: source,
         target: target,
         strokeWidth: 1,
-        data: "",
+        data: dropdownData,
+        // onDropdownChange:onEdgeDropDownChange,
         objectModal: "",
         type: type,
         className: type,
         animated: false,
-
         labelBgStyle: { fill: "#5c59599e", backdropFilter: "blur(2px)" },
         labelStyle: {
           fill: "white",
@@ -452,6 +463,7 @@ const FlowChart = (props: any) => {
     }
     console.log("hi");
   };
+  
   const edgeTypes:any = {
     buttonedge: ButtonEdge,
   };
@@ -536,9 +548,11 @@ const FlowChart = (props: any) => {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         snapToGrid={false}
-        onClick={() => {
+        onClick={(e) => {
           // setSelectedNode({});
+          e.preventDefault();
           setOpenDialog(false);
+          // console.log('clicked');
         }}
         
         onNodeDoubleClick={onNodeDoubleClick}

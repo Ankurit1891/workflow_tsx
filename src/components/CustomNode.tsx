@@ -131,7 +131,6 @@ const CustomNode = (props: any) => {
                 isConnectable={true}
               />
               <Handle
-              
                 onConnect={(params) => console.log("handle onConnect", params)}
                 type="target"
                 position={Position.Top}
