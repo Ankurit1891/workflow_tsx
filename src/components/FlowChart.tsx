@@ -151,7 +151,7 @@ const FlowChart = (props: any) => {
         width: "fit-content",
         border: "1px solid transparent",
       },
-
+      
       data: {
         isSelectable: true,
         label: (
@@ -390,7 +390,6 @@ const FlowChart = (props: any) => {
       if (name === "" || name === null) {
         name = node.name;
       }
-      const desc = "";
       removeNode(node.id);
       onAddNode(
         nodeCp.keyId,
@@ -400,7 +399,7 @@ const FlowChart = (props: any) => {
         nodeCp.icon,
         name,
         nodeCp.type,
-        desc,
+        node.description,
         id,
         node.position.x,
         node.position.y

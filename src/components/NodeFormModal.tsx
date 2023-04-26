@@ -89,6 +89,7 @@ const NodeFormModal = ({
     handleSubmit,
     watch,
     control,
+    // eslint-disable-next-line no-empty-pattern
     formState: {},
   } = useForm({
     mode: "all",

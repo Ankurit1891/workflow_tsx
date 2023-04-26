@@ -1,0 +1,311 @@
+{
+  "Id": "DoubleApprovalHardDeleteCustomer",
+  "States": [
+    {
+      "Name": "Start",
+      "Transitions": [
+        {
+          "TransitionName": "OnAdd",
+          "SystemEventCode": "OnAdd",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 200,
+              "Condition": "",
+              "Order": 1,
+              "NextState": "AddApprovalPending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "AddApprovalPending",
+      "Transitions": [
+        {
+          "TransitionName": "OnAddApprove-L1",
+          "SystemEventCode": "OnIntermediateApprove",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 200,
+              "Condition": "",
+              "Order": 1,
+              "NextState": "AddApprovalPending"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnAddApprove-L2",
+          "SystemEventCode": "OnApprove",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 200,
+              "Condition": "",
+              "Order": 1,
+              "NextState": "Approved"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnAddReject-L1",
+          "SystemEventCode": "OnReject",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 200,
+              "Condition": "",
+              "Order": 1,
+              "NextState": "Finish"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnAddReject-L2",
+          "SystemEventCode": "OnReject",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 200,
+              "Condition": "",
+              "Order": 1,
+              "NextState": "Finish"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnEdit",
+          "SystemEventCode": "OnEdit",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 203,
+              "Condition": "Surya.Ab.MakerChecker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null | Surya.Ab.MakerChecker.MakerCondition",
+              "Order": 1,
+              "NextState": "AddApprovalPending"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnWithdraw",
+          "SystemEventCode": "OnWithdraw",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 203,
+              "Condition": "Surya.Ab.MakerChecker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null | Surya.Ab.MakerChecker.MakerCondition",
+              "Order": 1,
+              "NextState": "Finish"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "Approved",
+      "Transitions": [
+        {
+          "TransitionName": "OnEdit",
+          "SystemEventCode": "OnEdit",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 203,
+              "Condition": "Surya.Ab.MakerChecker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null | Surya.Ab.MakerChecker.MakerCondition",
+              "Order": 1,
+              "NextState": "EditApprovalPending"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnDelete",
+          "SystemEventCode": "OnDelete",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 203,
+              "Condition": "Surya.Ab.MakerChecker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null | Surya.Ab.MakerChecker.MakerCondition",
+              "Order": 1,
+              "NextState": "DeleteApprovalPending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "EditApprovalPending",
+      "Transitions": [
+        {
+          "TransitionName": "OnEditApprove-L1",
+          "SystemEventCode": "OnIntermediateApprove",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 200,
+              "Condition": "",
+              "Order": 1,
+              "NextState": "EditApprovalPending"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnEditApprove-L2",
+          "SystemEventCode": "OnApprove",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 200,
+              "Condition": "",
+              "Order": 1,
+              "NextState": "Approved"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnEditReject-L1",
+          "SystemEventCode": "OnReject",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 200,
+              "Condition": "",
+              "Order": 1,
+              "NextState": "Approved"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnEditReject-L2",
+          "SystemEventCode": "OnReject",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 200,
+              "Condition": "",
+              "Order": 1,
+              "NextState": "Approved"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnEdit",
+          "SystemEventCode": "OnEdit",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 203,
+              "Condition": "Surya.Ab.MakerChecker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null | Surya.Ab.MakerChecker.MakerCondition",
+              "Order": 1,
+              "NextState": "EditApprovalPending"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnEditWithdraw",
+          "SystemEventCode": "OnWithdraw",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 203,
+              "Condition": "Surya.Ab.MakerChecker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null | Surya.Ab.MakerChecker.MakerCondition",
+              "Order": 1,
+              "NextState": "EditApprovalPending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "DeleteApprovalPending",
+      "Transitions": [
+        {
+          "TransitionName": "OnDeleteApprove-L1",
+          "SystemEventCode": "OnIntermediateApprove",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 200,
+              "Condition": "",
+              "Order": 1,
+              "NextState": "DeleteApprovalPending"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnDeleteApprove-L2",
+          "SystemEventCode": "OnApprove",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 200,
+              "Condition": "",
+              "Order": 1,
+              "NextState": "Finish"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnDeleteReject-L1",
+          "SystemEventCode": "OnReject",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 200,
+              "Condition": "",
+              "Order": 1,
+              "NextState": "Approved"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnDeleteReject-L2",
+          "SystemEventCode": "OnReject",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 200,
+              "Condition": "",
+              "Order": 1,
+              "NextState": "Approved"
+            }
+          ]
+        },
+        {
+          "TransitionName": "OnEditWithdraw",
+          "SystemEventCode": "OnWithdraw",
+          "PreTransitionAction": {},
+          "PostTransitionAction": {},
+          "ConditionalNextStates": [
+            {
+              "ConditionType": 203,
+              "Condition": "Surya.Ab.MakerChecker, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null | Surya.Ab.MakerChecker.MakerCondition",
+              "Order": 1,
+              "NextState": "DeleteApprovalPending"
+            }
+          ]
+        }
+      ]
+    },
+    { "Name": "Finish" }
+  ]
+}

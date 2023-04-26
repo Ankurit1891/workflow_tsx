@@ -109,7 +109,6 @@ const [selectedKeyOrder, setSelectedKeyOrder] = useState(props.edge.data?.Order?
         nextStateName=node.name;
       }
     })
-    // console.log('NAME: ',data.Conditional_Next_Step_Data , ' Conditional Type : ',conditionalNextStateType, ' Condition: ',conditionData , " Order: ",conditionalOrder);
     const conditionEdgeObject={
         ConditionName:data.Conditional_Next_Step_Data,
         ConditionType:conditionalNextStateType,

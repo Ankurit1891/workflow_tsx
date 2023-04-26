@@ -124,7 +124,7 @@ const ConditionalNodePanel = (props: any) => {
       conditionalOrder: conditionalOrder2,
       conditionData: conditionData2,
     };
-    console.log(`OBJECT 1 = > `, JSON.stringify(obj1));
+    console.log(`OBJECT = > `, JSON.stringify(obj1));
 
     // let nextStateName = "";
     // props.nodes.map((node: any) => {
