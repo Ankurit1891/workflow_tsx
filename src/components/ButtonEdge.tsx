@@ -70,9 +70,8 @@ export default function ButtonEdge(
       >
         <div
           style={{
-            width: "80px",
+            width: "50px",
             height: "50px",
-            color: "teal",
             backgroundColor: "transparent",
             borderRadius: "5px",
             fontSize: "15px",
@@ -83,7 +82,7 @@ export default function ButtonEdge(
             defaultChecked={value}
             value={value}
             style={{
-              width: "110px",
+              width: "50px",
               padding: "3px",
               fontSize: "10px",
               backgroundColor: "transparent",

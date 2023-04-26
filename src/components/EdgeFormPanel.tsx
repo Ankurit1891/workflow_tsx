@@ -282,6 +282,7 @@ const EdgeFormPanel = (props: any) => {
               <AbStepperStep label="Transition Name" key="Transition Name">
                 <AbStack style={widthStyleLabel}>
                   <AbInput
+                  autoFocus
                     name={"Transition_Name"}
                     control={control}
                     rules={{
@@ -325,6 +326,7 @@ const EdgeFormPanel = (props: any) => {
                 key="Pre-Transition Action"
               >
                 <AbSelect
+                autoFocus={true}
                   name={"Pre_Transition_Action_Type"}
                   key={"PreTransitionActionType1"}
                   label="Pre-Transition Action Type"
@@ -388,6 +390,7 @@ const EdgeFormPanel = (props: any) => {
                 key="Post-Transition Action"
               >
                 <AbSelect
+                autoFocus
                   required={true}
                   key={"PostTransitionActionType1"}
                   label="Post-Transition Action Type"

@@ -34,6 +34,7 @@ const DialogBox = (props: any) => {
     <Dialog hidden={false} onDismiss={dismissHandler} dialogContentProps={dialogContentProps} >
       <form onSubmit={handleSubmit(onSubmit)}>
         <AbInput
+        autoFocus
         key={'Node_name'}
           name={"Node_name"}
           control={control}
