@@ -17,7 +17,7 @@ import ReactFlow, {
   NodeMouseHandler,
   Position,
 } from "reactflow";
-import ButtonEdge from './ButtonEdge';
+import ButtonEdge from "./ButtonEdge";
 import "../App.css";
 import { nodeStyle } from "../node_data/RightBarNodeList";
 import { initialEdges, initialNodes } from "../node_data/NodeData";
@@ -202,9 +202,6 @@ const FlowChart = (props: any) => {
     props.updatedNodes(nodes);
   };
 
-  const onEdgeDropDownChange = (val:any,id:any) => {
-    console.log('this is sone data',val , 'id ',id);
-  };
 
   const onNodesChange = useCallback(
     (changes: any) => setNodes((nds): any => applyNodeChanges(changes, nds)),
@@ -218,22 +215,21 @@ const FlowChart = (props: any) => {
     ),
   };
 
-  // const onDropdownChange=(val:any,id:any)=>{
-  //   onEdgeDropDownChange(val,id);
-  // }
-  // onconnect the edge (adding the edge)
-  const da=()=>{
-    console.log('w');
+  const onDropdownChange=(val:any,id:any)=>{
+    console.log(id);
+    console.log(edges);
   }
+  
+  // onconnect the edge (adding the edge)
   const onConnect = (params: any) => {
-    let type= "smoothstep";
-    let dropdownData='True';
+    let type = "smoothstep";
+    let dropdownData = "True";
     if (!openEdgeFormModal) {
       const { source, target } = params;
       nodes.map((node) => {
-        if (node.id === source && node.description === "condition" ) {
+        if (node.id === source && node.description === "condition") {
           console.log(params);
-          type= 'buttonedge';
+          type = "buttonedge";
         }
       });
       const newEdge = {
@@ -243,8 +239,10 @@ const FlowChart = (props: any) => {
         source: source,
         target: target,
         strokeWidth: 1,
-        data: dropdownData,
-        // onDropdownChange:onEdgeDropDownChange,
+        data: {
+          value: dropdownData,
+          onDropdownChange: onDropdownChange,
+        },
         objectModal: "",
         type: type,
         className: type,
@@ -255,6 +253,7 @@ const FlowChart = (props: any) => {
           fontWeight: "400",
           backdropFilter: "blur(2px)",
         },
+
         labelShowBg: true,
         label: "",
         markerEnd: {
@@ -264,7 +263,6 @@ const FlowChart = (props: any) => {
       };
       setEdges([...edges, newEdge]);
       props.updatedNodes(nodes);
-      // console.log(storeNode)
     }
   };
 
@@ -463,11 +461,11 @@ const FlowChart = (props: any) => {
     }
     console.log("hi");
   };
-  
-  const edgeTypes:any = {
+
+  const edgeTypes: any = {
     buttonedge: ButtonEdge,
   };
-  
+
   return (
     <div
       onKeyDown={onKeyDown}
@@ -554,7 +552,6 @@ const FlowChart = (props: any) => {
           setOpenDialog(false);
           // console.log('clicked');
         }}
-        
         onNodeDoubleClick={onNodeDoubleClick}
         onNodeClick={onNodeLeftClick}
         onNodeContextMenu={onNodeRightClick}

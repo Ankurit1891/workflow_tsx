@@ -2,14 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getSmoothStepPath } from "reactflow";
 
 import "../index.css";
-import { AbSelect, AbSelectOption } from "@surya-soft/surya-ab-reactui";
 
 const foreignObjectSize = 40;
-
-const onEdgeClick = (evt: any, id: any) => {
-  evt.stopPropagation();
-  alert(`remove ${id}`);
-};
 
 export default function ButtonEdge(
   {
@@ -24,7 +18,6 @@ export default function ButtonEdge(
     data,
     markerEnd,
   }: any,
-  onDropdownChange: any
 ) {
   const [edgePath, labelX, labelY] = getSmoothStepPath({
     sourceX,
@@ -35,7 +28,7 @@ export default function ButtonEdge(
     targetPosition,
   });
 
-  const [value, setValue] = useState<any>(data ?? "False");
+  const [value, setValue] = useState<any>(data.value ?? "True");
   const dropdownList = [
     { key: 1, value: true, text: "True" },
     { key: 2, value: false, text: "False" },
@@ -43,11 +36,9 @@ export default function ButtonEdge(
   const onValueChange = (e: any) => {
     const val = e.target.value.toString();
     setValue(val);
-    data = val;
-    // onDropdownChange(val, id);
+    data.value = val;
+    data.onDropdownChange(val, id);
   };
-
-  console.log(value);
   return (
     <>
       <path
@@ -70,7 +61,7 @@ export default function ButtonEdge(
       >
         <div
           style={{
-            width: "50px",
+            width: "60px",
             height: "50px",
             backgroundColor: "transparent",
             borderRadius: "5px",
@@ -82,7 +73,7 @@ export default function ButtonEdge(
             defaultChecked={value}
             value={value}
             style={{
-              width: "50px",
+              width: "60px",
               padding: "3px",
               fontSize: "10px",
               backgroundColor: "transparent",
