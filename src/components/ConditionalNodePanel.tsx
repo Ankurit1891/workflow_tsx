@@ -83,11 +83,12 @@ const ConditionalNodePanel = (props: any) => {
   };
 
   const widthStyle = {
-    width: 400,
+    width: 500,
   };
 
   const widthStyleLabel = {
-    maxWidth: "400px",
+    maxWidth: "550px",
+    paddingLeft:'50px',
   };
   useEffect(() => {
     fetch("/api/conditional_next_state")
@@ -159,20 +160,14 @@ const ConditionalNodePanel = (props: any) => {
 
   const onSubmit = handleSubmit((data: any) => {
     console.log(data);
+
     const obj1={
-        ConditionName:data.Conditional_Next_Step_Data_1,
-        conditionalNextStateType:conditionalNextStateType1,
-        conditionalOrder:conditionalOrder1,
-        conditionData:conditionData1,
-    }
-    const obj2={
         ConditionName:data.Conditional_Next_Step_Data_2,
         conditionalNextStateType:conditionalNextStateType2,
         conditionalOrder:conditionalOrder2,
         conditionData:conditionData2,
     }
     console.log(`OBJECT 1 = > `, JSON.stringify(obj1));
-    console.log(`OBJECT 2 = > `, JSON.stringify(obj2));
 
     // let nextStateName = "";
     // props.nodes.map((node: any) => {
@@ -212,7 +207,7 @@ const ConditionalNodePanel = (props: any) => {
           isOpen={props.isOpen}
           placement={"right"}
           onDismiss={dismiss}
-          size="L"
+          size="M"
           modalLike={true}
         >
           <AbPanelHeader>
@@ -221,94 +216,6 @@ const ConditionalNodePanel = (props: any) => {
             </span>
           </AbPanelHeader>
           <AbPanelBody>
-            <AbStepper
-              key={props.node.id}
-              size="small"
-              showStepNumbers={false}
-              activeIndex={active}
-              onStepClick={setActive}
-              orientation="vertical"
-            >
-              <AbStepperStep label="On Condition True" key="Condition True">
-                <AbStack style={widthStyleLabel}>
-                  <AbInput
-                    name={"Conditional_Next_Step_Data_1"}
-                    control={control}
-                    rules={{
-                      required: "This field is required",
-                      maxLength: {
-                        value: 10,
-                        message: "Maximum length exceeded",
-                      },
-                      minLength: {
-                        value: 5,
-                        message: "Enter minimum 5 characters ",
-                      },
-                    }}
-                    key={"Conditional Next Step Input 1"}
-                    required={true}
-                    label="Condition Name"
-                    type={AbInputTypes.Text}
-                  />
-                </AbStack>
-                <AbSelect
-                  //   defaultSelectedKey={selectedKeyConditionType}
-                  key={"conditionalType1"}
-                  label="Conditional Type"
-                  onChange={onChangeConditionType1}
-                  placeholder="Select one option"
-                  style={widthStyle}
-                >
-                  {conditionalNextStateDropDownList.map((data: any): any => {
-                    if (data) {
-                      return (
-                        <AbSelectOption key={data.actionType}>
-                          {data.text}
-                        </AbSelectOption>
-                      );
-                    }
-                  })}
-                </AbSelect>
-
-                <AbSelect
-                  label="Condition"
-                  key={'Condition1'}
-                  //   defaultSelectedKey={selectedKeyCondition}
-                  onChange={onChangeCondition1}
-                  placeholder="Select one option"
-                  style={widthStyle}
-                >
-                  {condition.map((data: any): any => {
-                    if (data) {
-                      return (
-                        <AbSelectOption key={data.actionType}>
-                          {data.text}
-                        </AbSelectOption>
-                      );
-                    }
-                  })}
-                </AbSelect>
-
-                <AbSelect
-                  label="Order"
-                  key={'Order1'}
-                  onChange={onChangeOrder1}
-                  //   defaultSelectedKey={selectedKeyOrder}
-                  placeholder="Select one option"
-                  style={widthStyle}
-                >
-                  {order.map((data: any): any => {
-                    if (data) {
-                      return (
-                        <AbSelectOption key={data.actionType}>
-                          {data.text}
-                        </AbSelectOption>
-                      );
-                    }
-                  })}
-                </AbSelect>
-              </AbStepperStep>
-              <AbStepperStep label="On Condition False" key="Condition False">
                 <AbStack style={widthStyleLabel}>
                   <AbInput
                     name={"Conditional_Next_Step_Data_2"}
@@ -329,7 +236,7 @@ const ConditionalNodePanel = (props: any) => {
                     label="Condition Name"
                     type={AbInputTypes.Text}
                   />
-                </AbStack>
+                
                 <AbSelect
                   //   defaultSelectedKey={selectedKeyConditionType}
                   key={"conditionalType2"}
@@ -386,41 +293,12 @@ const ConditionalNodePanel = (props: any) => {
                     }
                   })}
                 </AbSelect>
-              </AbStepperStep>
-
-              {/* <div>
-                <AbButton
-                  onClick={onSubmit}
-                  type={AbButtonType.submit}
-                  style={{ marginTop: "10px" }}
-                  variant="Primary"
-                >
-                  Submit
-                </AbButton>
-              </div> */}
-            </AbStepper>
+                </AbStack>
           </AbPanelBody>
           <AbPanelFooter>
-            <div>
-              {active === 0 && (
-                <AbButton
-                  style={{ marginTop: "10px", marginRight: "10px" }}
-                  onClick={() => setActive((prev) => prev + 1)}
-                  variant="Default"
-                >
-                  Next
-                </AbButton>
-              )}
-              {active === 1 && (
-                <AbButton
-                  style={{ marginTop: "10px", marginRight: "10px" }}
-                  onClick={() => setActive((prev) => prev - 1)}
-                  variant="Default"
-                >
-                  Back
-                </AbButton>
-              )}
-              {active === 1 && (
+            <div style={{display:'flex',justifyContent:'flex-end'}}>
+              
+              
                 <AbButton
                   onClick={onSubmit}
                   type={AbButtonType.submit}
@@ -429,7 +307,7 @@ const ConditionalNodePanel = (props: any) => {
                 >
                   Submit
                 </AbButton>
-              )}
+             
             </div>
           </AbPanelFooter>
         </AbPanel>

@@ -68,8 +68,10 @@ const CustomNode = (props: any) => {
             <span
               style={{
                 color:
-                  props.NodebackgroundColor === "#FFFFFF"
-                    ? "#000000"
+                  props.NodebackgroundColor === "#CAC6C67E" && props.theme
+                    ? props.parent === "rightBar"
+                      ? "#000000"
+                      : ""
                     : "#ffffff",
                 marginRight: "10px",
                 marginTop: props.parent === "rightBar" ? "-2px" : "5px",
@@ -81,7 +83,7 @@ const CustomNode = (props: any) => {
             <div
               style={{
                 color:
-                  props.NodebackgroundColor === "#FFFFFF"
+                  props.NodebackgroundColor === "#CAC6C67E" && props.theme
                     ? "#000000"
                     : "#ffffff",
                 fontWeight: "600",
@@ -100,7 +102,7 @@ const CustomNode = (props: any) => {
         <div
           ref={props.parent === "rightBar" ? drag : null}
           style={{
-            zIndex:'0',
+            zIndex: "0",
             backgroundColor: "transparent",
             transform: "rotate(0deg)",
             width: props.parent === "rightBar" ? "" : "100px",
@@ -175,7 +177,7 @@ const CustomNode = (props: any) => {
             >
               <span
                 style={{
-                  color: "#ffffff",
+                  color: props.theme ? "#000000" : "#ffffff",
                   marginTop: props.parent === "rightBar" ? "-2px" : "-10px",
                   marginLeft: props.parent === "rightBar" ? "25px" : "-29px",
                   fontSize: props.parent === "rightBar" ? "18px" : "",
@@ -185,7 +187,7 @@ const CustomNode = (props: any) => {
               </span>
               <span
                 style={{
-                  color: "white",
+                  color: props.theme ? "#000000" : "#ffffff",
                   fontWeight: "600",
                   marginLeft: props.parent === "rightBar" ? "-13px" : "-30px",
                   fontSize: props.parent === "rightBar" ? "18px" : "",

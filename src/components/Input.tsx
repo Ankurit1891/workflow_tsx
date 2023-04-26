@@ -20,6 +20,7 @@ export const Input = ({
         render={({ field, fieldState, formState }) => {
           return (
             <TextField
+            autoFocus
               label={label}
               placeholder={placeholder}
               defaultValue={data}

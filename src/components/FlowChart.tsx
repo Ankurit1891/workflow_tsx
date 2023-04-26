@@ -144,7 +144,7 @@ const FlowChart = (props: any) => {
       animated: false,
       color: color,
       style: {
-        backdropFilter: "blur(1px)",
+        // backdropFilter: "blur(1px)",
         backgroundColor: "transparent",
         borderColor: "transparent",
         padding: color === "#27294e" ? "0px" : "7px",
