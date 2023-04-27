@@ -153,6 +153,7 @@ const FlowChart = (props: any) => {
       },
       
       data: {
+        maxOut:2,
         isSelectable: true,
         label: (
           <>

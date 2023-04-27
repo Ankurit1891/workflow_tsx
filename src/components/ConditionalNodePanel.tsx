@@ -135,16 +135,16 @@ const ConditionalNodePanel = (props: any) => {
     // console.log('NAME: ',data.Conditional_Next_Step_Data , ' Conditional Type : ',conditionalNextStateType, ' Condition: ',conditionData , " Order: ",conditionalOrder);
     // const conditionEdgeObject = {
     //   ConditionName: data.Conditional_Next_Step_Data,
-    // //   ConditionType: conditionalNextStateType,
-    // //   Condition: conditionData,
-    // //   Order: conditionalOrder,
+    //   ConditionType: conditionalNextStateType,
+    //   Condition: conditionData,
+    //   Order: conditionalOrder,
     //   NextState: nextStateName,
     // };
     // const objectModal = {
     //   ConditionName: data.Conditional_Next_Step_Data,
-    // //   ConditionType: conditionalNextStateType.input,
-    // //   Condition: conditionData.input,
-    // //   Order: conditionalOrder.input,
+    //   ConditionType: conditionalNextStateType.input,
+    //   Condition: conditionData.input,
+    //   Order: conditionalOrder.input,
     //   NextState: nextStateName,
     // };
     // props.alterConditionalEdge(
