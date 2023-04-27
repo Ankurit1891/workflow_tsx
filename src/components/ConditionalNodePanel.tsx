@@ -118,13 +118,13 @@ const ConditionalNodePanel = (props: any) => {
   const onSubmit = handleSubmit((data: any) => {
     console.log(data);
 
-    const obj1 = {
+    const obj = {
       ConditionName: data.Conditional_Next_Step_Data_2,
       conditionalNextStateType: conditionalNextStateType2,
       conditionalOrder: conditionalOrder2,
       conditionData: conditionData2,
     };
-    console.log(`OBJECT = > `, JSON.stringify(obj1));
+    console.log(`OBJECT = > `, JSON.stringify(obj));
 
     // let nextStateName = "";
     // props.nodes.map((node: any) => {
@@ -153,6 +153,7 @@ const ConditionalNodePanel = (props: any) => {
     //   objectModal,
     //   props.edge.id
     // );
+    props.alterConditionalNode(props.node,obj);
     props.setOpenConditionalPanel(false);
   });
 

@@ -261,7 +261,7 @@ const EdgeFormPanel = (props: any) => {
           isOpen={props.isOpen}
           placement={"right"}
           onDismiss={dismiss}
-          size="L"
+          size="M"
           modalLike={true}
         >
           <AbPanelHeader>

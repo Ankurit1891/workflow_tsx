@@ -244,7 +244,9 @@ const FlowChart = (props: any) => {
           value: dropdownData,
           onDropdownChange: onDropdownChange,
         },
-        objectModal: "",
+        objectModal: {
+          conditionalNextState:[]
+        },
         type: type,
         className: type,
         animated: false,
@@ -465,7 +467,15 @@ const FlowChart = (props: any) => {
   const edgeTypes: any = {
     buttonedge: ButtonEdge,
   };
-
+const alterConditionalNode=(node:any,objectData:any)=>{
+  edges.map((e:any)=>{
+    if(node.id===e.target)
+    {
+      e.objectModal.conditionalNextState.push(objectData);
+      console.log(e.id, e.source,e.target,e.objectModal);
+    }
+  })
+}
   return (
     <div
       onKeyDown={onKeyDown}
@@ -520,6 +530,7 @@ const FlowChart = (props: any) => {
         //   setOpenConditionalPanel={setOpenConditionalPanel}
         // />
         <ConditionalNodePanel
+        alterConditionalNode={alterConditionalNode}
           node={selectedNode}
           dismissHandler={closePanelConditional}
           isOpen={isOpenConditional}
